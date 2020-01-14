@@ -24,9 +24,7 @@ class Route {
 			$preg = preg_replace("/{[^\{\}]+}/", "([^\/]+)", $preg);
 			$result = preg_match("/^$preg$/", $url, $match);
 
-			if(!$result) {
-				continue;
-			}
+			if(!$result) continue;
 
 			unset($match[0]);
 

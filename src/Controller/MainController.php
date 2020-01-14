@@ -24,5 +24,23 @@ class MainController {
 		return view("write");
 	}
 
+	# 피드 이동
+	public function list() {
+		return view("list");
+	}
+
+	# 친구창
+	# 설정
+	# 검색
+
+
 }
 ?>
+
+<!-- user()를 썼을때 -->
+<!-- 로그인 되어있으면 로그인된 정보 가져옴 (true) -->
+<!-- 로그인 안되어있으면 false -->
+
+<!-- user(3)를 썼을때 -->
+<!-- 로그인여부와 상관없이 users 테이블에서 idx가 3인 유저 정보를 가져옴 -->
+<!-- 없으면 false -->
