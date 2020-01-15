@@ -1,6 +1,5 @@
 <?php
 namespace src\App;
-
 class Route {
 	private static $GET = [];
 	private static $POST = [];
@@ -15,16 +14,16 @@ class Route {
 
 	public static function init() {
 		$datas =  self::${$_SERVER["REQUEST_METHOD"]};
-
 		$url = "/";
 		if(isset($_GET['url'])) $url .= trim($_GET['url'], "/");
-
 		foreach($datas as $data) {
 			$preg = preg_replace("/\//", "\/", $data[0]);
 			$preg = preg_replace("/{[^\{\}]+}/", "([^\/]+)", $preg);
 			$result = preg_match("/^$preg$/", $url, $match);
 
-			if(!$result) continue;
+			if(!$result) {
+				continue;
+			}
 
 			unset($match[0]);
 
@@ -37,10 +36,9 @@ class Route {
 			$controllerName = "\\src\\Controller\\" . $action[0];
 			$controller = new $controllerName();
 			$controller->{$action[1]}(...$match);
-
 			return;
 		}
-
+		
 		move("/error");
 	}
 }

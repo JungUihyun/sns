@@ -21,6 +21,7 @@ function back($msg = "") {
 	exit;
 }
 
+// 유저 정보 갖고오기
 function user($idx = 0) {
 	if($idx == 0) {
 		if(isset($_SESSION['user'])) {

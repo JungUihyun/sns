@@ -5,11 +5,11 @@ class DB {
 	private static $DB = null;
 
 	public static function getConnection() {
-		$dbname = "";
-		$charset = "";
-		$id = "";
-		$password = "";
-		if(is_null(self::$DB)) self::$DB = new \PDO("mysql:host=localhost; dbname=" . $dbname . "; charset=" . $charset . ";", "" . $id . "", "" . $password . "", [19 => 5, 3 => 1]);
+		$dbname = "twins200202";
+		$charset = "utf8mb4";
+		$id = "twins200202";
+		$password = "1234";
+		if(is_null(self::$DB)) self::$DB = new \PDO("mysql:host=gondr.asuscomm.com; dbname=" . $dbname . "; charset=" . $charset . ";", "" . $id . "", "" . $password . "", [19 => 5, 3 => 1]);
 		return self::$DB;
 	}
 
