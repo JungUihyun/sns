@@ -9,6 +9,11 @@ class MainController {
 		return view("index");
 	}
 
+	# 404 페이지 이동
+	public function error() {
+		return view("error");
+	}
+
 	# 회원가입 페이지 이동
 	public function register() {
 		return view("register");

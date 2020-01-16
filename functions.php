@@ -12,7 +12,7 @@ function view($url, $data = []) {
 function move($url, $msg = "") {
 	if($msg != "") echo "<script>alert('" . $msg . "')</script>";
 	echo "<script>location.href='$url';</script>";
-	exit;
+	exit;			
 }
 
 function back($msg = "") {
@@ -25,7 +25,7 @@ function back($msg = "") {
 function user($idx = 0) {
 	if($idx == 0) {
 		if(isset($_SESSION['user'])) {
-			$user = DB::fetch("SELECT * FROM users WHERE idx = ?", [$_SESSION['user']->idx]);
+			$user = DB::fetch("SELECT * FROM sns_users WHERE idx = ?", [$_SESSION['user']->idx]);
 			if($user) {
 				return $user;
 			} else {

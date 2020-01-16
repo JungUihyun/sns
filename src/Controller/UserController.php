@@ -50,13 +50,20 @@ class UserController {
             $_SESSION['user'] = $user;
             move("/", "로그인 완료");
         }
-	}
+    }
+    
+    # 로그아웃 처리
+    public function logout() {
+        unset($_SESSION['user']);
+        move("/", "로그아웃 완료");
+    }
 
     # 글쓰기 처리
 	public function write() {
         
 	}
-
 	
+
+    
 
 }

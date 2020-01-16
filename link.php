@@ -4,6 +4,9 @@ use src\Controller\MainController;
 
 // index page
 Route::GET("/", "MainController@index");
+// 404 page
+Route::GET("/error", "MainController@error");
+
 # 회원가입 페이지 이동
 Route::GET("/register", "MainController@register");
 # 회원가입 처리
@@ -12,6 +15,8 @@ Route::POST("/register", "UserController@register");
 Route::GET("/login", "MainController@login");
 # 로그인 처리
 Route::POST("/login", "UserController@login");
+# 로그아웃 처리
+Route::GET("/logout", "UserController@logout");
 
 Route::init();
 ?>
