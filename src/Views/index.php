@@ -18,7 +18,7 @@
     <div class="profile">
         <a href="/profile" class="link_img">
             <img src="/images/default_profile.jpg" alt="profile_img">
-        </a>
+        </a> 
         <a href="/profile" class="link_name"><?= $_SESSION['user']->name ?></a>
     </div>
 
@@ -32,7 +32,9 @@
 </div>
 
 <div class="container">
-    
+    <div class="section">
+        
+    </div>
 </div>
 
 <?php if(isset($_SESSION['user'])) : ?>
