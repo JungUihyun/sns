@@ -1,5 +1,5 @@
 // 아이디 기억
-$(document).reqdy(function() {
+$(document).ready(function() {
     // 저장된 쿠키값을 가져와서 ID칸에 넣음. 없으면 공백
     let key = getCookie("key");
     $("#id").val(key);
@@ -52,3 +52,7 @@ function getCookie(cookieName) {
 }
 // 아이디 기억 끝
 
+// 글추가 테스트
+$("#append").on("click", function() {
+    $(".posting").append("<div class='section'> </div><br>");
+});

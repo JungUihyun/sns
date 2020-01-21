@@ -12,6 +12,11 @@
         </button>
     </div>
 
+    <div class="logout">
+        <a href="/logout" style="position: absolute; right: 200px; top: 20px;">로그아웃</a>
+        <button id="append" style="position: absolute; right: 300px; top: 20px;">글추가</button>
+    </div>
+
 </header>
 
 <div id="side">
@@ -32,19 +37,44 @@
 </div>
 
 <div class="container">
-    <div class="section">
+    <div class="posting">
+        <div class="write">
+            <input type="text" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요.">
+            <div class="media">
+                <div class="type">
+                    <ul>
+                        <li>
+                            <a href="" class="link_menu">
+                                <span class="txt_menu">
+                                    <span class="ico camera"></span>
+                                    <em>사진/동영상</em>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" class="link_menu">
+                                <span class="txt_menu">
+                                    <span class="ico music"></span>
+                                    <em>뮤직</em>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" class="link_menu">
+                                <span class="txt_menu">
+                                    <span class="ico link"></span>
+                                    <em>링크</em>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br>
         
     </div>
 </div>
-
-<?php if(isset($_SESSION['user'])) : ?>
-    <span><?= $_SESSION['user']->name ?>님</span>
-    <a href="/logout">로그아웃</a>
-    <a href="/write">글쓰기</a>
-<?php else : ?>
-    <a href="/login">로그인</a>    
-    <a href="/register">회원가입</a>
-<?php endif; ?>
 
 <?php 
     else : 

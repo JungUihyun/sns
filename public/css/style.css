@@ -1,7 +1,8 @@
 /* Reset */
 * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
-a { text-decoration: none; }
-html { overflow-y: scroll; }
+a { text-decoration: none;  }
+em { font-style: normal; }
+html { overflow-y: scroll; background-color: #f3f3f3; }
 /* Reset End */
 
 /* Header */
@@ -53,15 +54,6 @@ header {
 }
 /* Header End */
 
-/* Container */
-.container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #f3f3f3;
-}
-/* Container End */
-
 /* Side */
 #side {
     position: fixed;
@@ -112,3 +104,114 @@ header {
 
 /* Side End */
 
+/* Container */
+.container {
+    position: absolute;
+    width: 100%;
+    padding-right: 259px;
+}
+
+.posting {
+    padding-top: 90px;
+    text-align: center;
+}
+
+.write {
+    width: 578px;
+    height: 169px;
+    padding: 36px 40px 20px;
+    display: inline-block;
+    background-color: #fff;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #dedede;
+}
+
+.write > input {
+    width: 100%;
+    border: none;
+    color: #000;
+    height: 37px;
+}
+
+.write > input::placeholder {
+    color: #999;
+}
+
+.media {
+    margin-top: 20px;
+}
+
+.media > .type {
+    position: relative;
+    width: auto;
+}
+
+.media > .type ul {
+    overflow: hidden;
+    width: auto;
+    border: 1px solid #d9d9d9;
+}
+
+.media .type li {
+    overflow: hidden;
+    width: 165px;
+    border-left: 0;
+    position: relative;
+    float: left;
+}
+
+.media .type li .link_menu {
+    display: block;
+    height: 54px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 54px;
+    color: #646464;
+}
+
+.media .type li .txt_menu {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.media .type li .ico {
+    width: 18px;
+    height: 16px;
+    margin: 19px 5px 0 0;
+    background-position: -155px -430px;
+    vertical-align: top;
+}
+
+.media .type li .camera {
+    background-image: url(/images/camera.png);
+}
+
+.media .type li .music {
+    background-image: url(/images/camera.png);
+}
+
+.media .type li .link {
+    background-image: url(/images/camera.png);
+}
+
+.media .type ul li:hover .link_menu {
+    background-color: #fafafa;
+}
+
+.media .type ul li:hover em {
+    text-decoration: underline;
+}
+
+
+
+.section {
+    display: inline-block;
+    width: 578px;
+    min-height: 150px;
+    padding: 40px 40px 0px;
+    background-color: #fff;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #dedede;
+}
+
+/* Container End */

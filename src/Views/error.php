@@ -41,7 +41,6 @@
 	.container {
 		position: absolute;
 		left: 0;
-		top: 65px;
 		bottom: 0;
 		right: 0;
 		min-height: 500px;

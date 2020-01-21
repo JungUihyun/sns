@@ -15,7 +15,7 @@
                 <img id="msg" src="/images/msg1.png" alt="msg">
             </div>
             <form id="login-form" method="post" action="/login">
-                <input type="text" name="id" id="id" placeholder="아이디" autocomplete="off">
+                <input type="eamail" name="id" id="id" placeholder="아이디" autocomplete="off">
                 <input type="password" name="password" id="password" placeholder="비밀번호">
                 <div class="keepLogin">
                     <input type="checkbox" id="keepLoginbox" name="keepLogin">
@@ -25,7 +25,6 @@
             </form>
             <div class="register">
                 <a href="/register">회원가입</a>
-                <a href="/asdfasdfadsf">에러페이지 가기</a>
             </div>            
         </div>  
 	</div>
