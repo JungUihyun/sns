@@ -8,13 +8,14 @@
     <div class="input">
         <input type="text" class="input_search" placeholder="친구, 채널, 태그, 장소 검색">
         <button class="btn_search">
-            <i class="far fa-search"></i>
+            <span class="ti-search"></span>
         </button>
     </div>
 
     <div class="logout">
         <a href="/logout" style="position: absolute; right: 200px; top: 20px;">로그아웃</a>
         <button id="append" style="position: absolute; right: 300px; top: 20px;">글추가</button>
+        <button id="delete" style="position: absolute; right: 350px; top: 20px;">글삭제</button>
     </div>
 
 </header>
@@ -46,7 +47,7 @@
                         <li>
                             <a href="" class="link_menu">
                                 <span class="txt_menu">
-                                    <span class="ico camera"></span>
+                                    <span class="ico ti-camera"></span>
                                     <em>사진/동영상</em>
                                 </span>
                             </a>
@@ -54,7 +55,7 @@
                         <li>
                             <a href="" class="link_menu">
                                 <span class="txt_menu">
-                                    <span class="ico music"></span>
+                                <span class="ico ti-music-alt"></span>
                                     <em>뮤직</em>
                                 </span>
                             </a>
@@ -62,7 +63,7 @@
                         <li>
                             <a href="" class="link_menu">
                                 <span class="txt_menu">
-                                    <span class="ico link"></span>
+                                    <span class="ico ti-link"></span>
                                     <em>링크</em>
                                 </span>
                             </a>
@@ -70,9 +71,12 @@
                     </ul>
                 </div>
             </div>
+            <div class="btn_group">
+                <button id="cancel">취소</button>
+                <button id="post">올리기</button>
+            </div>
         </div>
         <br>
-        
     </div>
 </div>
 

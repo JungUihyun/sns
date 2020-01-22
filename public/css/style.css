@@ -52,6 +52,15 @@ header {
     color: #999;
     font-weight: lighter;
 }
+
+.btn_search {
+    border: 1px solid black;
+}
+
+.btn_search > .ti-search {
+    background-color: none;
+    border: 1px solid black;
+}
 /* Header End */
 
 /* Side */
@@ -119,11 +128,13 @@ header {
 .write {
     width: 578px;
     height: 169px;
+    /* height: 308px; */
     padding: 36px 40px 20px;
     display: inline-block;
     background-color: #fff;
     margin-bottom: 15px;
     border-bottom: 1px solid #dedede;
+    position: relative;
 }
 
 .write > input {
@@ -131,6 +142,7 @@ header {
     border: none;
     color: #000;
     height: 37px;
+    font-size: 16px;
 }
 
 .write > input::placeholder {
@@ -138,7 +150,9 @@ header {
 }
 
 .media {
-    margin-top: 20px;
+    position: absolute;
+    bottom: 20px;
+    /* bottom: 70px; */
 }
 
 .media > .type {
@@ -174,24 +188,15 @@ header {
     cursor: pointer;
 }
 
-.media .type li .ico {
-    width: 18px;
-    height: 16px;
-    margin: 19px 5px 0 0;
-    background-position: -155px -430px;
-    vertical-align: top;
+.media .type .ico {
+    font-size: 18px;
+    margin-right: 4px;
+    color: rgb(141, 141, 141);
 }
 
-.media .type li .camera {
-    background-image: url(/images/camera.png);
-}
-
-.media .type li .music {
-    background-image: url(/images/camera.png);
-}
-
-.media .type li .link {
-    background-image: url(/images/camera.png);
+.media .type ul li:hover .ico {
+    /* font-weight: bold; */
+    color: #000;
 }
 
 .media .type ul li:hover .link_menu {
@@ -202,7 +207,39 @@ header {
     text-decoration: underline;
 }
 
+.write > .btn_group {
+    width: 160px;
+    height: 34px;
+    display: flex;
+    position: absolute;
+    bottom: 15px;
+    right: 38px;
+    justify-content: space-around;
+    display: none;
+}
 
+.write > .btn_group button {
+    height: 100%;
+    padding: 0px 17px;
+    font-size: 14px;
+    border-radius: 1px;
+    cursor: pointer;
+}
+
+.write > .btn_group > #cancel {
+    width: 68px;
+    border: 1px solid #999;
+    background-color: #fff;
+}
+
+.write > .btn_group > #post {
+    width: 81px;
+    background-color: #f7a68d;
+    border-color: #f7a68d;
+    border: none;
+    color: #fff;
+
+}
 
 .section {
     display: inline-block;
@@ -212,6 +249,7 @@ header {
     background-color: #fff;
     margin-bottom: 15px;
     border-bottom: 1px solid #dedede;
+    text-align: left !important;
 }
 
 /* Container End */

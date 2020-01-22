@@ -53,6 +53,40 @@ function getCookie(cookieName) {
 // 아이디 기억 끝
 
 // 글추가 테스트
+
 $("#append").on("click", function() {
     $(".posting").append("<div class='section'> </div><br>");
 });
+
+$("#delete").on("click", function() {
+    $(".section:last").remove();
+    $("br:last").remove();
+});
+// 글추가 테스트 끝
+
+// 글쓰기 애니메이션
+$(".write > input").focus(function() {
+    $(".write").animate({ height : "308px" }, 300);
+    $(".media").animate({ bottom : "70px" }, 300);
+    $(".btn_group").fadeIn();
+});
+
+$(".write > .btn_group > #cancel").on("click", function() {
+    $(".write").animate({ height : "169px" }, 300);
+    $(".media").animate({ bottom : "20px" }, 300);
+    $(".btn_group").fadeOut('fast');
+});
+// 글쓰기 애니메이션 끝
+
+// 글 포스팅
+$("#post").on("click", function() {
+    let value = $(".write > input").val();
+    if($.trim(value) == "") {
+        alert("입력값이 비었습니다. 다시 입력해 주세요.");
+        return;
+    } else {
+        $(".posting").append($("<div class='section'>" + value + "</div><br>").fadeIn());
+        $(".write > input").val('');
+    }
+});
+// 글 포스팅 끝
