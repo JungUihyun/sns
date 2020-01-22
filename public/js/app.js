@@ -87,6 +87,9 @@ $("#post").on("click", function() {
     } else {
         $(".posting").append($("<div class='section'>" + value + "</div><br>").fadeIn());
         $(".write > input").val('');
+        $(".write").animate({ height : "169px" }, 300);
+        $(".media").animate({ bottom : "20px" }, 300);
+        $(".btn_group").fadeOut('fast');
     }
 });
 // 글 포스팅 끝
