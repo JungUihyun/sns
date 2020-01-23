@@ -14,8 +14,6 @@
 
     <div class="logout">
         <a href="/logout" style="position: absolute; right: 200px; top: 20px;">로그아웃</a>
-        <button id="append" style="position: absolute; right: 300px; top: 20px;">글추가</button>
-        <button id="delete" style="position: absolute; right: 350px; top: 20px;">글삭제</button>
     </div>
 
 </header>
@@ -40,7 +38,7 @@
 <div class="container">
     <div class="posting">
         <div class="write">
-            <input type="text" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요.">
+            <textarea name="write_input" id="write_input" cols="30" rows="10" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요."></textarea>
             <div class="media">
                 <div class="type">
                     <ul>
@@ -77,6 +75,22 @@
             </div>
         </div>
         <br>
+        <div class="section">
+            <div class="btnList">
+                <button class="modify">수정</button>
+                <button class="delete">삭제</button>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<div class="cover_wrapper">
+    <div class="modify_write">
+        <textarea name="modify_input" id="modify_input" cols="30" rows="10" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요."></textarea>
+            <div class="btn_group">
+                <button id="modify_cancel">취소</button>
+                <button id="modify_post">올리기</button>
+            </div>
     </div>
 </div>
 

@@ -63,12 +63,5 @@ class UserController {
         move("/", "로그아웃 완료");
     }
 
-    # 글쓰기 처리
-	public function write() {
-        
-	}
-	
-
-    
 
 }
