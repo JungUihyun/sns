@@ -46,7 +46,21 @@
     <div class="container">
         <div class="container_wrap">
             <div class="myStory">
-
+                <div class="name">
+                    <img src="/images/default_profile.jpg" alt="프로필 사진">
+                    <span><?= $_SESSION['user']->name ?></span>
+                </div>
+                <div class="menu_story">
+                    <ul>
+                        <li>전체</li>
+                        <li>캘린더</li>
+                        <li>사진</li>
+                        <li>동영상</li>
+                        <li>장소</li>
+                        <li>뮤직</li>
+                        <li>더보기</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -54,10 +68,10 @@
     <div class="cover_wrapper">
         <div class="modify_write">
             <textarea name="modify_input" id="modify_input" cols="30" rows="10" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요."></textarea>
-                <div class="btn_group">
-                    <button id="modify_cancel">취소</button>
-                    <button id="modify_post">올리기</button>
-                </div>
+            <div class="btn_group">
+                <button id="modify_cancel">취소</button>
+                <button id="modify_post">올리기</button>
+            </div>
         </div>
     </div>
 </body>

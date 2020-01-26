@@ -2,6 +2,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
 a { text-decoration: none; }
 em { font-style: normal; }
+li { list-style: none; }
 html { overflow-y: scroll; background-color: #f3f3f3; }
 /* Reset End */
 
@@ -114,7 +115,25 @@ header {
 /* Side End */
 
 /* Container */
+.container {
+    background-color: #999;
+    width: 100%;
+    padding-right: 259px;
+    position: absolute;
+}
 
+.container_wrap {
+    padding-top: 65px;
+    background-color: #000;
+    width: 800px;
+    height: 342px;   
+    position: relative;
+    margin: 0 auto;
+}
+
+.myStory {
+    background-image: url(/images/profileBG.jpg);
+}
 
 
 /* Container End */
