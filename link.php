@@ -20,5 +20,8 @@ Route::GET("/logout", "UserController@logout");
 # 프로필 페이지 이동
 Route::GET("/profile", "MainController@profile");
 
+# 글쓰기 처리
+Route::POST("/write", "PostController@write");
+
 Route::init();
 ?>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <script>
+        let total_page = "<?=$total_page?>";
+        let now_page = "<?=$page?>";
+        let roll_page = now_page; 
+
+        $(window).scroll(function () {
+            let chkBtm = parseInt($(document).height()) - parseInt($(window).height()); 
+            if (chkBtm == $(window).scrollTop()) { 
+                roll_page++; 
+                
+                if (roll_page <= total_page) { 
+                    callContent(roll_page, 'append'); 
+                } 
+            } else if ($(window).scrollTop() == 0) { 
+                now_page--; 
+                if (now_page > 0) { 
+                    callContent(now_page, 'prepend'); 
+                }   
+            }
+        }); 
+        
+        function callContent(a, b) {
+            let url = "<?=G5_BBS_URL?>/board.php?bo_table=<?=$bo_table?>&page=" + a;
+            let tbody = "";
+            let thtml = ""; 
+            
+            $.ajax({
+                type: "POST", url: url, dataType: "html", success: function (html) {
+                    tbody = html.split('<article>'); 
+                    thtml = tbody[1].split('</article>'); 
+                    setTimeout(function () {
+                        if (b == 'append') {
+                            // $(".tbl_head01").find('tbody').append(thtml[0]); 
+                            $("#fboardlist").append(thtml[0]);
+                        }
+                    }, 1000);
+                }, error: function (xhr, status, error) { 
+                    alert(error); 
+                }
+            });
+        }
+
+        $(window).scroll(function(){ 
+            // 최하단일 경우를 체크하기 위해 최하단 위치값을 지정 
+            // 화면 문서전체의 길이에서, 현재 창 높이를 뺀 것이 최하단 값 
+            var chkBtm = parseInt($(document).height()) - parseInt($(window).height()); 
+            if(chkBtm == $(window).scrollTop()){ 
+                // 최하단으로 도달했을 경우 
+                console.log('바닥입니다!'); 
+            } else if($(window).scrollTop() == 0){ 
+                // 최상단으로 도달했을 경우 
+                console.log('꼭대기입니다!'); 
+            } 
+        });
+        </script>
+</body>
+
+</html>

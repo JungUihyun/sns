@@ -5,45 +5,46 @@ use src\App\DB;
 
 class PostController {
     # 글쓰기 처리
-	// public function write() {
-    //     $title = $_POST['title'];
-    //     $date = $_POST['date'];
-    //     $time = $_POST['time'];
-    //     $content = $_POST['content'];
+	public function write() {
+        var_dump($_POST);
+        // $title = $_POST['title'];
+        // $date = $_POST['date'];
+        // $time = $_POST['time'];
+        $content = $_POST['content'];
 
-    //     if($title == "" || $date == "" || $content == "") {
-    //         Library::msgAndGo("필수 값이 비어있습니다.", "/todo/write");
-    //         return;
-    //     }
+        if(isEmpty($_POST)) {
+            back("필수 값이 비어있습니다.");
+        }
 
-    //     $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
-    //     $user = $_SESSION['user'];
+        // $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
+        $user = $_SESSION['user'];
 
-    //     $sql = "INSERT INTO todos (`title`, `content`, `owner`, `date`) VALUES(?, ?, ?, ?)";
-    //     $result = DB::execute($sql, [$title, $content, $user->id, $datetime]);
+        $sql = "INSERT INTO sns_boards (`content`, `writer`) VALUES(?, ?)";
+        // $result = DB::execute($sql, [$content, $user->id, $datetime]);
+        $result = DB::execute($sql, [$content, $user->id]);
         
-    //     if($result != 1) {
-    //         Library::msgAndGo("데이터베이스 입력중 오류 발생",  "/todo/write");
-    //         return;
-    //     }
-    //     Library::msgAndGo("성공적으로 입력되었습니다.", "/", "success");
-    // }
+        if(!$result) {
+            back("데이터베이스 입력중 오류 발생");
+        }
+
+        move("/", "성공적으로 입력되었습니다.");
+    }
     
     // # 글 수정
     // public function modify() {
-    //     $title = $_POST['title'];
+    //     // $title = $_POST['title'];
     //     $date = $_POST['date'];
     //     $time = $_POST['time'];
     //     $content = $_POST['content'];
     //     $id = $_POST['id'];
 
-    //     if($title == "" || $date == "" || $content == "") {
+    //     if($date == "" || $content == "") {
     //         Library::msgAndGo("필수값이 비어있습니다.", "/todo/mod?id" . $id);
     //         return;
     //     }
 
     //     $user = $_SESSION['user'];
-    //     $sql = "SELECT * FROM todos WHERE owner = ? AND id = ?";
+    //     $sql = "SELECT * FROM sns_boards WHERE writer = ? AND id = ?";
     //     $data = DB::fetch($sql, [$user->id, $id]);
 
     //     if($data == null) {
@@ -52,7 +53,7 @@ class PostController {
     //     }
 
     //     $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
-    //     $sql = "UPDATE todos SET `title` = ?, `content` = ?, `date` = ? WHERE `id` = ?";
+    //     $sql = "UPDATE sns_boards SET `title` = ?, `content` = ?, `date` = ? WHERE `id` = ?";
     //     $result = DB::execute($sql, [$title, $content, $datetime, $id]);
 
     //     if($result != 1) {
@@ -72,7 +73,7 @@ class PostController {
 
     //     $id = $_GET['id'];
     //     $user = $_SESSION['user'];
-    //     $sql = "SELECT * FROM todos WHERE owner = ? AND id = ?";
+    //     $sql = "SELECT * FROM sns_boards WHERE writer = ? AND id = ?";
     //     $data = DB::fetch($sql, [$user->id, $id]);
 
     //     if($data == null) {
@@ -80,7 +81,7 @@ class PostController {
     //         return;
     //     }
 
-    //     $sql = "DELETE FROM todos WHERE id = ?";
+    //     $sql = "DELETE FROM sns_boards WHERE id = ?";
     //     $result = DB::execute($sql, [$id]);
     //     if($result != 1) {
     //         Library::msgAndGo("데이터베이스 삭제중 오류 발생", "/");

@@ -4,9 +4,37 @@ namespace src\Controller;
 use src\App\DB;
 
 class MainController {
-	# 인덱스 페이지 이동
+	# 인덱스 페이지 이동, 데이터 전송
 	public function index() {
-		return view("index");
+		$list = [];
+        $cnt = 0;
+        $prev = false;
+        $next = false;
+		$page = 0;
+		
+        if(isset($_SESSION['user'])) {
+            $user = $_SESSION['user'];
+            $page = isset($_GET['p']) && is_numeric($_GET['p']) ? $_GET['p'] : 1;
+            $start = ($page - 1) * 5; 
+			// $sql = "SELECT * FROM sns_boards WHERE writer = ? AND date >= NOW() ORDER BY date LIMIT {$start}, 5"; //LIMIT 기본 정렬은 asc 오름차순인데 0개서 부터 5개 가져온다.
+			$sql = "SELECT * FROM sns_boards ORDER BY date LIMIT {$start}, 5";
+            $list = DB::fetchAll($sql, [$_SESSION['user']->id]);
+
+			// $sql = "SELECT count(*) AS cnt FROM sns_boards WHERE writer = ? AND date >= NOW()";
+			$sql = "SELECT count(*) AS cnt FROM sns_boards";
+
+            $cnt = DB::fetch($sql, [$user->id]);
+            $cnt = $cnt->cnt;
+
+            if(ceil($cnt / 5) > $page) {
+                $next = true;
+            }
+            if($page != 1) {
+                $prev = true;
+            }
+		}
+
+		return view("index", ['list' => $list, 'cnt' => $cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 	# 404 페이지 이동

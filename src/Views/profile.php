@@ -2,7 +2,9 @@
 
 <header>
     <div id="logo">
-        <img src="/images/main_logo.png" alt="main_logo">
+        <a href="/">
+            <img src="/images/main_logo.png" alt="main_logo">
+        </a>
     </div>
 
     <div class="input">

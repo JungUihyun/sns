@@ -54,12 +54,14 @@ header {
 }
 
 .btn_search {
-    border: 1px solid black;
+    background-color: #fff;
+    border: none;
 }
 
 .btn_search > .ti-search {
     background-color: none;
-    border: 1px solid black;
+    cursor: pointer;
+    color: rgb(117, 117, 117);
 }
 /* Header End */
 
@@ -138,7 +140,7 @@ header {
     position: relative;
 }
 
-.write > textarea {
+.write textarea {
     width: 100%;
     border: none;
     color: #000;
@@ -148,11 +150,11 @@ header {
     resize: none;
 }
 
-.write > textarea:focus {
+.write textarea:focus {
     height: auto;
 }
 
-.write > textarea::placeholder {
+.write textarea::placeholder {
     color: #999;
 }
 
@@ -214,7 +216,7 @@ header {
     text-decoration: underline;
 }
 
-.write > .btn_group {
+.write > form > .btn_group {
     width: 160px;
     height: 34px;
     display: flex;
@@ -225,7 +227,7 @@ header {
     display: none;
 }
 
-.write > .btn_group button {
+.write > form > .btn_group input {
     height: 100%;
     padding: 0px 17px;
     font-size: 14px;
@@ -233,14 +235,14 @@ header {
     cursor: pointer;
 }
 
-.write > .btn_group > #cancel {
+.write > form > .btn_group > #cancel {
     width: 68px;
     border: 1px solid #999;
     color: #505050;
     background-color: #fff;
 }
 
-.write > .btn_group > #post {
+.write > form > .btn_group > #post {
     width: 81px;
     background-color: #f7a68d;
     border-color: #f7a68d;
@@ -292,7 +294,7 @@ header {
     height: 252px !important;
 }
 
-.modify_write > textarea {
+.modify_write textarea {
     width: 100%;
     border: none;
     color: #000;
@@ -302,11 +304,11 @@ header {
     min-height: 70%;
 }
 
-.modify_write > textarea::placeholder {
+.modify_write textarea::placeholder {
     color: #999;
 }
 
-.modify_write > .btn_group {
+.modify_write .btn_group {
     width: 160px;
     height: 34px;
     display: flex;
@@ -316,7 +318,7 @@ header {
     justify-content: space-around;
 }
 
-.modify_write > .btn_group button {
+.modify_write .btn_group button {
     height: 100%;
     padding: 0px 17px;
     font-size: 14px;
@@ -324,17 +326,17 @@ header {
     cursor: pointer;
 }
 
-.modify_write > .btn_group > #modify_cancel {
+.modify_write .btn_group > #modify_cancel {
     width: 68px;
     border: 1px solid #999;
     background-color: #fff;
 }
 
-.modify_write > .btn_group > #modify_cancel:hover {
+.modify_write .btn_group > #modify_cancel:hover {
     border: 1px solid #000;
 }
 
-.modify_write > .btn_group > #modify_post {
+.modify_write .btn_group > #modify_post {
     width: 81px;
     background-color: #f26a41;
     border-color: #f26a41;
@@ -342,7 +344,7 @@ header {
     color: #fff;
 }
 
-.modify_write > .btn_group > #modify_post:hover {
+.modify_write .btn_group > #modify_post:hover {
     background-color: #e64312;
     border: #ff3c00;
 }
