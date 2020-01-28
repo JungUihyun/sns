@@ -29,6 +29,11 @@ class MainController {
 		return view("write");
 	}
 
+	# 프로필 페이지 이동
+	public function profile() {
+		return view("profile");
+	}
+
 	# 피드 이동
 	public function list() {
 		return view("list");

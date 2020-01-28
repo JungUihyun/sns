@@ -17,6 +17,8 @@ Route::GET("/login", "MainController@login");
 Route::POST("/login", "UserController@login");
 # 로그아웃 처리
 Route::GET("/logout", "UserController@logout");
+# 프로필 페이지 이동
+Route::GET("/profile", "MainController@profile");
 
 Route::init();
 ?>

@@ -21,7 +21,7 @@ class UserController {
             return;
 		}
 		
-		if(!preg_match("/^[0-9a-zA-Zㄱ-ㅎ가-힣 ]+$/", $id)) {
+		if(!preg_match("/^[0-9a-zA-Zㄱ-ㅎ가-힣!@#$%^&*() ]+$/", $id)) {
 			back("아이디가 올바른 형식이 아닙니다. 아이디를 다시 입력해 주세요");
 			return;
         }

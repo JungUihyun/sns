@@ -116,24 +116,88 @@ header {
 
 /* Container */
 .container {
-    background-color: #999;
     width: 100%;
+    height: 100%;
     padding-right: 259px;
+    padding-top: 65px;
     position: absolute;
 }
 
 .container_wrap {
-    padding-top: 65px;
     background-color: #000;
     width: 800px;
     height: 342px;   
     position: relative;
     margin: 0 auto;
+    color: #fff;
+}
+
+.bg {
+    position: absolute;
+    width: 800px;
+    height: 342px;
+    background-color: rgba(0, 0, 0, 0.192);
+    z-index: 5;
 }
 
 .myStory {
     background-image: url(/images/profileBG.jpg);
+    height: 100%;
+    position: relative;
 }
+
+.myStory > .name {
+    z-index: 6;
+    position: absolute;
+    width: 190px;
+    top: 50px;
+    left: 70px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.myStory > .name > img {
+    border: 3px solid #fff;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.myStory > .name > span {
+    font-size: 28px;
+    line-height: 80px;
+}
+
+.myStory > .menu_story {
+    z-index: 6;
+    position: absolute;
+    bottom: 15px;
+    left: 40px;
+    font-size: 14px;
+    width: 470px;
+    height: 35px;
+}
+
+.myStory > .menu_story > ul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;  
+}
+
+.myStory > .menu_story > ul > li {
+    width: 67px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    color: rgb(201, 197, 197);
+}
+
+.myStory > .menu_story > ul > li:hover {
+    color: #fff;
+    border-bottom: 3px solid #f26a41;
+}
+
+
 
 
 /* Container End */
