@@ -58,9 +58,9 @@
             </div>
         </div>
     </div>
-    <div class="asd" style="display:flex; justify-content: space-between">
-    <div class="myPost">
-        <?php foreach($list as $item) { ?>
+    <div class="asd">
+        <div class="myPost">
+            <?php foreach($list as $item) { ?>
                 <div class="section">
                     <div class="post_profile">
                         <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">

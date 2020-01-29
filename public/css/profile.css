@@ -315,7 +315,7 @@ header {
     position: relative;
     margin-top: 10px;
     margin-left: 10px;
-    width: 182px;
+    width: 212px;
     display: inline-block;
 }
 
@@ -330,7 +330,12 @@ header {
     margin: 0 0 10px;
 }
 
-
+.asd {
+    margin: 0 auto;
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+}
 
 /* Container End */
 

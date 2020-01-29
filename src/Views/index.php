@@ -91,8 +91,8 @@
                 <div class="post_profile">
                     <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
                     <div class="post_info">
-                        <span><?= $item->writer ?></span>
-                        <span><?= $item->date ?></span>
+                        <span class="writer"><?= $item->writer ?></span>
+                        <span class="time"><?= $item->date ?></span>
                     </div>
                 </div>
                 <div class="post_content"><?= $item->content ?></div>
@@ -121,7 +121,8 @@
         <textarea name="modify_input" id="modify_input" cols="30" rows="10" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요."></textarea>
             <div class="btn_group">
                 <button id="modify_cancel">취소</button>
-                <button id="modify_post">올리기</button>
+                <a href="/modify" id="modify_post">올리기</a>
+                <!-- <button id="modify_post">올리기</button> -->
             </div>
     </div>
 </div>

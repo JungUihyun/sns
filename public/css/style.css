@@ -265,16 +265,16 @@ header {
 
 .section > .post_profile {
     position: absolute;
-    top: 10px;
-    left: 20px;
-    width: 200px;
+    top: 30px;
+    left: 35px;
+    width: 170px;
     display: flex;
     justify-content: space-between;
 }
 
 .section > .post_profile > img {
     border-radius: 50%;
-    width: 45px;
+    width: 50px;
 }
 
 .section > .post_profile > .post_info {
@@ -284,7 +284,7 @@ header {
 
 .section > .post_content {
     overflow-y: auto;
-    margin-top: 20px;
+    margin-top: 45px;
     min-height: 80px;
     width: 100%;
     text-overflow: clip;
@@ -354,6 +354,18 @@ header {
     border-radius: 3px;
 }
 
+.time {
+    font-size: 12px;
+    color: #acb0b8;
+}
+
+.writer {
+    cursor: pointer;
+}
+
+.writer:hover {
+    text-decoration: underline;
+}
 
 /* Container End */
 
@@ -405,7 +417,7 @@ header {
     justify-content: space-around;
 }
 
-.modify_write .btn_group button {
+.modify_write .btn_group * {
     height: 100%;
     padding: 0px 17px;
     font-size: 14px;
@@ -417,6 +429,7 @@ header {
     width: 68px;
     border: 1px solid #999;
     background-color: #fff;
+    border-radius: 3px;
 }
 
 .modify_write .btn_group > #modify_cancel:hover {
@@ -424,11 +437,13 @@ header {
 }
 
 .modify_write .btn_group > #modify_post {
+    line-height: 34px;
     width: 81px;
     background-color: #f26a41;
     border-color: #f26a41;
     border: none;
     color: #fff;
+    border-radius: 3px;
 }
 
 .modify_write .btn_group > #modify_post:hover {

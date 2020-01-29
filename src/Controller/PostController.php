@@ -31,38 +31,37 @@ class PostController {
     }
     
     // # 글 수정
-    // public function modify() {
-    //     // $title = $_POST['title'];
-    //     $date = $_POST['date'];
-    //     $time = $_POST['time'];
-    //     $content = $_POST['content'];
-    //     $id = $_POST['id'];
+    public function modify() {
+        // $title = $_POST['title'];
+        // $date = $_POST['date'];
+        // $time = $_POST['time'];
 
-    //     if($date == "" || $content == "") {
-    //         Library::msgAndGo("필수값이 비어있습니다.", "/todo/mod?id" . $id);
-    //         return;
-    //     }
+        $content = $_POST['content'];
+        
+        $id = $_POST['id'];
 
-    //     $user = $_SESSION['user'];
-    //     $sql = "SELECT * FROM sns_boards WHERE writer = ? AND id = ?";
-    //     $data = DB::fetch($sql, [$user->id, $id]);
+        if($date == "" || $content == "") {
+            back("필수값이 비어있습니다.");
+        }
 
-    //     if($data == null) {
-    //         Library::msgAndGo("권한이 없습니다.", "/");
-    //         return;
-    //     }
+        $user = $_SESSION['user'];
+        $sql = "SELECT * FROM sns_boards WHERE writer = ? AND id = ?";
+        $data = DB::fetch($sql, [$user->id, $id]);
 
-    //     $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
-    //     $sql = "UPDATE sns_boards SET `title` = ?, `content` = ?, `date` = ? WHERE `id` = ?";
-    //     $result = DB::execute($sql, [$title, $content, $datetime, $id]);
+        if($data == null) {
+            back("권한이 없습니다.");
+        }
 
-    //     if($result != 1) {
-    //         Library::msgAndGo("데이터베이스 수정중 오류 발생.", "/todo/mod?id=" . $id);
-    //         return;
-    //     }
-    //     Library::msgAndGo("성공적으로 수정되었습니다.", "/", "success");
-    //     return;
-    // }
+        $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
+        $sql = "UPDATE sns_boards SET `title` = ?, `content` = ?, `date` = ? WHERE `id` = ?";
+        $result = DB::execute($sql, [$title, $content, $datetime, $id]);
+
+        if(!$result) {
+            back("데이터베이스 수정중 오류 발생.");
+        }
+
+        move("성공적으로 수정되었습니다.", "/");
+    }
 	
     # 글 삭제
     public function delete() {
