@@ -55,12 +55,14 @@ header {
 }
 
 .btn_search {
-    border: 1px solid black;
+    background-color: #fff;
+    border: none;
 }
 
 .btn_search > .ti-search {
     background-color: none;
-    border: 1px solid black;
+    cursor: pointer;
+    color: rgb(117, 117, 117);
 }
 /* Header End */
 
@@ -121,6 +123,7 @@ header {
     padding-right: 259px;
     padding-top: 65px;
     position: absolute;
+    text-align: center;
 }
 
 .container_wrap {
@@ -197,6 +200,135 @@ header {
     border-bottom: 3px solid #f26a41;
 }
 
+.myPost {
+    width: 578px;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    top: 0;
+    margin-top: 10px;
+}
+
+.section {
+    width: 578px;
+    min-height: 190px;
+    padding: 40px 40px 0px;
+    background-color: #fff;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #dedede;
+    text-align: left !important;
+    position: relative;
+    height: auto;
+}
+
+.section > .post_profile {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.section > .post_profile > img {
+    border-radius: 50%;
+    width: 45px;
+}
+
+.section > .post_profile > .post_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.section > .post_content {
+    margin-top: 20px;
+    min-height: 80px;
+    width: 100%;
+    text-overflow: clip;
+}
+
+.section > .btnList {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.section > .comment {
+    padding: 0 40px 15px;
+    margin: 0 -40px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #f4f4f4;
+    background-color: #fcfcfc;
+    padding-top: 15px;
+}
+
+.section > .comment > .comment_input {
+    padding: 5px 10px;
+    width: 100%;
+    background-color: #ddd;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #e6eaed;
+}
+
+.section > .comment > .comment_input > input {
+    width: 85%;
+    border: none;
+}
+
+.section > .comment > .comment_input > input::placeholder {
+    color: rgb(180, 180, 180);
+}
+
+.comment_input > .comment_icon {
+    color: rgb(201, 201, 201);
+    font-size:20px;
+}
+
+.comment_input > .comment_icon span {
+    cursor: pointer;
+}
+
+.comment_input > .comment_icon span:hover {
+    color: rgb(143, 143, 143);
+}
+
+.comment_post {
+    display: none;
+    position: absolute;
+    width: 64px;
+    height: 39px;
+    border-color: #f7a68d;
+    background-color: #f7a68d;
+    color: #fff;
+    bottom: 15px;
+    right: 30px;
+    text-align: center;
+    line-height: 39px;
+    border-radius: 3px;
+}
+
+.widget {
+    position: relative;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 182px;
+    display: inline-block;
+}
+
+.widget div {
+    height: 212px;
+    background-color: #fff;
+    border-bottom: 1px solid #dedede;
+    padding: 0 15px;
+}
+
+.widget_info {
+    margin: 0 0 10px;
+}
 
 
 

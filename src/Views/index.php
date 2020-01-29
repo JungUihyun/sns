@@ -88,14 +88,28 @@
         <br>
         <?php foreach($list as $item) { ?>
             <div class="section">
-                <div class="postProfile">
-                    <h3>작성자 : <?= $item->writer ?></h3>
-                    <p>작성날짜 : <?= $item->date ?></p>
-                    <p>내용 : <?= $item->content ?></p>
+                <div class="post_profile">
+                    <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
+                    <div class="post_info">
+                        <span><?= $item->writer ?></span>
+                        <span><?= $item->date ?></span>
+                    </div>
                 </div>
+                <div class="post_content"><?= $item->content ?></div>
                 <div class="btnList">
                     <button class="modify">수정</button>
-                    <button class="delete">삭제</button>
+                    <!-- <a class="modify" href="/modify?id=<?= $item->id ?>">수정</a> -->
+                    <a href="/delete?id=<?= $item->id ?>">삭제</a>
+                </div>
+                <div class="comment">
+                    <div class="comment_input">
+                        <input type="text" placeholder="댓글을 입력하세요">
+                        <div class="comment_icon">
+                            <span class="ti-image"></span>
+                            <span class="ti-face-smile"></span>
+                        </div>
+                    </div>
+                    <a href="" class="comment_post">전송</a>
                 </div>
             </div>
             <br>
@@ -111,3 +125,11 @@
             </div>
     </div>
 </div>
+<script>
+    dateFormat(dateString);
+
+    function dateFormat(dateString) {
+        let date = new Date(dateString);
+        return date;
+    }
+</script>

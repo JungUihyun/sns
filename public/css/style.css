@@ -253,13 +253,41 @@ header {
 .section {
     display: inline-block;
     width: 578px;
-    min-height: 150px;
+    min-height: 260px;
     padding: 40px 40px 0px;
     background-color: #fff;
     margin-bottom: 15px;
     border-bottom: 1px solid #dedede;
     text-align: left !important;
     position: relative;
+    height: auto;
+}
+
+.section > .post_profile {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.section > .post_profile > img {
+    border-radius: 50%;
+    width: 45px;
+}
+
+.section > .post_profile > .post_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.section > .post_content {
+    overflow-y: auto;
+    margin-top: 20px;
+    min-height: 80px;
+    width: 100%;
+    text-overflow: clip;
 }
 
 .section > .btnList {
@@ -267,6 +295,65 @@ header {
     right: 20px;
     top: 20px;
 }
+
+.section > .comment {
+    padding: 0 40px 15px;
+    margin: 0 -40px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #f4f4f4;
+    background-color: #fcfcfc;
+    padding-top: 15px;
+}
+
+.section > .comment > .comment_input {
+    padding: 5px 10px;
+    width: 100%;
+    background-color: #ddd;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #e6eaed;
+}
+
+.section > .comment > .comment_input > input {
+    width: 85%;
+    border: none;
+}
+
+.section > .comment > .comment_input > input::placeholder {
+    color: rgb(180, 180, 180);
+}
+
+.comment_input > .comment_icon {
+    color: rgb(201, 201, 201);
+    font-size:20px;
+}
+
+.comment_input > .comment_icon span {
+    cursor: pointer;
+}
+
+.comment_input > .comment_icon span:hover {
+    color: rgb(143, 143, 143);
+}
+
+.comment_post {
+    display: none;
+    position: absolute;
+    width: 64px;
+    height: 39px;
+    border-color: #f7a68d;
+    background-color: #f7a68d;
+    color: #fff;
+    bottom: 15px;
+    right: 30px;
+    text-align: center;
+    line-height: 39px;
+    border-radius: 3px;
+}
+
 
 /* Container End */
 

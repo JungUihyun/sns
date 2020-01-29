@@ -1,3 +1,6 @@
+// https://offbyone.tistory.com/279     파일 업로드
+
+
 // 아이디 기억
 $(document).ready(function () {
     // 저장된 쿠키값을 가져와서 ID칸에 넣음. 없으면 공백
@@ -94,6 +97,43 @@ $("#post").on("click", function () {
 });
 // 글 포스팅 끝
 
+// 이미지 업로드
+function uploadImage(f) {
+    // 업로드 할 수 있는 파일 확장자를 제한합니다.
+    // let extArray = new Array('hwp', 'xls', 'doc', 'xlsx', 'docx', 'pdf', 'jpg', 'gif', 'png', 'txt', 'ppt', 'pptx');
+    let extArray = new Array('jpg', 'gif', 'png');
+    let path = document.getElementById("upfile").value;
+
+    if (path == "") {
+        alert("사진을 선택해 주세요.");
+        return false;
+    }
+    let pos = path.indexOf(".");
+
+    if (pos < 0) {
+        alert("적합하지 않은 파일 입니다. 다시 선택해 주세요.");
+        return false;
+    }
+
+    let ext = path.slice(path.indexOf(".") + 1).toLowerCase();
+    let checkExt = false;
+
+    for (let i = 0; i < extArray.length; i++) {
+        if (ext == extArray[i]) {
+            checkExt = true;
+            break;
+        }
+    }
+
+    if (checkExt == false) {
+        alert("업로드 할 수 없는 파일 확장자 입니다.");
+        return false;
+    }
+
+    return true;
+}
+// 파일 업로드 끝
+
 // 글 수정
 $(".btnList > .modify").on("click", function () {
     $(".cover_wrapper").css("display", "block");
@@ -106,16 +146,28 @@ $("#modify_cancel").on("click", function () {
 
 // ajax 무한 스크롤
 $(document).ready(function () {
-    $(document).scroll(function() {
-      var maxHeight = $(document).height();
-      var currentScroll = $(window).scrollTop() + $(window).height();
-  
-      if (maxHeight <= currentScroll + 100) {
-        $.ajax({
-          
-        })
-      }
+    $(document).scroll(function () {
+        let maxHeight = $(document).height();
+        let currentScroll = $(window).scrollTop() + $(window).height();
+
+        if (maxHeight <= currentScroll + 100) {
+            $.ajax({
+
+            })
+        }
     })
 });
 
 // ajax 무한 스크롤 끝
+
+// 댓글 input창 눌렀을 때
+$(".comment_input > input").on("click", function() {
+    $(".comment_input").animate({ width: "87%" }, 200);
+    $(".comment_post").fadeIn('fast');
+});
+
+$("#side").on("click", function() {
+    $(".comment_input").animate({ width: "100%" }, 200);
+    $(".comment_post").fadeOut('fast');
+});
+// 댓글 input창 눌렀을 때 끝

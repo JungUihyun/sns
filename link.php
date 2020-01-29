@@ -22,6 +22,8 @@ Route::GET("/profile", "MainController@profile");
 
 # 글쓰기 처리
 Route::POST("/write", "PostController@write");
+# 글삭제 처리
+Route::GET("/delete", "PostController@delete");
 
 Route::init();
 ?>

@@ -58,6 +58,45 @@
             </div>
         </div>
     </div>
+    <div class="asd" style="display:flex; justify-content: space-between">
+    <div class="myPost">
+        <?php foreach($list as $item) { ?>
+                <div class="section">
+                    <div class="post_profile">
+                        <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
+                        <div class="post_info">
+                            <span><?= $item->writer ?></span>
+                            <span><?= $item->date ?></span>
+                        </div>
+                    </div>
+                    <div class="post_content"><?= $item->content ?></div>
+                    <div class="btnList">
+                        <button class="modify">수정</button>
+                        <button class="delete">삭제</button>
+                    </div>
+                    <div class="comment">
+                        <div class="comment_input">
+                            <input type="text" placeholder="댓글을 입력하세요">
+                            <div class="comment_icon">
+                                <span class="ti-image"></span>
+                                <span class="ti-face-smile"></span>
+                            </div>
+                        </div>
+                        <a href="" class="comment_post">전송</a>
+                    </div>
+                </div>
+                <br>
+            <?php } ?>
+        </div>
+        <div class="widget">
+            <div class="widget_info">
+                <h3>정보</h3>
+            </div>
+            <div class="widget_friend">
+                <h3>추천친구</h3>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="cover_wrapper">

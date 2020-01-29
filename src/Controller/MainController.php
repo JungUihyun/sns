@@ -15,9 +15,9 @@ class MainController {
         if(isset($_SESSION['user'])) {
             $user = $_SESSION['user'];
             $page = isset($_GET['p']) && is_numeric($_GET['p']) ? $_GET['p'] : 1;
-            $start = ($page - 1) * 5; 
+            // $start = ($page - 1) * 5; 
 			// $sql = "SELECT * FROM sns_boards WHERE writer = ? AND date >= NOW() ORDER BY date LIMIT {$start}, 5"; //LIMIT 기본 정렬은 asc 오름차순인데 0개서 부터 5개 가져온다.
-			$sql = "SELECT * FROM sns_boards ORDER BY date LIMIT {$start}, 5";
+			$sql = "SELECT * FROM sns_boards ORDER BY date DESC";
             $list = DB::fetchAll($sql, [$_SESSION['user']->id]);
 
 			// $sql = "SELECT count(*) AS cnt FROM sns_boards WHERE writer = ? AND date >= NOW()";
@@ -59,12 +59,34 @@ class MainController {
 
 	# 프로필 페이지 이동
 	public function profile() {
-		return view("profile");
-	}
+		$list = [];
+        $cnt = 0;
+        $prev = false;
+        $next = false;
+		$page = 0;
+		
+        if(isset($_SESSION['user'])) {
+            $user = $_SESSION['user'];
+            $page = isset($_GET['p']) && is_numeric($_GET['p']) ? $_GET['p'] : 1;
+            // $start = ($page - 1) * 5; 
+			// $sql = "SELECT * FROM sns_boards WHERE writer = ? AND date >= NOW() ORDER BY date LIMIT {$start}, 5";
+			$sql = "SELECT * FROM sns_boards WHERE writer = ? ORDER BY date DESC";
+            $list = DB::fetchAll($sql, [$_SESSION['user']->name]);
 
-	# 피드 이동
-	public function list() {
-		return view("list");
+			$sql = "SELECT count(*) AS cnt FROM sns_boards WHERE writer = ?";
+
+            $cnt = DB::fetch($sql, [$user->name]);
+            $cnt = $cnt->cnt;
+
+            if(ceil($cnt / 5) > $page) {
+                $next = true;
+            }
+            if($page != 1) {
+                $prev = true;
+            }
+		}
+
+		return view("profile", ['list' => $list, 'cnt' => $cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 	# 친구창
