@@ -318,12 +318,18 @@ header {
     justify-content: space-between;  
 }
 
+.active {
+    color: #fff !important;
+    border-bottom: 3px solid #f26a41;
+}
+
 .myStory > .menu_story > ul > li {
     width: 67px;
     display: block;
     text-align: center;
     cursor: pointer;
     color: rgb(201, 197, 197);
+    transition: all .3s;
 }
 
 .myStory > .menu_story > ul > li:hover {

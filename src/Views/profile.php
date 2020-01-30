@@ -88,7 +88,7 @@
             </div>
             <div class="menu_story">
                 <ul>
-                    <li>전체</li>
+                    <li class="active">전체</li>
                     <li>캘린더</li>
                     <li>사진</li>
                     <li>동영상</li>
@@ -126,7 +126,6 @@
                         <a href="" class="comment_post">전송</a>
                     </div>
                 </div>
-                <br>
             <?php } ?>
         </div>
         <div class="widget">

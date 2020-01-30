@@ -20,7 +20,9 @@
     </div>
 
     <div class="logout">
-        <a href="/logout" style="position: absolute; right: 200px; top: 20px;">로그아웃</a>
+        <a href="/logout">
+            <span class="ti-shift-right" style="position: absolute; right: 50px; top: 20px; cursor: pointer; font-size: 20px;"></span>
+        </a>
     </div>
 
 </header>
@@ -143,8 +145,23 @@
                     <a href="/delete?id=<?= $item->id ?>">삭제</a>
                 </div>
                 <div class="comment">
+                    <div class="comment_list">
+                        <ul>
+                            <li>
+                                <div class="comment_profile">
+                                    <div class="comment_info">
+                                        <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
+                                        <span>사용자</span>
+                                    </div>
+                                </div>
+                                <div class="comment_content">
+                                    댓글 테스트
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="comment_input">
-                        <input type="text" placeholder="댓글을 입력하세요">
+                        <input type="text" class="comment_" placeholder="댓글을 입력하세요">
                         <div class="comment_icon">
                             <span class="ti-image"></span>
                             <span class="ti-face-smile"></span>

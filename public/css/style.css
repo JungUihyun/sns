@@ -500,6 +500,46 @@ header {
     text-decoration: underline;
 }
 
+.comment_list {
+    width: 100%;
+    height: auto;
+}
+
+.comment_list > ul {
+    width: 100%;
+    height: 100%;
+}
+
+.comment_list > ul li {
+    width: 100%;
+    position: relative;
+}
+
+.comment_info > img {
+    border-radius: 50%;
+    width: 36px;
+}
+
+.comment_info {
+    display: flex;
+}
+
+.comment_info > span {
+    margin-left: 10px;
+    font-weight: 700;
+}
+
+.comment_content {
+    position: relative;
+    font-size: 13px;
+    bottom: 20px;
+    left: 45px;
+}
+
+.comment_info > span {
+    font-size: 13px;
+}
+
 /* Container End */
 
 /* Modify */

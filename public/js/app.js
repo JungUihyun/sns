@@ -164,12 +164,12 @@ $("#side").on("click", function () {
 
 // 댓글 작성
 $(document).ready(function () {
-    $("#rep_bt").click(function () {
-        $.post("reply_ok.php", {
-            bno: $(".bno").val(),
-            dat_user: $(".dat_user").val(),
-            dat_pw: $(".dat_pw").val(),
-            content: $(".reply_content").val(),
+    $(".comment_post").click(function () {
+        $.post("index.php", {
+            comment_input: $(".comment_").val(),
+            // user: $(".dat_user").val(),
+            // dat_pw: $(".dat_pw").val(),
+            // content: $(".reply_content").val(),
         },
         function (data, success) {
             if (success == "success") {
@@ -181,6 +181,8 @@ $(document).ready(function () {
         });
     });
 });
+
+// comments -> idx, uidx, pidx, content, wdate
 // 댓글 작성 끝
 
 // side bar 버튼 애니메이션
