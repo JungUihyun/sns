@@ -1,5 +1,5 @@
 // https://offbyone.tistory.com/279     파일 업로드
-
+// https://www.phpschool.com/gnuboard4/bbs/board.php?bo_table=qna_html&wr_id=285850     ajax
 
 // 아이디 기억
 $(document).ready(function () {
@@ -147,13 +147,12 @@ $(document).ready(function () {
         }
     })
 });
-
 // ajax 무한 스크롤 끝
 
 // 댓글 input창 눌렀을 때
 $(".comment_input > input").on("click", function () {
-    $(".comment_input").animate({ width: "87%" }, 200);
-    $(".comment_post").fadeIn('fast');
+    $(this).parent().animate({ width: "87%" }, 200);
+    $(this).parent().parent().children('input').fadeIn('fast');
 });
 
 $("#side").on("click", function () {
@@ -162,25 +161,31 @@ $("#side").on("click", function () {
 });
 // 댓글 input창 눌렀을 때 끝
 
+// 댓글 리스트 크기조절
+if($(".comment").height() >= 110) {    
+    $(".section").css( 'height', '400');
+}
+// 댓글 리스트 크기조절 끝
+
 // 댓글 작성
-$(document).ready(function () {
-    $(".comment_post").click(function () {
-        $.post("index.php", {
-            comment_input: $(".comment_").val(),
-            // user: $(".dat_user").val(),
-            // dat_pw: $(".dat_pw").val(),
-            // content: $(".reply_content").val(),
-        },
-        function (data, success) {
-            if (success == "success") {
-                $(".reply_view").html(data);
-                alert("댓글이 작성되었습니다");
-            } else {
-                alert("댓글작성이 실패되었습니다");
-            }
-        });
+$("#btn").click(function(){
+    let id = $("#id").val();
+    let no = $("#no").val();
+    let comment = $("#comment").val();
+    let date = chan_val;
+    let data_arr = {"id":id,"no":no,"comment":comment,"date":date};
+    $.ajax({
+      type:"post",
+      data:data_arr,
+      url:"./cnt_save.php",
+      dataType:"html",
+      success:function(data){
+        $("#cmt_view").append("<div style='width:600px; border:1px solid #e1e1e1; display:inline-block; margin-bottom:10px;'><ul style='height:30px; margin:0; padding:0; list-style:none; background:#e6e6e6;'><li style='width:100px; height:30px; line-height:30px; padding-left:10px; box-sizing:border-box; float:left; font-size:17px;'>" + id + "</li><li style='width:200px; height:30px; line-height:30px; padding-left:10px; box-sizing:border-box; float:left; font-size:15px;'>" + date + "</li><li style='width:50px; height:30px; line-height:30px; padding-left:10px; box-sizing:border-box; float:right; font-size:15px;'><a href=''>삭제</a></li></ul><div style='width:600px; min-height:100px; padding:10px; box-sizing:border-box;'>" + comment + "</div></div>");
+        document.getElementById("comment").value='';
+      }
     });
-});
+   
+  });
 
 // comments -> idx, uidx, pidx, content, wdate
 // 댓글 작성 끝

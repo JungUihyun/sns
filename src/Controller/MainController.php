@@ -6,6 +6,7 @@ use src\App\DB;
 class MainController {
 	# 인덱스 페이지 이동, 데이터 전송
 	public function index() {
+		$comment_list = [];
 		$list = [];
         $cnt = 0;
         $prev = false;
@@ -31,10 +32,16 @@ class MainController {
             }
             if($page != 1) {
                 $prev = true;
-            }
+			}
+			
+			/* 댓글 쓰기 */
+            // $start = ($page - 1) * 5; 
+			// $sql = "SELECT * FROM sns_boards WHERE writer = ? AND date >= NOW() ORDER BY date LIMIT {$start}, 5"; //LIMIT 기본 정렬은 asc 오름차순인데 0개서 부터 5개 가져온다.
+			$comment_sql = "SELECT * FROM sns_comments ORDER BY wdate DESC";
+            $comment_list = DB::fetchAll($comment_sql, [$_SESSION['user']->id]);
 		}
 
-		return view("index", ['list' => $list, 'cnt' => $cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
+		return view("index", ['comment_list' => $comment_list, 'list' => $list, 'cnt' => $cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 	# 404 페이지 이동

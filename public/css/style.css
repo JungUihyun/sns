@@ -440,7 +440,7 @@ header {
     padding-top: 15px;
 }
 
-.section > .comment > .comment_input {
+.section > .comment .comment_input {
     padding: 5px 10px;
     width: 100%;
     background-color: #ddd;
@@ -450,12 +450,12 @@ header {
     border: 1px solid #e6eaed;
 }
 
-.section > .comment > .comment_input > input {
+.section > .comment .comment_input > input {
     width: 85%;
     border: none;
 }
 
-.section > .comment > .comment_input > input::placeholder {
+.section > .comment .comment_input > input::placeholder {
     color: rgb(180, 180, 180);
 }
 
@@ -478,6 +478,8 @@ header {
     width: 64px;
     height: 39px;
     border-color: #f7a68d;
+    border: 1px solid #f7a68d;
+    border: none;
     background-color: #f7a68d;
     color: #fff;
     bottom: 15px;

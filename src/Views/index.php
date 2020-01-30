@@ -147,27 +147,32 @@
                 <div class="comment">
                     <div class="comment_list">
                         <ul>
-                            <li>
-                                <div class="comment_profile">
-                                    <div class="comment_info">
-                                        <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
-                                        <span>사용자</span>
+                            <?php foreach($comment_list as $item2) { ?>
+                                <li>
+                                    <div class="comment_profile">
+                                        <div class="comment_info">
+                                            <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
+                                            <span><?= $item2->writer ?></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="comment_content">
-                                    댓글 테스트
-                                </div>
-                            </li>
+                                    <div class="comment_content">
+                                        <?= $item2->content ?>
+                                    </div>
+                                </li>
+                            <?php } ?>
+                            <!-- foreach End -->
                         </ul>
                     </div>
-                    <div class="comment_input">
-                        <input type="text" class="comment_" placeholder="댓글을 입력하세요">
-                        <div class="comment_icon">
-                            <span class="ti-image"></span>
-                            <span class="ti-face-smile"></span>
+                    <form action="/comment_write" method="post">
+                        <div class="comment_input">
+                            <input type="text" name="comment_" class="comment_" placeholder="댓글을 입력하세요">
+                            <div class="comment_icon">
+                                <span class="ti-image"></span>
+                                <span class="ti-face-smile"></span>
+                            </div>
                         </div>
-                    </div>
-                    <a href="" class="comment_post">전송</a>
+                        <input type="submit" class="comment_post" value="전송">
+                    </form>
                 </div>
             </div>
             <br>
@@ -187,10 +192,10 @@
 </div>
 
 <script>
-    dateFormat(dateString);
+    // dateFormat(dateString);
 
-    function dateFormat(dateString) {
-        let date = new Date(dateString);
-        return date;
-    }
+    // function dateFormat(dateString) {
+    //     let date = new Date(dateString);
+    //     return date;
+    // }
 </script>
