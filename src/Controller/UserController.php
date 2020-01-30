@@ -60,7 +60,7 @@ class UserController {
     # 로그아웃 처리
     public function logout() {
         unset($_SESSION['user']);
-        move("/logout", "로그아웃 완료");
+        move("/login", "로그아웃 완료");
     }
 
 

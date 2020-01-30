@@ -3,6 +3,7 @@
 a { text-decoration: none;  }
 em { font-style: normal; }
 html { overflow-y: scroll; background-color: #f3f3f3; }
+li { list-style: none; }
 /* Reset End */
 
 /* Header */
@@ -109,8 +110,140 @@ header {
     text-overflow: ellipsis;
 }
 
-.friend {
-    
+.side_button {
+    width: 100%;
+    height: 40px;
+}
+
+.side_button > ul {
+    width: 100%;
+    height: 100%;
+}
+
+.side_button > ul li {
+    width: calc(100%/3);
+    height: 100%;
+    float: left;
+    line-height: 38px;
+}
+
+.side_button > ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding-left: 1px;
+    z-index: 1;
+    border: 1px solid #d0d0d0;
+    background-color: #f3f3f3;
+    color: #000;
+    border-left: none;
+    color: #696969;
+    font-weight: 700;
+    font-size: 14px;
+    text-align: center;
+}
+
+#note {
+    border-right: none;
+}
+
+#friend {
+    border-top: 2px solid #f26a41;
+    border-bottom: none;
+    color: #000;
+}
+
+.side_content {
+    width: 100%;
+    height: 709px;
+}
+
+.recommend, .note {
+    display: none;
+}
+
+.content {
+    padding: 0 15px;
+}
+
+.content > span {
+    width: 100%;
+    height: 40px;
+    font-size: 12px;
+    color: #999;
+    font-weight: 700;
+    line-height: 40px;
+}
+
+.friend_list {
+    width: 100%;
+    height: 100%;
+}
+
+.friend_list > ul {
+    width: 100%;
+    height: 100%;
+}
+
+.friend_list > ul li {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 12px;
+}
+
+.friend_list > ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.friend_profile {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.friend_profile > img {
+    width: 38px;
+    border-radius: 50%;
+}
+
+.friend_profile > span {
+    color: #000;
+    width: 136px;
+    font-size: 14px;
+    height: 100%;
+    padding-left: 10px;
+    line-height: 33px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+}
+
+.note_button {
+    display: block;
+    width: 100%a;
+    height: 62px;
+    font-size: 14px;
+    padding: 15px 0;
+}
+
+.note_button > a {
+    text-align: center;
+    display: block;
+    height: 33px;
+    border: 1px solid #d0d0d0;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 32px;
+    background-color: #f0f0f0;
+    color: #717171;
+    letter-spacing: -1px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.note_button > a:hover {
+    background-color: #e4e4e4;
 }
 
 /* Side End */

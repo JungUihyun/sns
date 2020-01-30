@@ -55,18 +55,6 @@ function getCookie(cookieName) {
 }
 // 아이디 기억 끝
 
-// 글추가 테스트
-
-$("#append").on("click", function () {
-    $(".posting").append("<div class='section'> </div><br>");
-});
-
-$("#delete").on("click", function () {
-    $(".section:last").remove();
-    $("br:last").remove();
-});
-// 글추가 테스트 끝
-
 // 글쓰기 애니메이션
 $(".write textarea").focus(function () {
     $(".write").animate({ height: "308px" }, 300);
@@ -82,6 +70,7 @@ $(".write .btn_group > #cancel").on("click", function () {
 // 글쓰기 애니메이션 끝
 
 // 글 포스팅
+/*
 $("#post").on("click", function () {
     let value = $(".write textarea").val();
     if ($.trim(value) == "") {
@@ -95,6 +84,7 @@ $("#post").on("click", function () {
         $(".write .btn_group").fadeOut('fast');
     }
 });
+*/
 // 글 포스팅 끝
 
 // 이미지 업로드
@@ -161,13 +151,73 @@ $(document).ready(function () {
 // ajax 무한 스크롤 끝
 
 // 댓글 input창 눌렀을 때
-$(".comment_input > input").on("click", function() {
+$(".comment_input > input").on("click", function () {
     $(".comment_input").animate({ width: "87%" }, 200);
     $(".comment_post").fadeIn('fast');
 });
 
-$("#side").on("click", function() {
+$("#side").on("click", function () {
     $(".comment_input").animate({ width: "100%" }, 200);
     $(".comment_post").fadeOut('fast');
 });
 // 댓글 input창 눌렀을 때 끝
+
+// 댓글 작성
+$(document).ready(function () {
+    $("#rep_bt").click(function () {
+        $.post("reply_ok.php", {
+            bno: $(".bno").val(),
+            dat_user: $(".dat_user").val(),
+            dat_pw: $(".dat_pw").val(),
+            content: $(".reply_content").val(),
+        },
+        function (data, success) {
+            if (success == "success") {
+                $(".reply_view").html(data);
+                alert("댓글이 작성되었습니다");
+            } else {
+                alert("댓글작성이 실패되었습니다");
+            }
+        });
+    });
+});
+// 댓글 작성 끝
+
+// side bar 버튼 애니메이션
+$("#friend").on("click", function() {
+    /* css */
+    $("#recommend").css( 'border-top', '1px solid #d0d0d0' ).css( 'border-bottom', '1px solid #d0d0d0' );
+    $("#note").css( 'border-top', '1px solid #d0d0d0' ).css( 'border-bottom', '1px solid #d0d0d0' );
+    $("#friend").css( 'border-top', '2px solid #f26a41' ).css( 'border-bottom', 'none' ).css( 'color', '#000' );
+    /* fade */
+    $(".recommend").fadeOut('fast');
+    $(".note").fadeOut('fast');
+    setTimeout(() => {
+        $(".friend").fadeIn('fast');
+    }, 200);
+});
+$("#recommend").on("click", function() {
+    /* css */
+    $("#friend").css( 'border-top', '1px solid #d0d0d0' ).css( 'border-bottom', '1px solid #d0d0d0' );
+    $("#note").css( 'border-top', '1px solid #d0d0d0' ).css( 'border-bottom', '1px solid #d0d0d0' );
+    $("#recommend").css( 'border-top', '2px solid #f26a41' ).css( 'border-bottom', 'none' ).css( 'color', '#000' );
+    /* fade */
+    $(".friend").fadeOut('fast');
+    $(".note").fadeOut('fast');
+    setTimeout(() => {
+        $(".recommend").fadeIn('fast');
+    }, 200);
+});
+$("#note").on("click", function() {
+    /* css */
+    $("#friend").css( 'border-top', '1px solid #d0d0d0' ).css( 'border-bottom', '1px solid #d0d0d0' );
+    $("#recommend").css( 'border-top', '1px solid #d0d0d0' ).css( 'border-bottom', '1px solid #d0d0d0' );
+    $("#note").css( 'border-top', '2px solid #f26a41' ).css( 'border-bottom', 'none' ).css( 'color', '#000' );
+    /* fade */
+    $(".friend").fadeOut('fast');
+    $(".recommend").fadeOut('fast');
+    setTimeout(() => {
+        $(".note").fadeIn('fast');
+    }, 200);
+});
+// side bar 버튼 애니메이션 끝

@@ -33,13 +33,54 @@
         <a href="/profile" class="link_name"><?= $_SESSION['user']->name ?></a>
     </div>
 
-    <!-- <div class="friend">
+    <div class="side_button">
         <ul>
-            <li><a href="/friend">친구</a></li>
-            <li><a href="/friend">신청</a></li>
-            <li><a href="/friend">쪽지</a></li>
+            <li><a href="javascript:return false;" id="friend">친구</a></li>
+            <li><a href="javascript:return false;" id="recommend">추천</a></li>
+            <li><a href="javascript:return false;" id="note">쪽지</a></li>
         </ul>
-    </div> -->
+    </div>
+    <div class="side_content">
+        <div class="friend content">
+            <span>내 친구 [숫자]</span>
+            <div class="friend_list">
+                <ul>
+                    <!-- foreach -->
+                    <li>
+                        <a href="">
+                            <div class="friend_profile">
+                                <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                <span>이름</span>
+                            </div>
+                        </a>
+                    </li>
+                    <!-- foreach End -->
+                </ul>
+            </div>
+        </div>
+        <div class="recommend content">
+            <span>추천 친구 [숫자]</span>
+            <div class="friend_list">
+                <ul>
+                    <!-- foreach -->
+                    <li>
+                        <a href="">
+                            <div class="friend_profile">
+                                <img src="/images/default_profile.jpg" alt="추천친구 프로필 이미지">
+                                <span>이름</span>
+                            </div>
+                        </a>
+                    </li>
+                    <!-- foreach End -->
+                </ul>
+            </div>
+        </div>
+        <div class="note content">
+            <div class="note_button">
+                <a href="">새 쪽지 작성</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="container">
@@ -116,16 +157,18 @@
         <?php } ?>
     </div>
 </div>
+
 <div class="cover_wrapper">
     <div class="modify_write">
         <textarea name="modify_input" id="modify_input" cols="30" rows="10" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요."></textarea>
             <div class="btn_group">
                 <button id="modify_cancel">취소</button>
-                <a href="/modify" id="modify_post">올리기</a>
+                <a href="/modify?id=<?= $item->id ?>" id="modify_post">올리기</a>
                 <!-- <button id="modify_post">올리기</button> -->
             </div>
     </div>
 </div>
+
 <script>
     dateFormat(dateString);
 

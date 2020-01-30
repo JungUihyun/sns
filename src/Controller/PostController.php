@@ -36,11 +36,15 @@ class PostController {
         // $date = $_POST['date'];
         // $time = $_POST['time'];
 
+        if(!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+            back("수정 대상 값이 올바르지 않습니다.");
+        }
+
         $content = $_POST['content'];
         
         $id = $_POST['id'];
 
-        if($date == "" || $content == "") {
+        if(isEmpty($content)) {
             back("필수값이 비어있습니다.");
         }
 
@@ -52,7 +56,7 @@ class PostController {
             back("권한이 없습니다.");
         }
 
-        $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
+        // $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
         $sql = "UPDATE sns_boards SET `title` = ?, `content` = ?, `date` = ? WHERE `id` = ?";
         $result = DB::execute($sql, [$title, $content, $datetime, $id]);
 
