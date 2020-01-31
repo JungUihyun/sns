@@ -1,0 +1,35 @@
+/* 20190724 21:21 */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.loader {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	animation: spin infinite linear 1s;
+}
+
+.item {
+	transform: translate(-100%);
+}
+
+.item.added {
+	transform: translate(0);
+}

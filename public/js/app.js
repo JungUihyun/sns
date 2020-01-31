@@ -171,7 +171,7 @@ if($(".comment").height() >= 110) {
 $("#btn").click(function(){
     let id = $("#id").val();
     let no = $("#no").val();
-    let comment = $("#comment").val();
+    let comment = $(".comment_").val();
     let date = chan_val;
     let data_arr = {"id":id,"no":no,"comment":comment,"date":date};
     $.ajax({

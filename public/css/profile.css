@@ -329,7 +329,7 @@ header {
     text-align: center;
     cursor: pointer;
     color: rgb(201, 197, 197);
-    transition: all .3s;
+    transition: all .1s;
 }
 
 .myStory > .menu_story > ul > li:hover {
@@ -456,15 +456,67 @@ header {
     display: inline-block;
 }
 
-.widget div {
+.widget > div {
     height: 212px;
     background-color: #fff;
     border-bottom: 1px solid #dedede;
     padding: 0 15px;
 }
 
+.widget h3 {
+    height: 47px;
+    padding: 19px 0 7px 5px;
+    border-bottom: 3px solid #e5e5e5;
+    font-size: 15px;
+    line-height: 18px;
+    color: #1f1d1d;
+    text-align: left;
+}
+
 .widget_info {
     margin: 0 0 10px;
+}
+
+.list_info {
+    width: 100%;
+    height: 150px;
+}
+
+.list_info > ul {
+    padding-top: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.list_info > ul li {
+    width: 100%;
+    height: 47px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    line-height: 14px;
+}
+
+.list_info > ul li > span {
+    font-size: 20px;
+    color: #acacac;
+    position: relative;
+    top: 8px;
+}
+
+.list_info > ul li > .story {
+    font-weight: 700;
+    font-size: 13px;
+    color: #1f1d1d;
+    padding-left: 5px;
+    top: 0;
+}
+
+.list_info > ul li > h4 {
+    padding-left: 29px;
+    height: 20px;
+    font-weight: 700;
+    font-size: 17px;
+    color: #646464;
 }
 
 .asd {

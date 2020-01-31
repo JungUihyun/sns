@@ -8,7 +8,8 @@ class MainController {
 	public function index() {
 		$comment_list = [];
 		$list = [];
-        $cnt = 0;
+		$cnt = 0;
+		$comment_cnt = 0;
         $prev = false;
         $next = false;
 		$page = 0;
@@ -22,26 +23,27 @@ class MainController {
             $list = DB::fetchAll($sql, [$_SESSION['user']->id]);
 
 			// $sql = "SELECT count(*) AS cnt FROM sns_boards WHERE writer = ? AND date >= NOW()";
-			$sql = "SELECT count(*) AS cnt FROM sns_boards";
+			// $sql = "SELECT count(*) AS cnt FROM sns_boards";
 
-            $cnt = DB::fetch($sql, [$user->id]);
-            $cnt = $cnt->cnt;
+            // $cnt = DB::fetch($sql, [$user->id]);
+            // $cnt = $cnt->cnt;
 
-            if(ceil($cnt / 5) > $page) {
-                $next = true;
-            }
-            if($page != 1) {
-                $prev = true;
-			}
+            // if(ceil($cnt / 5) > $page) {
+            //     $next = true;
+            // }
+            // if($page != 1) {
+            //     $prev = true;
+			// }
 			
 			/* 댓글 쓰기 */
-            // $start = ($page - 1) * 5; 
-			// $sql = "SELECT * FROM sns_boards WHERE writer = ? AND date >= NOW() ORDER BY date LIMIT {$start}, 5"; //LIMIT 기본 정렬은 asc 오름차순인데 0개서 부터 5개 가져온다.
 			$comment_sql = "SELECT * FROM sns_comments ORDER BY wdate DESC";
-            $comment_list = DB::fetchAll($comment_sql, [$_SESSION['user']->id]);
+			$comment_list = DB::fetchAll($comment_sql, [$_SESSION['user']->id]);
+			
+			// $comment_cnt = DB::fetch($sql, [$user->id]);
+			// $comment_cnt = $comment_cnt->comment_cnt;
 		}
 
-		return view("index", ['comment_list' => $comment_list, 'list' => $list, 'cnt' => $cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
+		return view("index", ['comment_list' => $comment_list, 'list' => $list, 'comment_cnt' => $comment_cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 	# 404 페이지 이동
@@ -66,8 +68,10 @@ class MainController {
 
 	# 프로필 페이지 이동
 	public function profile() {
+		$comment_list = [];
 		$list = [];
-        $cnt = 0;
+		// $cnt = 0;
+		$comment_cnt = 0;
         $prev = false;
         $next = false;
 		$page = 0;
@@ -76,24 +80,33 @@ class MainController {
             $user = $_SESSION['user'];
             $page = isset($_GET['p']) && is_numeric($_GET['p']) ? $_GET['p'] : 1;
             // $start = ($page - 1) * 5; 
-			// $sql = "SELECT * FROM sns_boards WHERE writer = ? AND date >= NOW() ORDER BY date LIMIT {$start}, 5";
+			// $sql = "SELECT * FROM sns_boards WHERE writer = ? AND date >= NOW() ORDER BY date LIMIT {$start}, 5"; //LIMIT 기본 정렬은 asc 오름차순인데 0개서 부터 5개 가져온다.
 			$sql = "SELECT * FROM sns_boards WHERE writer = ? ORDER BY date DESC";
-            $list = DB::fetchAll($sql, [$_SESSION['user']->name]);
+            $list = DB::fetchAll($sql, [$_SESSION['user']->id]);
 
-			$sql = "SELECT count(*) AS cnt FROM sns_boards WHERE writer = ?";
+			// $sql = "SELECT count(*) AS cnt FROM sns_boards WHERE writer = ? AND date >= NOW()";
+			// $sql = "SELECT count(*) AS cnt FROM sns_boards";
 
-            $cnt = DB::fetch($sql, [$user->name]);
-            $cnt = $cnt->cnt;
+            // $cnt = DB::fetch($sql, [$user->id]);
+            // $cnt = $cnt->cnt;
 
-            if(ceil($cnt / 5) > $page) {
-                $next = true;
-            }
-            if($page != 1) {
-                $prev = true;
-            }
+            // if(ceil($cnt / 5) > $page) {
+            //     $next = true;
+            // }
+            // if($page != 1) {
+            //     $prev = true;
+			// }
+			
+			/* 댓글 쓰기 */
+			$comment_sql = "SELECT * FROM sns_comments ORDER BY wdate DESC";
+			$comment_list = DB::fetchAll($comment_sql, [$_SESSION['user']->id]);
+			
+			$comment_sql = "SELECT count(*) AS comment_cnt FROM sns_boards WHERE writer = ?";
+			$comment_cnt = DB::fetch($comment_sql, [$user->id]);
+			$comment_cnt = $comment_cnt->comment_cnt;
 		}
 
-		return view("profile", ['list' => $list, 'cnt' => $cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
+		return view("profile", ['comment_list' => $comment_list, 'list' => $list, 'comment_cnt' => $comment_cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 	# 친구창

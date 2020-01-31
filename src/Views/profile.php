@@ -131,6 +131,15 @@
         <div class="widget">
             <div class="widget_info">
                 <h3>정보</h3>
+                <div class="list_info">
+                    <ul>
+                        <li>
+                            <span class="ti-pencil"></span>
+                            <span class="story">스토리</span>
+                            <h4>12</h4>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="widget_friend">
                 <h3>추천친구</h3>

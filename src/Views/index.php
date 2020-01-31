@@ -140,6 +140,7 @@
                 </div>
                 <div class="post_content"><?= $item->content ?></div>
                 <div class="btnList">
+                    <span id="section_idx"><?= $item->id ?></span>
                     <button class="modify">수정</button>
                     <!-- <a class="modify" href="/modify?id=<?= $item->id ?>">수정</a> -->
                     <a href="/delete?id=<?= $item->id ?>">삭제</a>
@@ -160,7 +161,6 @@
                                     </div>
                                 </li>
                             <?php } ?>
-                            <!-- foreach End -->
                         </ul>
                     </div>
                     <form action="/comment_write" method="post">
