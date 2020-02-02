@@ -13,6 +13,9 @@ class MainController {
         $prev = false;
         $next = false;
 		$page = 0;
+		/* 추천친구 */
+		$recommend_list = [];
+		$recommend_cnt = 0;
 		
         if(isset($_SESSION['user'])) {
             $user = $_SESSION['user'];
@@ -41,9 +44,15 @@ class MainController {
 			
 			// $comment_cnt = DB::fetch($sql, [$user->id]);
 			// $comment_cnt = $comment_cnt->comment_cnt;
-		}
 
-		return view("index", ['comment_list' => $comment_list, 'list' => $list, 'comment_cnt' => $comment_cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
+
+			/* 추천친구 */
+			// $recommend_sql = "SELECT * FROM sns_users WHERE id NOT IN(" . $_SESSION['user']->id . ") ORDER BY rand()";
+			$recommend_sql = "SELECT * FROM sns_users WHERE id NOT IN('$user->id') ORDER BY rand() LIMIT 0, 8";
+			$recommend_list = DB::fetchAll($recommend_sql, [$_SESSION['user']->id]);
+		}	
+
+		return view("index", ['recommend_list' => $recommend_list, 'comment_list' => $comment_list, 'list' => $list, 'comment_cnt' => $comment_cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 	# 404 페이지 이동
