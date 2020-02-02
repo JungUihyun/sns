@@ -91,7 +91,7 @@ class MainController {
             // $start = ($page - 1) * 5; 
 			// $sql = "SELECT * FROM sns_boards WHERE writer = ? AND date >= NOW() ORDER BY date LIMIT {$start}, 5"; //LIMIT 기본 정렬은 asc 오름차순인데 0개서 부터 5개 가져온다.
 			$sql = "SELECT * FROM sns_boards WHERE writer = ? ORDER BY date DESC";
-            $list = DB::fetchAll($sql, [$_SESSION['user']->id]);
+            $list = DB::fetchAll($sql, [$user->id]);
 
 			// $sql = "SELECT count(*) AS cnt FROM sns_boards WHERE writer = ? AND date >= NOW()";
 			// $sql = "SELECT count(*) AS cnt FROM sns_boards";

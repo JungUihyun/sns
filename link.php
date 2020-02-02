@@ -29,5 +29,8 @@ Route::GET("/delete", "PostController@delete");
 # 댓글 쓰기 처리
 Route::POST("/comment_write", "PostController@comment_write");
 
+# 친구 신청하기
+Route::GET("/friend/question", "UserController@question");
+
 Route::init();
 ?>

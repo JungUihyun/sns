@@ -88,40 +88,40 @@ $("#post").on("click", function () {
 // 글 포스팅 끝
 
 // 이미지 업로드
-function uploadImage(f) {
-    // 업로드 할 수 있는 파일 확장자를 제한합니다.
-    // let extArray = new Array('hwp', 'xls', 'doc', 'xlsx', 'docx', 'pdf', 'jpg', 'gif', 'png', 'txt', 'ppt', 'pptx');
-    let extArray = new Array('jpg', 'gif', 'png');
-    let path = document.getElementById("upfile").value;
+// function uploadImage(f) {
+//     // 업로드 할 수 있는 파일 확장자를 제한합니다.
+//     // let extArray = new Array('hwp', 'xls', 'doc', 'xlsx', 'docx', 'pdf', 'jpg', 'gif', 'png', 'txt', 'ppt', 'pptx');
+//     let extArray = new Array('jpg', 'gif', 'png');
+//     let path = document.getElementById("upfile").value;
 
-    if (path == "") {
-        alert("사진을 선택해 주세요.");
-        return false;
-    }
-    let pos = path.indexOf(".");
+//     if (path == "") {
+//         alert("사진을 선택해 주세요.");
+//         return false;
+//     }
+//     let pos = path.indexOf(".");
 
-    if (pos < 0) {
-        alert("적합하지 않은 파일 입니다. 다시 선택해 주세요.");
-        return false;
-    }
+//     if (pos < 0) {
+//         alert("적합하지 않은 파일 입니다. 다시 선택해 주세요.");
+//         return false;
+//     }
 
-    let ext = path.slice(path.indexOf(".") + 1).toLowerCase();
-    let checkExt = false;
+//     let ext = path.slice(path.indexOf(".") + 1).toLowerCase();
+//     let checkExt = false;
 
-    for (let i = 0; i < extArray.length; i++) {
-        if (ext == extArray[i]) {
-            checkExt = true;
-            break;
-        }
-    }
+//     for (let i = 0; i < extArray.length; i++) {
+//         if (ext == extArray[i]) {
+//             checkExt = true;
+//             break;
+//         }
+//     }
 
-    if (checkExt == false) {
-        alert("업로드 할 수 없는 파일 확장자 입니다.");
-        return false;
-    }
+//     if (checkExt == false) {
+//         alert("업로드 할 수 없는 파일 확장자 입니다.");
+//         return false;
+//     }
 
-    return true;
-}
+//     return true;
+// }
 // 파일 업로드 끝
 
 // 글 수정
@@ -135,18 +135,18 @@ $("#modify_cancel").on("click", function () {
 // 글 수정 끝
 
 // ajax 무한 스크롤
-$(document).ready(function () {
-    $(document).scroll(function () {
-        let maxHeight = $(document).height();
-        let currentScroll = $(window).scrollTop() + $(window).height();
+// $(document).ready(function () {
+//     $(document).scroll(function () {
+//         let maxHeight = $(document).height();
+//         let currentScroll = $(window).scrollTop() + $(window).height();
 
-        if (maxHeight <= currentScroll + 100) {
-            $.ajax({
+//         if (maxHeight <= currentScroll + 100) {
+//             $.ajax({
 
-            })
-        }
-    })
-});
+//             })
+//         }
+//     })
+// });
 // ajax 무한 스크롤 끝
 
 // 댓글 input창 눌렀을 때
@@ -168,24 +168,24 @@ if($(".comment").height() >= 110) {
 // 댓글 리스트 크기조절 끝
 
 // 댓글 작성
-$("#btn").click(function(){
-    let id = $("#id").val();
-    let no = $("#no").val();
-    let comment = $(".comment_").val();
-    let date = chan_val;
-    let data_arr = {"id":id,"no":no,"comment":comment,"date":date};
-    $.ajax({
-      type:"post",
-      data:data_arr,
-      url:"./cnt_save.php",
-      dataType:"html",
-      success:function(data){
-        $("#cmt_view").append("<div style='width:600px; border:1px solid #e1e1e1; display:inline-block; margin-bottom:10px;'><ul style='height:30px; margin:0; padding:0; list-style:none; background:#e6e6e6;'><li style='width:100px; height:30px; line-height:30px; padding-left:10px; box-sizing:border-box; float:left; font-size:17px;'>" + id + "</li><li style='width:200px; height:30px; line-height:30px; padding-left:10px; box-sizing:border-box; float:left; font-size:15px;'>" + date + "</li><li style='width:50px; height:30px; line-height:30px; padding-left:10px; box-sizing:border-box; float:right; font-size:15px;'><a href=''>삭제</a></li></ul><div style='width:600px; min-height:100px; padding:10px; box-sizing:border-box;'>" + comment + "</div></div>");
-        document.getElementById("comment").value='';
-      }
-    });
+// $("#btn").click(function(){
+//     let id = $("#id").val();
+//     let no = $("#no").val();
+//     let comment = $(".comment_").val();
+//     let date = chan_val;
+//     let data_arr = {"id":id,"no":no,"comment":comment,"date":date};
+//     $.ajax({
+//       type:"post",
+//       data:data_arr,
+//       url:"./cnt_save.php",
+//       dataType:"html",
+//       success:function(data){
+//         $("#cmt_view").append("<div style='width:600px; border:1px solid #e1e1e1; display:inline-block; margin-bottom:10px;'><ul style='height:30px; margin:0; padding:0; list-style:none; background:#e6e6e6;'><li style='width:100px; height:30px; line-height:30px; padding-left:10px; box-sizing:border-box; float:left; font-size:17px;'>" + id + "</li><li style='width:200px; height:30px; line-height:30px; padding-left:10px; box-sizing:border-box; float:left; font-size:15px;'>" + date + "</li><li style='width:50px; height:30px; line-height:30px; padding-left:10px; box-sizing:border-box; float:right; font-size:15px;'><a href=''>삭제</a></li></ul><div style='width:600px; min-height:100px; padding:10px; box-sizing:border-box;'>" + comment + "</div></div>");
+//         document.getElementById("comment").value='';
+//       }
+//     });
    
-  });
+//   });
 
 // comments -> idx, uidx, pidx, content, wdate
 // 댓글 작성 끝
@@ -228,3 +228,15 @@ $("#note").on("click", function() {
     }, 200);
 });
 // side bar 버튼 애니메이션 끝
+
+// 친구 추천 리스트에서 지우기 (일시적)
+let recommend_cnt = $("#recommend_cnt").text();
+
+$(".refuse").on("click", function() {
+    $(this).parent().parent().parent().remove();
+    recommend_cnt = recommend_cnt - 1;
+
+    $("#recommend_cnt").html(recommend_cnt);
+});
+
+// 친구 추천 리스트에서 지우기 끝

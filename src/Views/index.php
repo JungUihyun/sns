@@ -61,21 +61,19 @@
             </div>
         </div>
         <div class="recommend content">
-            <span>추천 친구 8</span>
+            <span>추천 친구 <span id="recommend_cnt">8</span></span>
             <div class="friend_list">
                 <ul>
                     <?php foreach($recommend_list as $item) { ?>
                     <li>
-                        <a href="">
-                            <div class="friend_profile">
-                                <img src="/images/default_profile.jpg" alt="추천친구 프로필 이미지">
-                                <span><?= $item->name ?></span>
-                            </div>
+                        <div class="friend_profile">
+                            <img src="/images/default_profile.jpg" alt="추천친구 프로필 이미지">
+                            <span><?= $item->name ?></span>
                             <div class="recommend_btn">
-                                <a href="" class="refuse"><span class="ti-close"></span></a>
-                                <a href="" class="accept"><span class="ti-check"></span></a>
+                                <a href="javascript:return false;" class="refuse"><span class="ti-close"></span></a>
+                                <a href="/friend/question" class="accept"><span class="ti-check"></span></a>
                             </div>
-                        </a>
+                        </div>
                     </li>
                     <?php } ?>
                 </ul>
