@@ -221,12 +221,16 @@ header {
 
 .recommend_btn {
     margin-top: 5px;
+    display: flex;
+    width: 50px;
+    height: 22px;
+    justify-content: space-between;
 }
 
 .recommend_btn span {
     font-size: 11px;
     border-radius: 50%;
-    padding: 4px;
+    padding: 3px;
     transition: all .3s;
     display: none;
     cursor: pointer;
@@ -234,9 +238,9 @@ header {
 
 .recommend_btn input {
     position: absolute;
-    width: 23px;
+    width: 21px;
     background-color: transparent;
-    height: 23px;
+    height: 21px;
     display: none;
     cursor: pointer;
     border: none;
