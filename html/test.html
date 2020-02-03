@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        
+.section {
+    display: inline-block;
+    width: 578px;
+    min-height: 260px;
+    padding: 40px 40px 0px;
+    background-color: #fff;
+    margin-bottom: 165px;
+    border-bottom: 1px solid #dedede;
+    text-align: left !important;
+    position: relative;
+    height: auto;
+}
+
+.section > .post_profile {
+    position: absolute;
+    top: 30px;
+    left: 35px;
+    width: 170px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.section > .post_profile > img {
+    border-radius: 50%;
+    width: 50px;
+}
+
+.section > .post_profile > .post_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.section > .post_content {
+    overflow-y: auto;
+    margin-top: 45px;
+    min-height: 80px;
+    width: 100%;
+    text-overflow: clip;
+}
+
+.section > .btnList {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.section > .comment {
+    padding: 0 40px 15px;
+    margin: 0 -40px;
+    width: 100%;
+    position: absolute;
+    top: 180px;
+    border-top: 1px solid #f4f4f4;
+    background-color: #fcfcfc;
+    padding-top: 15px;
+}
+
+.section > .comment .comment_input {
+    padding: 5px 10px;
+    width: 100%;
+    background-color: #ddd;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #e6eaed;
+}
+
+.section > .comment .comment_input > input {
+    width: 85%;
+    border: none;
+}
+
+.section > .comment .comment_input > input::placeholder {
+    color: rgb(180, 180, 180);
+}
+
+.comment_input > .comment_icon {
+    color: rgb(201, 201, 201);
+    font-size:20px;
+}
+
+.comment_input > .comment_icon span {
+    cursor: pointer;
+}
+
+.comment_input > .comment_icon span:hover {
+    color: rgb(143, 143, 143);
+}
+
+.comment_post {
+    display: none;
+    position: absolute;
+    width: 64px;
+    height: 39px;
+    border-color: #f7a68d;
+    border: 1px solid #f7a68d;
+    border: none;
+    background-color: #f7a68d;
+    color: #fff;
+    bottom: 15px;
+    right: 30px;
+    text-align: center;
+    line-height: 39px;
+    border-radius: 3px;
+}
+
+.time {
+    font-size: 12px;
+    color: #acb0b8;
+}
+
+.writer {
+    cursor: pointer;
+}
+
+.writer:hover {
+    text-decoration: underline;
+}
+
+.comment_list {
+    width: 100%;
+    height: auto;
+}
+
+.comment_list > ul {
+    width: 100%;
+    height: 100%;
+}
+
+.comment_list > ul li {
+    width: 100%;
+    position: relative;
+}
+
+.comment_info > img {
+    border-radius: 50%;
+    width: 36px;
+}
+
+.comment_info {
+    display: flex;
+}
+
+.comment_info > span {
+    margin-left: 10px;
+    font-weight: 700;
+}
+
+.comment_content {
+    position: relative;
+    font-size: 13px;
+    bottom: 20px;
+    left: 45px;
+}
+
+.comment_info > span {
+    font-size: 13px;
+}
+    </style>
+</head>
+<body>
+    
+    <div class="section">
+        <div class="post_profile">
+            <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
+            <div class="post_info">
+                <span class="writer"><?= $item->writer ?></span>
+                <span class="time"><?= $item->date ?></span>
+            </div>
+        </div>
+        <div class="post_content"><?= $item->content ?></div>
+        <div class="btnList">
+            <span id="section_idx"><?= $item->id ?></span>
+            <button class="modify">수정</button>
+            <!-- <a class="modify" href="/modify?id=<?= $item->id ?>">수정</a> -->
+            <a href="/delete?id=<?= $item->id ?>">삭제</a>
+        </div>
+        <div class="comment">
+            <div class="comment_list">
+                <ul>
+                    <?php foreach($item->comments as $item2) { ?>
+                        <li>
+                            <div class="comment_profile">
+                                <div class="comment_info">
+                                    <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
+                                    <span><?= $item2->writer ?></span>
+                                    <span class="time" style="font-size:11px; font-weight: normal"><?= $item2->wdate ?></span>
+                                </div>
+                            </div>
+                            <div class="comment_content">
+                                <?= $item2->content ?>
+                            </div>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <form action="/comment_write" method="post">
+                <div class="comment_input">
+                    <input type="text" style="display:none;" name="pidx" value="<?= $item->idx ?>">
+                    <input type="text" name="comment_" class="comment_" placeholder="댓글을 입력하세요">
+                    <div class="comment_icon">
+                        <span class="ti-image"></span>
+                        <span class="ti-face-smile"></span>
+                    </div>
+                </div>
+                <input type="submit" class="comment_post" value="전송">
+            </form>
+        </div>
+    </div>
+    <br>
+
+</body>
+</html>
