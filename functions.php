@@ -61,4 +61,10 @@ function isEmpty($arr) {
 function toScript($vName, $dName) {
 	echo '<script> let ' . $vName . ' = ' . json_encode($dName) . ';</script>';
 }
+
+function json($value) {
+    header('Content-Type: application/json');
+    echo json_encode($value);
+    exit;
+}
 ?>

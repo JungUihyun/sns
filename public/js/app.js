@@ -1,5 +1,6 @@
 // https://offbyone.tistory.com/279     파일 업로드
 // https://www.phpschool.com/gnuboard4/bbs/board.php?bo_table=qna_html&wr_id=285850     ajax
+// https://zooo.kr/main/index.php   PHP
 
 // 아이디 기억
 $(document).ready(function () {
@@ -134,6 +135,76 @@ $("#modify_cancel").on("click", function () {
 });
 // 글 수정 끝
 
+// ajax 더보기 버튼
+// let currentIdx = 0;
+// let grid = null;
+
+// getDataFromServer(currentIdx);
+
+// let moreBtn = $("#moreBtn");
+// moreBtn.on("click", function() {
+//     console.log("asd");
+//     getDataFromServer(5);
+// });
+
+// function getDataFromServer(idx){
+//     return new Promise( (res, rej) => {
+//         $.ajax({
+//             url: `/list/${idx}`,
+//             method: 'get',
+//             success: (data) => {
+//                 if(data.success){
+//                     makeTemplate(data.list);
+//                     currentIdx += data.list.length;
+//                     // $(".list-btn").css({display:'inline-block'});
+//                     // $(".write-btn").css({display:'none'});
+//                 }else {
+//                     // $(".icon-btn").css({display:'none'});
+//                 }
+//                 res();
+//             }
+//         });
+//     });
+// }
+
+// function makeTemplate(list){
+//     const posting = document.querySelector(".posting");
+//     if(currentIdx == 0){
+//         posting.innerHTML = "";
+//         grid = document.createElement("div");
+//         grid.id = "gridContainer";
+//     }
+
+//     list.forEach((item, idx) => {
+//         setTimeout(()=>{
+//             let dom = makeItem(item);
+//             grid.appendChild(dom);
+//             setTimeout(()=>{
+//                 dom.classList.add("active");
+//             }, 10);
+//         }, Math.floor(idx / 3)  * 500);
+//     });
+//     posting.appendChild(grid);
+// }
+
+// function makeItem(item){
+//     let dom = document.createElement("li");
+//     // dom.classList.add("todobox");
+//     dom.innerHTML = `
+//                 <div class="comment_profile">
+//                     <div class="comment_info">
+//                         <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
+//                         <span>${ item.title }</span>
+//                     </div>
+//                 </div>
+//                 <div class="comment_content">
+//                     ${ item.content }
+//                 </div>`;
+//     return dom;
+// }
+
+// ajax 더보기 버튼 끝
+
 // ajax 무한 스크롤
 // $(document).ready(function () {
 //     $(document).scroll(function () {
@@ -168,25 +239,34 @@ if($(".comment").height() >= 110) {
 // 댓글 리스트 크기조절 끝
 
 // 댓글 작성
-// $("#btn").click(function(){
+// $(".comment_post").click(function(){
 //     let id = $("#id").val();
 //     let no = $("#no").val();
 //     let comment = $(".comment_").val();
 //     let date = chan_val;
 //     let data_arr = {"id":id,"no":no,"comment":comment,"date":date};
+
 //     $.ajax({
 //       type:"post",
 //       data:data_arr,
-//       url:"./cnt_save.php",
+//       url:"/comment_write",
 //       dataType:"html",
 //       success:function(data){
-//         $("#cmt_view").append("<div style='width:600px; border:1px solid #e1e1e1; display:inline-block; margin-bottom:10px;'><ul style='height:30px; margin:0; padding:0; list-style:none; background:#e6e6e6;'><li style='width:100px; height:30px; line-height:30px; padding-left:10px; box-sizing:border-box; float:left; font-size:17px;'>" + id + "</li><li style='width:200px; height:30px; line-height:30px; padding-left:10px; box-sizing:border-box; float:left; font-size:15px;'>" + date + "</li><li style='width:50px; height:30px; line-height:30px; padding-left:10px; box-sizing:border-box; float:right; font-size:15px;'><a href=''>삭제</a></li></ul><div style='width:600px; min-height:100px; padding:10px; box-sizing:border-box;'>" + comment + "</div></div>");
+//         $("#.comment_list > ul").append(`<li>
+//                                     <div class="comment_profile">
+//                                         <div class="comment_info">
+//                                             <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
+//                                             <span><?= $item2->writer ?></span>
+//                                         </div>
+//                                     </div>
+//                                     <div class="comment_content">
+//                                         <?= $item2->content ?>
+//                                     </div>
+//                                 </li>`);
 //         document.getElementById("comment").value='';
 //       }
 //     });
-   
 //   });
-
 // comments -> idx, uidx, pidx, content, wdate
 // 댓글 작성 끝
 
@@ -233,7 +313,7 @@ $("#note").on("click", function() {
 let recommend_cnt = $("#recommend_cnt").text();
 
 $(".refuse").on("click", function() {
-    $(this).parent().parent().parent().remove();
+    $(this).parent().parent().parent().parent().remove();
     recommend_cnt = recommend_cnt - 1;
 
     $("#recommend_cnt").html(recommend_cnt);

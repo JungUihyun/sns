@@ -64,20 +64,23 @@ class UserController {
     # 친구신청 보내기
     public function question() {
         $user = $_SESSION['user'];
-        // $rsql = "SELECT * FROM sns_users WHERE "; // 친구신청 보내는 사람의 정보
+        $ridx = $_POST['ridx'];
         $sql = "INSERT INTO sns_addfriend (`qidx`, `ridx`, date) VALUES (?, ?, NOW())";
-        $result = DB::execute($sql, [$user->idx, 받은사람인덱스]);
+        $result = DB::execute($sql, [$user->idx, $ridx]);
 
         if(!$result){
             back("DB에 값이 올바르게 들어가지 않았습니다.");
         }
-
+        
         move("/", "친구신청 완료");
     }
 
     # 친구신청 받기
     public function receive() {
-
+        $user = $_SESSION['user'];
+        var_dump($user);
+        // $sql = "DELETE FROM a USING sns_addfriend a JOIN sns_users u ON  ";
+        
     }
 
 

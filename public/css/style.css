@@ -154,6 +154,7 @@ header {
 }
 
 .side_content {
+    overflow-y: scroll;
     width: 100%;
     height: 709px;
 }
@@ -197,20 +198,29 @@ header {
     display: flex;
 }
 
-.friend_profile > img {
+.friend_profile > form {
+    width: 100%;
+    display: flex;
+}
+
+.friend_profile > form > img {
     width: 38px;
     border-radius: 50%;
 }
 
-.friend_profile > span {
+.friend_profile > form > span {
     color: #000;
     width: 136px;
     font-size: 14px;
     height: 100%;
     padding-left: 10px;
-    line-height: 33px;
+    line-height: 38px;
     font-weight: 700;
     text-overflow: ellipsis;
+}
+
+.recommend_btn {
+    margin-top: 5px;
 }
 
 .recommend_btn span {
@@ -219,6 +229,17 @@ header {
     padding: 4px;
     transition: all .3s;
     display: none;
+    cursor: pointer;
+}
+
+.recommend_btn input {
+    position: absolute;
+    width: 23px;
+    background-color: transparent;
+    height: 23px;
+    display: none;
+    cursor: pointer;
+    border: none;
 }
 
 .recommend_btn .ti-check {
@@ -245,7 +266,8 @@ header {
     cursor: default;
 }
 
-.friend_list > ul li > .friend_profile:hover > .recommend_btn span {
+.friend_list > ul li > .friend_profile:hover .recommend_btn span,
+.friend_list > ul li > .friend_profile:hover .recommend_btn input {
     display: inline-block;
 }
 
@@ -346,6 +368,14 @@ header {
     float: left;
 }
 
+.media .type li .input_menu {
+    cursor: pointer;
+    width: 165px;
+    position: absolute;
+    display: block;
+    height: 54px;
+}
+
 .media .type li .link_menu {
     display: block;
     height: 54px;
@@ -419,7 +449,7 @@ header {
     min-height: 260px;
     padding: 40px 40px 0px;
     background-color: #fff;
-    margin-bottom: 15px;
+    margin-bottom: 165px;
     border-bottom: 1px solid #dedede;
     text-align: left !important;
     position: relative;
@@ -464,7 +494,7 @@ header {
     margin: 0 -40px;
     width: 100%;
     position: absolute;
-    bottom: 0;
+    top: 180px;
     border-top: 1px solid #f4f4f4;
     background-color: #fcfcfc;
     padding-top: 15px;

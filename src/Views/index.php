@@ -44,35 +44,62 @@
     </div>
     <div class="side_content">
         <div class="friend content">
+            <span>친구 요청 <span id="recommend_cnt"><?= $question_cnt ?></span></span>
+            <div class="friend_list">
+                <ul>
+                    <?php foreach($question_list as $item) { ?>
+                        <li>
+                            <div class="friend_profile">
+                                <form action="">
+                                    <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                    <span><?= $item->name ?></span>
+                                    <div class="recommend_btn">
+                                        <span class="refuse ti-close"></span>
+                                        <input onclick="location.href='friend/receive'" type="submit" value="" class="accept recommend_submit"><span class="ti-check"></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
             <span>내 친구 [숫자]</span>
             <div class="friend_list">
                 <ul>
-                    <!-- foreach -->
-                    <li>
-                        <a href="">
+                    <!-- foreach friend_list -->
+                        <li>
                             <div class="friend_profile">
-                                <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
-                                <span>이름</span>
+                                <form action="">
+                                    <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                    <span><?= $item->name ?></span>
+                                    <div class="recommend_btn">
+                                        <span class="refuse ti-close"></span>
+                                        <input type="submit" value="" class="accept recommend_submit"><span class="ti-check"></span>
+                                    </div>
+                                </form>
                             </div>
-                        </a>
-                    </li>
-                    <!-- foreach End -->
+                        </li>
+                    <!-- foreach end friend_list -->
                 </ul>
             </div>
         </div>
         <div class="recommend content">
-            <span>추천 친구 <span id="recommend_cnt">8</span></span>
+            <span>추천 친구 <span id="recommend_cnt"><?= $recommend_cnt ?></span></span>
             <div class="friend_list">
                 <ul>
                     <?php foreach($recommend_list as $item) { ?>
                     <li>
                         <div class="friend_profile">
-                            <img src="/images/default_profile.jpg" alt="추천친구 프로필 이미지">
-                            <span><?= $item->name ?></span>
-                            <div class="recommend_btn">
-                                <a href="javascript:return false;" class="refuse"><span class="ti-close"></span></a>
-                                <a href="/friend/question" class="accept"><span class="ti-check"></span></a>
-                            </div>
+                            <form action="/friend/question" method="post">
+                                <img src="/images/default_profile.jpg" alt="추천친구 프로필 이미지">
+                                <input type="hidden" value="<?= $item->idx ?>" name="ridx">
+                                <span><?= $item->name ?></span>
+                                <div class="recommend_btn">
+                                    <span class="refuse ti-close"></span>
+                                    <input type="submit" value="" class="accept recommend_submit"><span class="ti-check"></span>
+                                    <!-- <a href="/friend/question" class="accept"><span class="ti-check"></span></a> -->
+                                </div>
+                            </form>
                         </div>
                     </li>
                     <?php } ?>
@@ -96,6 +123,7 @@
                     <div class="type">
                         <ul>
                             <li>
+                                <input type="file" style="opacity: 0;" class="input_menu">
                                 <a href="" class="link_menu">
                                     <span class="txt_menu">
                                         <span class="ico ti-camera"></span>
@@ -104,6 +132,7 @@
                                 </a>
                             </li>
                             <li>
+                                <input type="file" style="opacity: 0;" class="input_menu">
                                 <a href="" class="link_menu">
                                     <span class="txt_menu">
                                     <span class="ico ti-music-alt"></span>
@@ -112,6 +141,7 @@
                                 </a>
                             </li>
                             <li>
+                                <input type="file" style="opacity: 0;" class="input_menu">
                                 <a href="" class="link_menu">
                                     <span class="txt_menu">
                                         <span class="ico ti-link"></span>
@@ -150,12 +180,13 @@
                 <div class="comment">
                     <div class="comment_list">
                         <ul>
-                            <?php foreach($comment_list as $item2) { ?>
+                            <?php foreach($item->comments as $item2) { ?>
                                 <li>
                                     <div class="comment_profile">
                                         <div class="comment_info">
                                             <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
                                             <span><?= $item2->writer ?></span>
+                                            <span class="time" style="font-size:11px; font-weight: normal"><?= $item2->wdate ?></span>
                                         </div>
                                     </div>
                                     <div class="comment_content">
@@ -167,6 +198,7 @@
                     </div>
                     <form action="/comment_write" method="post">
                         <div class="comment_input">
+                            <input type="text" style="display:none;" name="pidx" value="<?= $item->idx ?>">
                             <input type="text" name="comment_" class="comment_" placeholder="댓글을 입력하세요">
                             <div class="comment_icon">
                                 <span class="ti-image"></span>

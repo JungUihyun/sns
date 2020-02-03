@@ -16,6 +16,9 @@ class MainController {
 		/* 추천친구 */
 		$recommend_list = [];
 		$recommend_cnt = 0;
+		/* 친구신청리스트 cnt */
+		$question_list = [];
+		$question_cnt = 0;
 		
         if(isset($_SESSION['user'])) {
             $user = $_SESSION['user'];
@@ -23,7 +26,7 @@ class MainController {
             // $start = ($page - 1) * 5; 
 			// $sql = "SELECT * FROM sns_boards WHERE writer = ? AND date >= NOW() ORDER BY date LIMIT {$start}, 5"; //LIMIT 기본 정렬은 asc 오름차순인데 0개서 부터 5개 가져온다.
 			$sql = "SELECT * FROM sns_boards ORDER BY date DESC";
-            $list = DB::fetchAll($sql, [$_SESSION['user']->id]);
+            $list = DB::fetchAll($sql);
 
 			// $sql = "SELECT count(*) AS cnt FROM sns_boards WHERE writer = ? AND date >= NOW()";
 			// $sql = "SELECT count(*) AS cnt FROM sns_boards";
@@ -38,21 +41,43 @@ class MainController {
             //     $prev = true;
 			// }
 			
-			/* 댓글 쓰기 */
-			$comment_sql = "SELECT * FROM sns_comments ORDER BY wdate DESC";
-			$comment_list = DB::fetchAll($comment_sql, [$_SESSION['user']->id]);
-			
+			foreach($list as $board){
+				/* 댓글 리스트 출력 */
+				$comment_sql = "SELECT * FROM sns_comments WHERE pidx = ? ORDER BY wdate";
+				$comment_list = DB::fetchAll($comment_sql, [$board->id]);
+				$board->comments = $comment_list;
+			}
+		
 			// $comment_cnt = DB::fetch($sql, [$user->id]);
 			// $comment_cnt = $comment_cnt->comment_cnt;
 
-
+			
 			/* 추천친구 */
-			// $recommend_sql = "SELECT * FROM sns_users WHERE id NOT IN(" . $_SESSION['user']->id . ") ORDER BY rand()";
-			$recommend_sql = "SELECT * FROM sns_users WHERE id NOT IN('$user->id') ORDER BY rand() LIMIT 0, 8";
-			$recommend_list = DB::fetchAll($recommend_sql, [$_SESSION['user']->id]);
+			// $recommend_sql = "SELECT * FROM sns_users WHERE id NOT IN(" . $user->id . ") ORDER BY rand()";
+			$recommend_sql = "SELECT * FROM sns_users WHERE id NOT IN('$user->id') ORDER BY rand()";
+			$recommend_list = DB::fetchAll($recommend_sql, [$user->id]);
+			$recommend_sql = "SELECT count(*) AS r_cnt FROM sns_users WHERE id NOT IN('$user->id')";
+			$recommend_cnt = DB::fetch($recommend_sql, [$user->id])->r_cnt;
+
+			/* 친구신청 리스트 출력 */
+			$question_sql = "SELECT DISTINCT u.* FROM sns_users u, sns_addfriend a WHERE a.qidx = u.idx";
+			$question_list = DB::fetchAll($question_sql, [$user->id]);
+			$question_sql = "SELECT count(*) AS q_cnt FROM sns_addfriend WHERE ridx = $user->idx";
+			$question_cnt = DB::fetch($question_sql, [$user->id])->q_cnt;
+
+			/* 친구 리스트 출력 */
+			// $friend_sql = "SELECT * FROM sns_friends WHERE ";
+			// $friend_list = DB::fetchAll($friend_sql, [$user->id]);
+			
+
+			// $receive_sql = "SELECT u.* FROM sns_users u, sns_addfriend a WHERE a.ridx = $user->idx";
+			// $receive_list = DB::fetchAll($receive_sql, [$user->id]);
+
+			// $receive_sql = "SELECT count(*) AS cnt FROM sns_addfriend WHERE ridx = $user->idx";
+			// $receive_cnt = DB::fetch($receive_sql, [$user->id])->cnt;
 		}	
 
-		return view("index", ['recommend_list' => $recommend_list, 'comment_list' => $comment_list, 'list' => $list, 'comment_cnt' => $comment_cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
+		return view("index", ['question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'list' => $list, 'comment_cnt' => $comment_cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 	# 404 페이지 이동
@@ -117,6 +142,7 @@ class MainController {
 
 		return view("profile", ['comment_list' => $comment_list, 'list' => $list, 'comment_cnt' => $comment_cnt, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
+
 
 	# 친구창
 	# 설정

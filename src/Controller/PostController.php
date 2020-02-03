@@ -92,6 +92,18 @@ class PostController {
         back("성공적으로 삭제되었습니다.");
     }
 
+    # 글 리스트 출력
+    // public function list($idx = 0) {
+    //     if(!isset($_SESSION['user'])){
+    //         back("로그인 후 시도하세요.");
+    //     }else {
+    //         $sql = "SELECT * FROM sns_boards ORDER BY date LIMIT {$idx}, 5";
+    //         $list = DB::fetchAll($sql, [$_SESSION['user']->id]);
+    //         var_dump($list);
+    //         json(['success'=>true, 'list'=>$list]);
+    //     }
+    // }
+
     # 댓글 쓰기 처리
     public function comment_write() {
         $comment = $_POST['comment_'];
@@ -104,13 +116,12 @@ class PostController {
         $user = $_SESSION['user'];
 
         $uidx = $_SESSION['user']->idx;
-        
-        var_dump($uidx);
+        $pidx = $_POST['pidx'];
 
-        $sql = "INSERT INTO sns_comments (`uidx`, `content`, `writer`, `wdate`) VALUES(?, ?, ?, NOW())";
+        $sql = "INSERT INTO sns_comments (`uidx`, `pidx`, `content`, `writer`, `wdate`) VALUES(?, ?, ?, ?, NOW())";
         // $result = DB::execute($sql, [$content, $user->id, $datetime]);
-        $result = DB::execute($sql, [$uidx, $comment, $user->name]);
-        
+        $result = DB::execute($sql, [$uidx, $pidx, $comment, $user->name]);
+
         if(!$result) {
             back("데이터베이스 입력중 오류 발생");
         }

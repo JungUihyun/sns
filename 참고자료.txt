@@ -1,4 +1,5 @@
 친구신청 Table
+idx qidx ridx date
 신청자	받은 사람	날짜
 
 받은 사람이 승락 시 위의 레코드 삭제 후 ->
