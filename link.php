@@ -32,7 +32,9 @@ Route::POST("/comment_write", "PostController@comment_write");
 # 친구 신청하기
 Route::POST("/friend/question", "UserController@question");
 # 친구 신청수락
-Route::GET("/friend/receive", "UserController@receive");
+Route::POST("/friend/receive", "UserController@receive");
+# 친구 삭제
+Route::GET("/friend/friend_delete", "UserController@delete_friend");
 
 Route::init();
 ?>

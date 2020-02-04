@@ -232,6 +232,7 @@ header {
     border-radius: 50%;
     padding: 3px;
     transition: all .3s;
+    width: 21px;
     display: none;
     cursor: pointer;
 }
@@ -244,6 +245,16 @@ header {
     display: none;
     cursor: pointer;
     border: none;
+    right: 32px;
+}
+
+.recommend_btn a {
+    position: relative;
+    display: block;
+    width: 21px;
+    height: 21px;
+    bottom: 14px;
+    right: 4px;
 }
 
 .recommend_btn .ti-check {
@@ -309,11 +320,12 @@ header {
     position: absolute;
     width: 100%;
     padding-right: 259px;
+    text-align: center;
 }
 
 .posting {
     padding-top: 90px;
-    text-align: center;
+    display: inline-block;
 }
 
 .write {
@@ -448,16 +460,14 @@ header {
 }
 
 .section {
-    display: inline-block;
     width: 578px;
-    min-height: 260px;
+    /* min-height: 300px; */
     padding: 40px 40px 0px;
     background-color: #fff;
     margin-bottom: 10px;
     border-bottom: 1px solid #dedede;
     text-align: left !important;
     position: relative;
-    height: auto;
 }
 
 .section > .post_profile {
@@ -483,6 +493,7 @@ header {
     overflow-y: auto;
     margin-top: 45px;
     min-height: 80px;
+    height: auto;
     width: 100%;
     text-overflow: clip;
 }
@@ -496,9 +507,7 @@ header {
 .section > .comment {
     padding: 0 40px 15px;
     margin: 0 -40px;
-    width: 100%;
-    position: absolute;
-    top: 180px;
+    width: 578px;
     border-top: 1px solid #f4f4f4;
     background-color: #fcfcfc;
     padding-top: 15px;
@@ -546,6 +555,7 @@ header {
     border: none;
     background-color: #f7a68d;
     color: #fff;
+    cursor: pointer;
     bottom: 15px;
     right: 30px;
     text-align: center;
@@ -567,6 +577,7 @@ header {
 }
 
 .comment_list {
+    margin-top: 10px;
     width: 100%;
     height: auto;
 }
@@ -604,6 +615,19 @@ header {
 
 .comment_info > span {
     font-size: 13px;
+}
+
+.comment_group {
+    height: 35px;
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+    line-height: 35px;
+}
+
+.comment_group a {
+    display: inline;
+    margin-right: 8px;
+    color: #73767c;
 }
 
 /* Container End */

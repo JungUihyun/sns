@@ -19,10 +19,10 @@ class PostController {
         // $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
         $user = $_SESSION['user'];
 
-        $sql = "INSERT INTO sns_boards (`content`, `writer`, `date`) VALUES(?, ?, NOW())";
+        $sql = "INSERT INTO sns_boards (`content`, `writer`, `date`, `level`) VALUES(?, ?, NOW(), 0)";
         // $result = DB::execute($sql, [$content, $user->id, $datetime]);
         $result = DB::execute($sql, [$content, $user->name]);
-        
+
         if(!$result) {
             back("데이터베이스 입력중 오류 발생");
         }
@@ -36,35 +36,35 @@ class PostController {
         // $date = $_POST['date'];
         // $time = $_POST['time'];
 
-        if(!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-            back("수정 대상 값이 올바르지 않습니다.");
-        }
+        // if(!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+        //     back("수정 대상 값이 올바르지 않습니다.");
+        // }
 
-        $content = $_POST['content'];
+        // $content = $_POST['content'];
         
-        $id = $_POST['id'];
+        // $id = $_POST['id'];
 
-        if(isEmpty($content)) {
-            back("필수값이 비어있습니다.");
-        }
+        // if(isEmpty($content)) {
+        //     back("필수값이 비어있습니다.");
+        // }
 
-        $user = $_SESSION['user'];
-        $sql = "SELECT * FROM sns_boards WHERE writer = ? AND id = ?";
-        $data = DB::fetch($sql, [$user->id, $id]);
+        // $user = $_SESSION['user'];
+        // $sql = "SELECT * FROM sns_boards WHERE writer = ? AND id = ?";
+        // $data = DB::fetch($sql, [$user->id, $id]);
 
-        if($data == null) {
-            back("권한이 없습니다.");
-        }
+        // if($data == null) {
+        //     back("권한이 없습니다.");
+        // }
 
-        // $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
-        $sql = "UPDATE sns_boards SET `title` = ?, `content` = ?, `date` = ? WHERE `id` = ?";
-        $result = DB::execute($sql, [$title, $content, $datetime, $id]);
+        // // $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
+        // $sql = "UPDATE sns_boards SET `title` = ?, `content` = ?, `date` = ? WHERE `id` = ?";
+        // $result = DB::execute($sql, [$title, $content, $datetime, $id]);
 
-        if(!$result) {
-            back("데이터베이스 수정중 오류 발생.");
-        }
+        // if(!$result) {
+        //     back("데이터베이스 수정중 오류 발생.");
+        // }
 
-        move("성공적으로 수정되었습니다.", "/");
+        // move("성공적으로 수정되었습니다.", "/");
     }
 	
     # 글 삭제
@@ -106,7 +106,8 @@ class PostController {
 
     # 댓글 쓰기 처리
     public function comment_write() {
-        $comment = $_POST['comment_'];
+        $comment = $_POST['comment'];
+        $writer = $_POST['writer'];
 
         if(isEmpty($_POST)) {
             back("필수 값이 비어있습니다.");
@@ -126,7 +127,7 @@ class PostController {
             back("데이터베이스 입력중 오류 발생");
         }
 
-        move("/", "성공적으로 입력되었습니다.");
+        // move("/", "성공적으로 입력되었습니다.");
     }
 
     # 댓글 수정
@@ -136,6 +137,16 @@ class PostController {
 
     # 댓글 삭제
     public function comment_delete() {
+
+    }
+
+    # 글 좋아요
+    public function like() {
+        $user = $_SESSION['user'];
+
+        $like_check_sql = "UPDATE liketo SET like_check = like_check + 1";
+        $like_cancel_sql = "UPDATE liketo SET like_check = 0 WHERE uidx = ? AND pidx = ?";
+        
 
     }
     

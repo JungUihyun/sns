@@ -1,3 +1,9 @@
+https://abc1211.tistory.com/364     좋아요
+https://offbyone.tistory.com/279     파일 업로드
+https://www.phpschool.com/gnuboard4/bbs/board.php?bo_table=qna_html&wr_id=285850     ajax
+https://zooo.kr/main/index.php   PHP
+
+
 친구신청 Table
 idx qidx ridx date
 신청자	받은 사람	날짜
@@ -13,3 +19,13 @@ idx qidx ridx date
 
 Question - 요청
 Receive - 수락
+
+
+테스트2가 테스트3한테 친구요청을 보냄
+addfriend
+14  ->    13
+
+user (테스트3)
+SELECT * FROM sns_users WHERE idx in ( SELECT qidx FROM sns_addfriend WHERE ridx = $user->idx );
+
+

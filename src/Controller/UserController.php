@@ -46,7 +46,6 @@ class UserController {
         extract($_POST);
 
         $user = DB::fetch("SELECT * FROM sns_users WHERE id = ? AND password = ?", [$id, $password]);
-        
         if(!$user) {
             back("일치하는 회원이 없습니다.");
         } else {
@@ -78,10 +77,38 @@ class UserController {
     # 친구신청 받기
     public function receive() {
         $user = $_SESSION['user'];
-        var_dump($user);
-        // $sql = "DELETE FROM a USING sns_addfriend a JOIN sns_users u ON  ";
+
+        // 친구신청을 보낸 사람의 인덱스
+        $qidx = $_POST['question_qidx'];
+
+        $sql = "DELETE FROM sns_addfriend WHERE ridx = ?";
+        $result = DB::execute($sql, [$user->idx]);
         
+        $sql2 = "INSERT INTO sns_friends (`qidx`, `ridx`, `date`) VALUES (?, ?, NOW())";
+        $result2 = DB::execute($sql2, [$user->idx, $qidx]);
+
+        $sql3 = "INSERT INTO sns_friends (`qidx`, `ridx`, `date`) VALUES (?, ?, NOW())";
+        $result3 = DB::execute($sql3, [$qidx, $user->idx]);
+
+        if(!$result || !$result2 || !$result3) {
+            back("DB에 값이 올바르게 가지 않았습니다.");
+        }
+
+        move("/", "친구요청 수락");
     }
 
+    # 친구삭제
+    public function delete_friend() {
+        $user = $_SESSION['user'];
+
+        $result1 = DB::execute("DELETE FROM sns_friends WHERE qidx = $user->idx");
+        $result2 = DB::execute("DELETE FROM sns_friends WHERE ridx = $user->idx");
+
+        if(!$result1 || !$result2) {
+            back("DB 작업이 완료되지 않았습니다.");
+        }
+
+        move("/", "친구삭제 완료");
+    }
 
 }

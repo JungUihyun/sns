@@ -1,7 +1,3 @@
-// https://offbyone.tistory.com/279     파일 업로드
-// https://www.phpschool.com/gnuboard4/bbs/board.php?bo_table=qna_html&wr_id=285850     ajax
-// https://zooo.kr/main/index.php   PHP
-
 // 아이디 기억
 $(document).ready(function () {
     // 저장된 쿠키값을 가져와서 ID칸에 넣음. 없으면 공백
@@ -87,43 +83,6 @@ $("#post").on("click", function () {
 });
 */
 // 글 포스팅 끝
-
-// 이미지 업로드
-// function uploadImage(f) {
-//     // 업로드 할 수 있는 파일 확장자를 제한합니다.
-//     // let extArray = new Array('hwp', 'xls', 'doc', 'xlsx', 'docx', 'pdf', 'jpg', 'gif', 'png', 'txt', 'ppt', 'pptx');
-//     let extArray = new Array('jpg', 'gif', 'png');
-//     let path = document.getElementById("upfile").value;
-
-//     if (path == "") {
-//         alert("사진을 선택해 주세요.");
-//         return false;
-//     }
-//     let pos = path.indexOf(".");
-
-//     if (pos < 0) {
-//         alert("적합하지 않은 파일 입니다. 다시 선택해 주세요.");
-//         return false;
-//     }
-
-//     let ext = path.slice(path.indexOf(".") + 1).toLowerCase();
-//     let checkExt = false;
-
-//     for (let i = 0; i < extArray.length; i++) {
-//         if (ext == extArray[i]) {
-//             checkExt = true;
-//             break;
-//         }
-//     }
-
-//     if (checkExt == false) {
-//         alert("업로드 할 수 없는 파일 확장자 입니다.");
-//         return false;
-//     }
-
-//     return true;
-// }
-// 파일 업로드 끝
 
 // 글 수정
 $(".btnList > .modify").on("click", function () {
@@ -221,54 +180,16 @@ $("#modify_cancel").on("click", function () {
 // ajax 무한 스크롤 끝
 
 // 댓글 input창 눌렀을 때
-$(".comment_input > input").on("click", function () {
+$(".comment_input > input").on("focus", function () {
     $(this).parent().animate({ width: "87%" }, 200);
     $(this).parent().parent().children('input').fadeIn('fast');
 });
 
-$("#side").on("click", function () {
+$(".comment_input > input").on("blur", function () {
     $(".comment_input").animate({ width: "100%" }, 200);
     $(".comment_post").fadeOut('fast');
 });
 // 댓글 input창 눌렀을 때 끝
-
-// 댓글 리스트 크기조절
-if($(".comment").height() >= 110) {    
-    $(".section").css( 'height', '400');
-}
-// 댓글 리스트 크기조절 끝
-
-// 댓글 작성
-// $(".comment_post").click(function(){
-//     let id = $("#id").val();
-//     let no = $("#no").val();
-//     let comment = $(".comment_").val();
-//     let date = chan_val;
-//     let data_arr = {"id":id,"no":no,"comment":comment,"date":date};
-
-//     $.ajax({
-//       type:"post",
-//       data:data_arr,
-//       url:"/comment_write",
-//       dataType:"html",
-//       success:function(data){
-//         $("#.comment_list > ul").append(`<li>
-//                                     <div class="comment_profile">
-//                                         <div class="comment_info">
-//                                             <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
-//                                             <span><?= $item2->writer ?></span>
-//                                         </div>
-//                                     </div>
-//                                     <div class="comment_content">
-//                                         <?= $item2->content ?>
-//                                     </div>
-//                                 </li>`);
-//         document.getElementById("comment").value='';
-//       }
-//     });
-//   });
-// comments -> idx, uidx, pidx, content, wdate
-// 댓글 작성 끝
 
 // side bar 버튼 애니메이션
 $("#friend").on("click", function() {
@@ -320,3 +241,40 @@ $(".refuse").on("click", function() {
 });
 
 // 친구 추천 리스트에서 지우기 끝
+
+// 댓글 작성 ajax
+// $(".comment_post").click(function(){
+//     // let id = $("#id").val();
+//     // let no = $("#no").val();
+//     let comment = $(".comment_").val();
+//     let writer = $(".writer").val();
+//     let data_arr = {"comment":comment, "writer":writer};
+
+//     $.ajax({
+//       type:"post",
+//       data:data_arr,
+//       url:"/comment_write",
+//       dataType:"html",
+//       success:function(){
+//         $(".comment_list > ul").append(`
+//                 <li>
+//                     <div class="comment_profile">
+//                         <div class="comment_info">
+//                             <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
+//                             <span>` + writer + `</span>
+//                         </div>
+//                     </div>
+//                     <div class="comment_content">
+//                         ` + content + `
+//                     </div>
+//                 </li>
+//         `);
+//         $(".comment_post").val("");
+//       }
+//     });
+// });   
+// 댓글 작성 ajax 끝
+
+// 좋아요 버튼
+
+// 좋아요 버튼 끝
