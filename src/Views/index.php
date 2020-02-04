@@ -74,7 +74,7 @@
                                     <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
                                     <span><?= $item->name ?></span>
                                     <div class="recommend_btn">
-                                        <span class="refuse ti-close"><a href="/friend/delete_friend"></a></span>
+                                        <span class="refuse ti-close"><a href="/friend/friend_delete"></a></span>
                                         <input type="submit" value="" class="accept recommend_submit"><span class="ti-check"></span>
                                     </div>
                                 </form>
@@ -180,7 +180,7 @@
                 </div>
                 <div class="comment">
                     <div class="comment_group">
-                        <a href="#">좋아요 <span class="like">1</span></a>
+                        <a href="#">좋아요 <span class="like" data-content_id="<?= $item->idx ?>">1</span></a>
                         <a href="#">댓글 <span class="comment_cnt"><?= $comment_cnt ?></span></a>
                     </div>
                     <div class="comment_list">

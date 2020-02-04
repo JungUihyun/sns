@@ -1,6 +1,7 @@
 https://offbyone.tistory.com/279     파일 업로드
 https://www.phpschool.com/gnuboard4/bbs/board.php?bo_table=qna_html&wr_id=285850     ajax
 https://zooo.kr/main/index.php   PHP
+https://abc1211.tistory.com/354?category=969354     좋아요
 
 
 친구신청 Table

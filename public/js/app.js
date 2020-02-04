@@ -276,14 +276,14 @@ $(".refuse").on("click", function() {
 // 댓글 작성 ajax 끝
 
 // 좋아요 버튼
-// $(document).on('click','.like_button', function(){
-//     let post_id = $(this).data('content_id');
+// $(document).on('click','.like', function(){
+//     let pidx = $(this).data('pidx');
 //     $(this).attr('disabled','disabled');
     
 //     $.ajax({
 //         url:"/board/like",
 //         method:"POST",
-//         data:{post_id : pidx},
+//         data:{pidx : pidx},
 //         success:function(data){
 //         if(data == 'done') {
 //             load_stuff();
@@ -293,3 +293,10 @@ $(".refuse").on("click", function() {
 //     });
 // });
 // 좋아요 버튼 끝
+
+// 댓글 쓸때 이모티콘
+$(".ti-face-smlie").on("click", function() {
+    let e = jQuery.Event( "keypress", { keyCode: 13 } ); 
+    $("#btn").trigger(e);
+});
+// 댓글 쓸때 이모티콘 끝

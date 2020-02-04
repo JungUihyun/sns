@@ -84,12 +84,14 @@ class PostController {
 
         $sql = "DELETE FROM sns_boards WHERE id = ?";
         $result = DB::execute($sql, [$id]);
+        $sql2 = "DELETE FROM sns_comments WHERE pidx = $id";
+        $result2 = DB::execute($sql2);
 
-        if(!$result) {
+        if(!$result || !$result2) {
             back("데이터베이스 삭제중 오류 발생");
         }
 
-        back("성공적으로 삭제되었습니다.");
+        move("/", "성공적으로 삭제되었습니다.");
     }
 
     # 글 리스트 출력
@@ -141,12 +143,25 @@ class PostController {
     }
 
     # 글 좋아요
-    public function like() {
-        $user = $_SESSION['user'];
-        
-        
+    // public function like() {
+    //     $user = $_SESSION['user'];
+    //     extract($_POST);
 
-    }
+    //     $like_cnt = 0;
+    //     $like_cnt++;
+        
+    //     if(isset($pidx)){
+    //         $sql = "INSERT INTO liketo (`pidx`, `uidx`, `level_check`) VALUES (?, ?, $like_cnt)";
+    //         $result = DB::execute($sql, [$pidx, $user->idx]);
+
+    //         if(!$result) {
+    //             back("데이터베이스 입력중 오류 발생");
+    //         } else {
+    //             echo "done";
+    //         }
+    //     }
+
+    // }
     
 
 }
