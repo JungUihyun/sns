@@ -276,5 +276,20 @@ $(".refuse").on("click", function() {
 // 댓글 작성 ajax 끝
 
 // 좋아요 버튼
-
+// $(document).on('click','.like_button', function(){
+//     let post_id = $(this).data('content_id');
+//     $(this).attr('disabled','disabled');
+    
+//     $.ajax({
+//         url:"/board/like",
+//         method:"POST",
+//         data:{post_id : pidx},
+//         success:function(data){
+//         if(data == 'done') {
+//             load_stuff();
+//         }
+//     }
+    
+//     });
+// });
 // 좋아요 버튼 끝

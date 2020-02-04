@@ -25,9 +25,12 @@ Route::POST("/write", "PostController@write");
 # 글삭제 처리
 Route::GET("/delete", "PostController@delete");
 # 글수정 처리
+# 글 좋아요 버튼
+Route::GET("/board/like", "PostController@like");
+
 
 # 댓글 쓰기 처리
-Route::POST("/comment_write", "PostController@comment_write");
+Route::GET("/comment_write", "PostController@comment_write");
 
 # 친구 신청하기
 Route::POST("/friend/question", "UserController@question");

@@ -143,9 +143,7 @@ class PostController {
     # 글 좋아요
     public function like() {
         $user = $_SESSION['user'];
-
-        $like_check_sql = "UPDATE liketo SET like_check = like_check + 1";
-        $like_cancel_sql = "UPDATE liketo SET like_check = 0 WHERE uidx = ? AND pidx = ?";
+        
         
 
     }
