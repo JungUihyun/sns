@@ -6,20 +6,20 @@ use src\App\DB;
 class PostController {
     # 글쓰기 처리
 	public function write() {
+        $user = $_SESSION['user'];
         // $title = $_POST['title'];
         // $date = $_POST['date'];
         // $time = $_POST['time'];
 
         $content = $_POST['content'];
 
-        if(isEmpty($_POST)) {
+        if($content == "") {
             back("필수 값이 비어있습니다.");
         }
 
         // $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
-        $user = $_SESSION['user'];
 
-        $sql = "INSERT INTO sns_boards (`content`, `writer`, `date`, `level`) VALUES(?, ?, NOW(), 0)";
+        $sql = "INSERT INTO sns_boards (`content`, `writer`, `date`, `liked`, `commented`) VALUES(?, ?, NOW(), 0, 0)";
         // $result = DB::execute($sql, [$content, $user->id, $datetime]);
         $result = DB::execute($sql, [$content, $user->name]);
 
@@ -30,41 +30,31 @@ class PostController {
         move("/", "성공적으로 입력되었습니다.");
     }
     
-    // # 글 수정
+    # 글 수정
     public function modify() {
-        // $title = $_POST['title'];
-        // $date = $_POST['date'];
-        // $time = $_POST['time'];
+        $user = $_SESSION['user'];
+        $content = $_POST['modify_input'];
+        $pidx = $_POST['pidx'];
 
-        // if(!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-        //     back("수정 대상 값이 올바르지 않습니다.");
-        // }
+        if($content == "" && $pidx == "") {
+            back("필수값이 비어있습니다.");
+        }
 
-        // $content = $_POST['content'];
-        
-        // $id = $_POST['id'];
+        $sql = "SELECT * FROM sns_boards WHERE writer = ? AND id = ?";
+        $data = DB::fetch($sql, [$user->name, $pidx]);
 
-        // if(isEmpty($content)) {
-        //     back("필수값이 비어있습니다.");
-        // }
+        if($data == null) {
+            back("권한이 없습니다.");
+        }
 
-        // $user = $_SESSION['user'];
-        // $sql = "SELECT * FROM sns_boards WHERE writer = ? AND id = ?";
-        // $data = DB::fetch($sql, [$user->id, $id]);
+        $sql = "UPDATE sns_boards SET `content` = ?, `date` = NOW() WHERE `id` = ?";
+        $result = DB::execute($sql, [$content, $pidx]);
 
-        // if($data == null) {
-        //     back("권한이 없습니다.");
-        // }
+        if(!$result) {
+            back("데이터베이스 수정중 오류 발생");
+        }
 
-        // // $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
-        // $sql = "UPDATE sns_boards SET `title` = ?, `content` = ?, `date` = ? WHERE `id` = ?";
-        // $result = DB::execute($sql, [$title, $content, $datetime, $id]);
-
-        // if(!$result) {
-        //     back("데이터베이스 수정중 오류 발생.");
-        // }
-
-        // move("성공적으로 수정되었습니다.", "/");
+        move("/", "성공적으로 수정되었습니다.");
     }
 	
     # 글 삭제
@@ -84,8 +74,8 @@ class PostController {
 
         $sql = "DELETE FROM sns_boards WHERE id = ?";
         $result = DB::execute($sql, [$id]);
-        $sql2 = "DELETE FROM sns_comments WHERE pidx = $id";
-        $result2 = DB::execute($sql2);
+        $sql2 = "DELETE FROM sns_comments WHERE pidx = ?";
+        $result2 = DB::execute($sql2, [$id]);
 
         if(!$result || !$result2) {
             back("데이터베이스 삭제중 오류 발생");
@@ -108,28 +98,28 @@ class PostController {
 
     # 댓글 쓰기 처리
     public function comment_write() {
-        $comment = $_POST['comment'];
-        $writer = $_POST['writer'];
+        $comment = $_POST['comment_'];
+        $user = $_SESSION['user'];
+
+        $pidx = $_POST['pidx'];
 
         if(isEmpty($_POST)) {
             back("필수 값이 비어있습니다.");
         }
 
-        // $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
-        $user = $_SESSION['user'];
+        $update = DB::execute("UPDATE sns_boards SET commented = commented + 1 WHERE id = ?", [$pidx]);
 
-        $uidx = $_SESSION['user']->idx;
-        $pidx = $_POST['pidx'];
+        // $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
 
         $sql = "INSERT INTO sns_comments (`uidx`, `pidx`, `content`, `writer`, `wdate`) VALUES(?, ?, ?, ?, NOW())";
         // $result = DB::execute($sql, [$content, $user->id, $datetime]);
-        $result = DB::execute($sql, [$uidx, $pidx, $comment, $user->name]);
+        $result = DB::execute($sql, [$user->idx, $pidx, $comment, $user->name]);
 
-        if(!$result) {
+        if(!$result || !$update) {
             back("데이터베이스 입력중 오류 발생");
         }
 
-        // move("/", "성공적으로 입력되었습니다.");
+        move("/", "성공적으로 입력되었습니다.");
     }
 
     # 댓글 수정
@@ -139,29 +129,48 @@ class PostController {
 
     # 댓글 삭제
     public function comment_delete() {
+        $user = $_SESSION['user'];
+        $pidx = $_GET['id'];
 
+        $update = DB::execute("UPDATE sns_boards SET commented = commented - 1 WHERE id = ?", [$pidx]);
+        $sql = DB::fetch("DELETE FROM sns_comments WHERE pidx = ? AND uidx = ?", [$pidx, $user->idx]);
+
+        if(!$update || !$sql) {
+            back("데이터베이스 삭제 중 오류 발생");
+        }
+
+        move("/", "댓글 삭제 완료");
     }
 
     # 글 좋아요
-    // public function like() {
-    //     $user = $_SESSION['user'];
-    //     extract($_POST);
+    public function like() {
+        $user = $_SESSION['user'];
 
-    //     $like_cnt = 0;
-    //     $like_cnt++;
-        
-    //     if(isset($pidx)){
-    //         $sql = "INSERT INTO liketo (`pidx`, `uidx`, `level_check`) VALUES (?, ?, $like_cnt)";
-    //         $result = DB::execute($sql, [$pidx, $user->idx]);
+        $id = $_GET['id'];
 
-    //         if(!$result) {
-    //             back("데이터베이스 입력중 오류 발생");
-    //         } else {
-    //             echo "done";
-    //         }
-    //     }
+        if(DB::fetch("SELECT * FROM sns_like WHERE pidx = ? AND uidx = ?", [$id, $user->idx])) {
+            $sql = DB::execute("DELETE FROM sns_like WHERE pidx = ? AND uidx = ?", [$id, $user->idx]);
+            $update = DB::execute("UPDATE sns_boards SET liked = liked - 1 WHERE id = ?", [$id]);
 
-    // }
+            if(!$sql || !$update) {
+                back("데이터베이스 삭제 중 오류 발생");
+            }
+
+            move("/", "좋아요를 취소하였습니다.");
+        } else {
+            $sql = "INSERT INTO sns_like (`pidx`, `uidx`) VALUES (?, ?)";
+            $result = DB::execute($sql, [$id, $user->idx]);
+
+            $update = "UPDATE sns_boards SET liked = liked + 1 WHERE id = ?";
+            $uResult = DB::execute($update, [$id]);
+            
+            if(!$result || !$uResult) {
+                back("데이터베이스 입력중 오류 발생");
+            }
+        }
+
+        move("/", "좋아요 투척");
+    }
     
 
 }

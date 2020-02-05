@@ -29,7 +29,7 @@
 
 <div id="side">
     <div class="profile">
-        <a href="/profile" class="link_img">
+        <a href="/profile?id=<?= $_SESSION['user']->id ?>" class="link_img">
             <img src="/images/default_profile.jpg" alt="profile_img">
         </a> 
         <a href="/profile" class="link_name"><?= $_SESSION['user']->name ?></a>
@@ -55,7 +55,7 @@
                                     <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
                                     <span><?= $item->name ?></span>
                                     <div class="recommend_btn">
-                                        <span class="refuse ti-close"></span>
+                                        <span class="refuse ti-close"><a href="/friend/refuse"></a></span>
                                         <span class="ti-check"><input type="submit" value="" class="accept recommend_submit"></span>
                                     </div>
                                 </form>
@@ -167,21 +167,23 @@
                 <div class="post_profile">
                     <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
                     <div class="post_info">
-                        <span class="writer"><?= $item->writer ?></span>
-                        <span class="time"><?= $item->date ?></span>
+                        <span name="writer" class="writer"><?= $item->writer ?></span>
+                        <span name="time" class="time"><?= $item->date ?></span>
                     </div>
                 </div>
                 <div class="post_content"><?= $item->content ?></div>
-                <div class="btnList">
-                    <span id="section_idx">
-                    <button class="modify">수정</button>
-                    <!-- <a class="modify" href="/modify?id=?= $item->id ?>">수정</a> -->
-                    <a href="/delete?id=<?= $item->id ?>">삭제</a>
-                </div>
+                <?php if($_SESSION['user']->name == $item->writer) { ?>
+                    <span class="ti-more-alt"></span>
+                    <div class="btnList">
+                        <input type="hidden" value="<?= $item->id ?>">
+                        <a class="modify" href="javascript:return false;">수정</a>
+                        <a class="delete" href="/delete?id=<?= $item->id ?>">삭제</a>
+                    </div>
+                <?php } ?>
                 <div class="comment">
                     <div class="comment_group">
-                        <a href="#">좋아요 <span class="like" data-content_id="<?= $item->idx ?>">1</span></a>
-                        <a href="#">댓글 <span class="comment_cnt"><?= $comment_cnt ?></span></a>
+                        <a href="/board/like?id=<?= $item->id ?>">좋아요 <span class="like"><?= $item->liked ?></span></a>
+                        <a href="#">댓글 <span class="comment_cnt"><?= $item->commented ?></span></a>
                     </div>
                     <div class="comment_list">
                         <ul>
@@ -197,14 +199,16 @@
                                     <div class="comment_content">
                                         <?= $item2->content ?>
                                     </div>
+                                    <div class="comment_btnList">
+                                        <a href="/comment_delete?id=<?= $item->id ?>" class="comment_delete"><span class="ti-close"></span></a>
+                                    </div>
                                 </li>
                             <?php } ?>
                         </ul>
                     </div>
                     <form action="/comment_write" method="post">
                         <div class="comment_input">
-                            <input type="hidden" class=".writer" value="<?= $_SESSION['user']->name ?>">
-                            <input type="text" style="display:none;" name="pidx" value="<?= $item->idx ?>">
+                            <input type="text" style="display:none;" name="pidx" value="<?= $item->id ?>">
                             <input type="text" name="comment_" class="comment_" placeholder="댓글을 입력하세요">
                             <div class="comment_icon">
                                 <span class="ti-image"></span>
@@ -222,12 +226,14 @@
 
 <div class="cover_wrapper">
     <div class="modify_write">
-        <textarea name="modify_input" id="modify_input" cols="30" rows="10" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요."></textarea>
-            <div class="btn_group">
-                <button id="modify_cancel">취소</button>
-                <a href="/modify?id=<?= $item->id ?>" id="modify_post">올리기</a>
-                <!-- <button id="modify_post">올리기</button> -->
-            </div>
+        <form action="/modify" method='post'>
+            <input type="hidden" value="" name="pidx" class="pidx">
+            <textarea name="modify_input" id="modify_input" cols="30" rows="10" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요."></textarea>
+                <div class="btn_group">
+                    <button type="button" id="modify_cancel">취소</button>
+                    <input type="submit" value="올리기" id="modify_post">
+                </div>
+        </form>
     </div>
 </div>
 

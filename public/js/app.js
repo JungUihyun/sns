@@ -84,16 +84,6 @@ $("#post").on("click", function () {
 */
 // 글 포스팅 끝
 
-// 글 수정
-$(".btnList > .modify").on("click", function () {
-    $(".cover_wrapper").css("display", "block");
-});
-
-$("#modify_cancel").on("click", function () {
-    $(".cover_wrapper").css("display", "none");
-});
-// 글 수정 끝
-
 // ajax 더보기 버튼
 // let currentIdx = 0;
 // let grid = null;
@@ -275,28 +265,40 @@ $(".refuse").on("click", function() {
 // });   
 // 댓글 작성 ajax 끝
 
-// 좋아요 버튼
-// $(document).on('click','.like', function(){
-//     let pidx = $(this).data('pidx');
-//     $(this).attr('disabled','disabled');
-    
-//     $.ajax({
-//         url:"/board/like",
-//         method:"POST",
-//         data:{pidx : pidx},
-//         success:function(data){
-//         if(data == 'done') {
-//             load_stuff();
-//         }
-//     }
-    
-//     });
-// });
-// 좋아요 버튼 끝
-
-// 댓글 쓸때 이모티콘
-$(".ti-face-smlie").on("click", function() {
-    let e = jQuery.Event( "keypress", { keyCode: 13 } ); 
-    $("#btn").trigger(e);
+// 게시글 메뉴 버튼 클릭
+$(".ti-more-alt").on("click", function() {
+    $(this).parent().children(".btnList").css("display", "inline-block");
+    $(".ti-more-alt").css("color", "#989898");
 });
-// 댓글 쓸때 이모티콘 끝
+
+$(document).on("click", function(e) {
+    if ( !$(e.target).hasClass("btnList") && !$(e.target).hasClass("ti-more-alt") ) {
+        $(".btnList").css("display", "none");
+        $(".ti-more-alt").css("color", "#c2c2c2");
+    }
+});
+// 게시글 메뉴 버튼 클릭 끝
+
+// 글 수정
+$(".btnList > .modify").on("click", function () {
+    $(".cover_wrapper").fadeIn();
+    $(".cover_wrapper").css("display", "fixed");
+});
+
+$("#modify_cancel").on("click", function () {
+    // $("#modify_input").val("");
+    $(".cover_wrapper").fadeOut();
+});
+
+$(".modify").on("click", function(){
+    $(".cover_wrapper").css("display", "fixed");
+
+    let content = $(this).parent().parent().children(".post_content").text();
+
+    $("#modify_input").text(content);
+
+    let pidx = $(this).parent().children("input").val();
+    
+    $(".pidx").val(pidx);
+});
+// 글 수정 끝

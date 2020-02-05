@@ -13,17 +13,18 @@ class UserController {
 
         if($id ==  "" || $password == "" || $name == ""){
             back("필수값은 공백이 될 수 없습니다.");
-            return;
         }
 
         if($password != $passwordc){
             back("비밀번호와 비밀번호 확인이 다릅니다.");
-            return;
 		}
 		
 		if(!preg_match("/^[0-9a-zA-Zㄱ-ㅎ가-힣!@#$%^&*() ]+$/", $id)) {
 			back("아이디가 올바른 형식이 아닙니다. 아이디를 다시 입력해 주세요");
-			return;
+        }
+
+        if(!DB::fetch("SELECT * FROM users WHERE id = ?", [$id])) {
+            back("이미 사용중인 아이디 입니다.");
         }
         
         // if(!preg_match("/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;", $id)) {
@@ -74,7 +75,7 @@ class UserController {
         move("/", "친구신청 완료");
     }
 
-    # 친구신청 받기
+    # 친구신청 수락
     public function receive() {
         $user = $_SESSION['user'];
 
@@ -97,12 +98,26 @@ class UserController {
         move("/", "친구요청 수락");
     }
 
+    # 친구신청 거절
+    public function refuse() {
+        $user = $_SESSION['user'];
+
+        $sql1 = DB::execute("DELETE FROM sns_addfriend WHERE qidx = ?", [$user->idx]);
+        $sql2 = DB::execute("DELETE FROM sns_addfriend WHERE ridx = ?", [$user->idx]);
+
+        if(!$sql1 || !$sql2) {
+            back("DB에 값이 올바르게 삭제되지 않았습니다.");
+        }
+        
+        move("/", "친구신청 거절");
+    }
+
     # 친구삭제
     public function delete_friend() {
         $user = $_SESSION['user'];
 
-        $result1 = DB::execute("DELETE FROM sns_friends WHERE qidx = $user->idx");
-        $result2 = DB::execute("DELETE FROM sns_friends WHERE ridx = $user->idx");
+        $result1 = DB::execute("DELETE FROM sns_friends WHERE qidx = ?", [$user->idx]);
+        $result2 = DB::execute("DELETE FROM sns_friends WHERE ridx = ?", [$user->idx]);
 
         if(!$result1 || !$result2) {
             back("DB 작업이 완료되지 않았습니다.");

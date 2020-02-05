@@ -498,10 +498,55 @@ header {
     text-overflow: clip;
 }
 
-.section > .btnList {
+.section > .ti-more-alt {
+    width: 16px;
+    height: 20px;
     position: absolute;
-    right: 20px;
-    top: 20px;
+    top: 35px;
+    right: 40px;
+    transform: rotate(90deg);
+    cursor: pointer;
+    color: #c2c2c2;
+}
+
+.section > .ti-more-alt:hover {
+    color: #989898;
+}
+
+.section > .btnList {
+    z-index: 30;
+    border: 2px solid #d0d0d0;
+    border-radius: 2px;
+    position: absolute;
+    right: 40px;
+    top: 60px;
+    width: 150px;
+    height: 78px;
+    float: left;
+    background-color: #fff;
+    display: none;
+}
+
+.section > .btnList a {
+    color: #000;
+    line-height: 35px;
+    padding: 0px 20px;
+    display: inline-block;
+    width: 100%;
+    height: 50%;
+    font-size: 13px;
+}
+
+.section > .btnList a:hover {
+    background-color: #f4f4f4;
+}
+
+.section > .btnList > .modify {
+    border-radius: 10px 10px 0px 0px;
+}
+
+.section > .btnList > .delete {
+    border-radius: 0px 0px 10px 10px;
 }
 
 .section > .comment {
@@ -613,6 +658,27 @@ header {
     left: 45px;
 }
 
+.comment_btnList {
+    position: absolute;
+    top: 4px;
+    right: 15px;
+    width: 15px;
+    height: 15px;
+    display: none;
+}
+
+.comment_list > ul > li:hover > .comment_btnList {
+    display: inline-block;
+}
+
+.comment_btnList a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    font-size: 10px;
+    color: #acb0b8;
+}
+
 .comment_info > span {
     font-size: 13px;
 }
@@ -634,7 +700,7 @@ header {
 
 /* Modify */
 .cover_wrapper {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     z-index: 201;

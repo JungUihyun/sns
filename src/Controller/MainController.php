@@ -34,10 +34,8 @@ class MainController {
 				$comment_sql = "SELECT * FROM sns_comments WHERE pidx = ? ORDER BY wdate";
 				$comment_list = DB::fetchAll($comment_sql, [$board->id]);
 				$board->comments = $comment_list;
-				$comment_sql = "SELECT count(*) AS c_cnt FROM sns_comments WHERE pidx = ?";
-				$comment_cnt = DB::fetch($comment_sql, [$board->id])->c_cnt;
-				$board->c_cnt = $comment_cnt;
 			}
+			
 			
 			/* 추천친구 */
 			// $recommend_sql = "SELECT * FROM sns_users WHERE id NOT IN(" . $user->id . ") ORDER BY rand()";
@@ -55,7 +53,6 @@ class MainController {
 			/* 친구 리스트 출력 */
 			$friend_sql = "SELECT * FROM sns_users WHERE idx in (SELECT ridx FROM sns_friends WHERE qidx = $user->idx)";
 			$friend_list = DB::fetchAll($friend_sql);
-
 			$friend_sql = "SELECT count(*) AS f_cnt FROM sns_friends WHERE ridx = $user->idx";
 			$friend_cnt = DB::fetch($friend_sql)->f_cnt;
 		}	
