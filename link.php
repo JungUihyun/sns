@@ -41,6 +41,8 @@ Route::POST("/friend/question", "UserController@question");
 Route::POST("/friend/receive", "UserController@receive");
 # 친구 신청 거절
 Route::GET("/friend/refuse", "UserController@refuse");
+# 친구 신청 취소
+Route::GET("/friend/send_cancel", "UserController@send_cancel");
 # 친구 삭제
 Route::GET("/friend/friend_delete", "UserController@delete_friend");
 

@@ -112,6 +112,20 @@ class UserController {
         move("/", "친구신청 거절");
     }
 
+    # 친구신청 취소
+    public function send_cancel() {
+        $user = $_SESSION['user'];
+        $ridx = $_GET['ridx'];
+
+        $sql = DB::execute("DELETE FROM sns_addfriend WHERE qidx = ? AND ridx = ?", [$user->idx, $ridx]);
+
+        if(!$sql) {
+            back("DB에 값이 올바르게 삭제되지 않았습니다.");
+        }
+
+        move("/", "친구신청 취소");
+    }
+
     # 친구삭제
     public function delete_friend() {
         $user = $_SESSION['user'];

@@ -22,6 +22,9 @@ class MainController {
 		/* 친구 리스트 */
 		$friend_list = [];
 		$friend_cnt = 0;
+		/* 보낸 친구신청 리스트 */
+		$send_list = [];
+		$send_cnt = 0;
 		
         if(isset($_SESSION['user'])) {
             $user = $_SESSION['user'];
@@ -36,28 +39,33 @@ class MainController {
 				$board->comments = $comment_list;
 			}
 			
-			
 			/* 추천친구 */
 			// $recommend_sql = "SELECT * FROM sns_users WHERE id NOT IN(" . $user->id . ") ORDER BY rand()";
-			$recommend_sql = "SELECT * FROM sns_users WHERE id NOT IN('$user->id') ORDER BY rand()";
-			$recommend_list = DB::fetchAll($recommend_sql);
-			$recommend_sql = "SELECT count(*) AS r_cnt FROM sns_users WHERE id NOT IN('$user->id')";
-			$recommend_cnt = DB::fetch($recommend_sql)->r_cnt;
+			$recommend_sql = "SELECT * FROM sns_users WHERE idx NOT IN (SELECT qidx FROM sns_friends WHERE ridx = ? ) ORDER BY rand()";
+			$recommend_list = DB::fetchAll($recommend_sql, [$user->idx]);
+			$recommend_sql = "SELECT count(*) AS r_cnt FROM sns_users WHERE idx NOT IN(?)";
+			$recommend_cnt = DB::fetch($recommend_sql, [$user->idx])->r_cnt;
 
 			/* 친구신청 리스트 출력 */
-			$question_sql = "SELECT * FROM sns_users WHERE idx in ( SELECT qidx FROM sns_addfriend WHERE ridx = $user->idx );";
-			$question_list = DB::fetchAll($question_sql);
-			$question_sql = "SELECT count(*) AS q_cnt FROM sns_addfriend WHERE ridx = $user->idx";
-			$question_cnt = DB::fetch($question_sql)->q_cnt;
+			$question_sql = "SELECT * FROM sns_users WHERE idx IN ( SELECT qidx FROM sns_addfriend WHERE ridx = ?)";
+			$question_list = DB::fetchAll($question_sql, [$user->idx]);
+			$question_sql = "SELECT count(*) AS q_cnt FROM sns_addfriend WHERE ridx = ?";
+			$question_cnt = DB::fetch($question_sql, [$user->idx])->q_cnt;
 
 			/* 친구 리스트 출력 */
-			$friend_sql = "SELECT * FROM sns_users WHERE idx in (SELECT ridx FROM sns_friends WHERE qidx = $user->idx)";
-			$friend_list = DB::fetchAll($friend_sql);
-			$friend_sql = "SELECT count(*) AS f_cnt FROM sns_friends WHERE ridx = $user->idx";
-			$friend_cnt = DB::fetch($friend_sql)->f_cnt;
+			$friend_sql = "SELECT * FROM sns_users WHERE idx IN (SELECT ridx FROM sns_friends WHERE qidx = ?)";
+			$friend_list = DB::fetchAll($friend_sql, [$user->idx]);
+			$friend_sql = "SELECT count(*) AS f_cnt FROM sns_friends WHERE ridx = ?";
+			$friend_cnt = DB::fetch($friend_sql, [$user->idx])->f_cnt;
+
+			/* 보낸 친구신청 리스트 출력 */
+			$send_sql = "SELECT * FROM sns_users WHERE idx IN (SELECT ridx FROM sns_addfriend WHERE qidx = ?)";
+			$send_list = DB::fetchAll($send_sql, [$user->idx]);
+			$send_sql = "SELECT count(*) AS s_cnt FROM sns_addfriend WHERE qidx = ?";
+			$send_cnt = DB::fetch($send_sql, [$user->idx])->s_cnt;
 		}	
 
-		return view("index", ['friend_list' => $friend_list, 'friend_cnt' => $friend_cnt, 'question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'comment_cnt' => $comment_cnt, 'list' => $list, 'prev' => $prev, 'next' => $next, 'p' => $page]);
+		return view("index", ['send_list' => $send_list, 'send_cnt' => $send_cnt, 'friend_list' => $friend_list, 'friend_cnt' => $friend_cnt, 'question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'comment_cnt' => $comment_cnt, 'list' => $list, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 	# 404 페이지 이동

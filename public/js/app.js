@@ -220,17 +220,6 @@ $("#note").on("click", function() {
 });
 // side bar 버튼 애니메이션 끝
 
-// 친구 추천 리스트에서 지우기 (일시적)
-let recommend_cnt = $("#recommend_cnt").text();
-
-$(".refuse").on("click", function() {
-    $(this).parent().parent().parent().parent().remove();
-    recommend_cnt = recommend_cnt - 1;
-
-    $("#recommend_cnt").html(recommend_cnt);
-});
-
-// 친구 추천 리스트에서 지우기 끝
 
 // 댓글 작성 ajax
 // $(".comment_post").click(function(){
@@ -302,3 +291,7 @@ $(".modify").on("click", function(){
     $(".pidx").val(pidx);
 });
 // 글 수정 끝
+
+// Drag & Drop
+
+// Drag & Drop 끝

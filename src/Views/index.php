@@ -85,6 +85,25 @@
             </div>
         </div>
         <div class="recommend content">
+            <span>보낸 신청 <span id="send_cnt"><?= $send_cnt ?></span></span>
+            <div class="friend_list">
+                <ul>
+                    <?php foreach($send_list as $item) { ?>
+                    <li>
+                        <div class="friend_profile">
+                            <form>
+                                <img src="/images/default_profile.jpg" alt="보낸친구 프로필 이미지">
+                                <input type="hidden" value="<?= $item->idx ?>" name="ridx">
+                                <span><?= $item->name ?></span>
+                                <div class="recommend_btn">
+                                    <span class="ti-close"><a href="/friend/send_cancel?ridx=<?= $item->idx ?>" class="send_cancel refuse"></a></span>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <?php } ?>
+                </ul>
+            </div>
             <span>추천 친구 <span id="recommend_cnt"><?= $recommend_cnt ?></span></span>
             <div class="friend_list">
                 <ul>
@@ -98,7 +117,6 @@
                                 <div class="recommend_btn">
                                     <span class="refuse ti-close"></span>
                                     <span class="ti-check"><input type="submit" value="" class="accept recommend_submit"></span>
-                                    <!-- <a href="/friend/question" class="accept"><span class="ti-check"></span></a> -->
                                 </div>
                             </form>
                         </div>
@@ -199,9 +217,12 @@
                                     <div class="comment_content">
                                         <?= $item2->content ?>
                                     </div>
-                                    <div class="comment_btnList">
-                                        <a href="/comment_delete?id=<?= $item->id ?>" class="comment_delete"><span class="ti-close"></span></a>
-                                    </div>
+                                    <!-- ?php if($_SESSION['user']->idx == $item2->uidx || $_SESSION['user']->name == $item->writer) { ?> -->
+                                    <?php if($_SESSION['user']->idx == $item2->uidx) { ?>
+                                        <div class="comment_btnList">
+                                            <a href="/comment_delete?id=<?= $item->id ?>" class="comment_delete"><span class="ti-close"></span></a>
+                                        </div>
+                                    <?php } ?>
                                 </li>
                             <?php } ?>
                         </ul>

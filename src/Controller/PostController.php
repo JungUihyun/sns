@@ -124,7 +124,6 @@ class PostController {
 
     # 댓글 수정
     public function comment_modify() {
-
     }
 
     # 댓글 삭제
