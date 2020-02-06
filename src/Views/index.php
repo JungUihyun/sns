@@ -322,8 +322,10 @@
 <!-- 쪽지작성 틀 끝 -->
 
 <!-- 쪽지 조회 -->
-<div class="cover_wrapper_msg_show">
-    <div class="message_write">
+<div class="cover_
+
+\
+lass="message_write">
         <div class="message_top">
             <h3>보낸쪽지</h3>
             <button type="button" id="message_cancel" class="msg_cancel"><span class="ti-close"></span></button>
