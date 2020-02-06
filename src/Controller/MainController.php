@@ -25,6 +25,13 @@ class MainController {
 		/* 보낸 친구신청 리스트 */
 		$send_list = [];
 		$send_cnt = 0;
+		/* 보낸 쪽지함 */
+		$send_msg_list = [];
+		$send_msg_cnt = 0;
+		/* 받은 쪽지함 */
+		$receive_msg_list = [];
+		$receive_msg_cnt = 0;
+
 		
         if(isset($_SESSION['user'])) {
             $user = $_SESSION['user'];
@@ -63,9 +70,17 @@ class MainController {
 			$send_list = DB::fetchAll($send_sql, [$user->idx]);
 			$send_sql = "SELECT count(*) AS s_cnt FROM sns_addfriend WHERE qidx = ?";
 			$send_cnt = DB::fetch($send_sql, [$user->idx])->s_cnt;
+
+			/* 보낸 쪽지 리스트 */
+			$send_msg_list = DB::fetchAll("SELECT * FROM sns_msg WHERE qidx = ? ORDER BY date DESC", [$user->idx]);
+			$send_msg_cnt = DB::fetch("SELECT count(*) AS s_m_cnt FROM sns_msg WHERE qidx = ?", [$user->idx])->s_m_cnt;
+
+			/* 받은 쪽지 리스트 */
+			$receive_msg_list = DB::fetchAll("SELECT * FROM sns_msg WHERE ridx = ? ORDER BY date DESC", [$user->idx]);
+			$receive_msg_cnt = DB::fetch("SELECT count(*) AS s_m_cnt FROM sns_msg WHERE ridx = ?", [$user->idx])->s_m_cnt;
 		}	
 
-		return view("index", ['send_list' => $send_list, 'send_cnt' => $send_cnt, 'friend_list' => $friend_list, 'friend_cnt' => $friend_cnt, 'question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'comment_cnt' => $comment_cnt, 'list' => $list, 'prev' => $prev, 'next' => $next, 'p' => $page]);
+		return view("index", ['receive_msg_list' => $receive_msg_list, 'receive_msg_cnt' => $receive_msg_cnt, 'send_msg_list' => $send_msg_list, 'send_msg_cnt' => $send_msg_cnt, 'send_list' => $send_list, 'send_cnt' => $send_cnt, 'friend_list' => $friend_list, 'friend_cnt' => $friend_cnt, 'question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'comment_cnt' => $comment_cnt, 'list' => $list, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 	# 404 페이지 이동

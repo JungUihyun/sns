@@ -96,7 +96,7 @@
                                 <input type="hidden" value="<?= $item->idx ?>" name="ridx">
                                 <span><?= $item->name ?></span>
                                 <div class="recommend_btn">
-                                    <span class="ti-close"><a href="/friend/send_cancel?ridx=<?= $item->idx ?>" class="send_cancel refuse"></a></span>
+                                    <span class="sended ti-close"><a href="/friend/send_cancel?ridx=<?= $item->idx ?>" class="send_cancel refuse"></a></span>
                                 </div>
                             </form>
                         </div>
@@ -108,26 +108,66 @@
             <div class="friend_list">
                 <ul>
                     <?php foreach($recommend_list as $item) { ?>
-                    <li>
-                        <div class="friend_profile">
-                            <form action="/friend/question" method="post">
-                                <img src="/images/default_profile.jpg" alt="추천친구 프로필 이미지">
-                                <input type="hidden" value="<?= $item->idx ?>" name="ridx">
-                                <span><?= $item->name ?></span>
-                                <div class="recommend_btn">
-                                    <span class="refuse ti-close"></span>
-                                    <span class="ti-check"><input type="submit" value="" class="accept recommend_submit"></span>
+                        <?php if($item->idx != user()->idx) { ?>
+                            <li>
+                                <div class="friend_profile">
+                                    <form action="/friend/question" method="post">
+                                        <img src="/images/default_profile.jpg" alt="추천친구 프로필 이미지">
+                                        <input type="hidden" value="<?= $item->idx ?>" name="ridx">
+                                        <span><?= $item->name ?></span>
+                                        <div class="recommend_btn">
+                                            <span class="refuse ti-close"></span>
+                                            <span class="ti-check"><input type="submit" value="" class="accept recommend_submit"></span>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </div>
-                    </li>
+                            </li>
+                        <?php } ?>
                     <?php } ?>
                 </ul>
             </div>
         </div>
         <div class="note content">
             <div class="note_button">
-                <a href="">새 쪽지 작성</a>
+                <a href="javascript:return false;" class="open_message">새 쪽지 작성</a>
+            </div>
+            <span>보낸 쪽지함 <span id="send_msg_cnt"><?= $send_msg_cnt ?></span></span>
+            <div class="message_list">
+                <ul>
+                    <?php foreach($send_msg_list as $item) { ?>
+                        <li>
+                            <div class="send_profile">
+                                <form>
+                                    <img src="/images/default_profile.jpg" alt="보낸 쪽지함 프로필 이미지">
+                                    <input type="hidden" value="<?= $item->idx ?>" name="ridx">
+                                    <div class="send_info">
+                                        <span><?= $item->receiver ?></span>
+                                        <span class="send_date"><?= $item->date ?></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <span>받은 쪽지함 <span id="receive_msg_cnt"><?= $receive_msg_cnt ?></span></span>
+            <div class="message_list">
+                <ul>
+                    <?php foreach($receive_msg_list as $item) { ?>
+                        <li>
+                            <div class="send_profile">
+                                <form>
+                                    <img src="/images/default_profile.jpg" alt="받은 쪽지함 프로필 이미지">
+                                    <input type="hidden" value="<?= $item->idx ?>" name="ridx">
+                                    <div class="send_info">
+                                        <span><?= $item->writer ?></span>
+                                        <span class="send_date"><?= $item->date ?></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    <?php } ?>
+                </ul>
             </div>
         </div>
     </div>
@@ -245,15 +285,47 @@
     </div>
 </div>
 
+
+<div class="cover_wrapper_msg">
+    <div class="message_write">
+        <div class="message_top">
+            <h3>새쪽지 작성</h3>
+            <button type="button" id="message_cancel"><span class="ti-close"></span></button>
+        </div>
+        <form action="/message" method="post" class="message_form">
+            <input type="text" name="receiver" placeholder="받는사람" class="post_input" readonly>
+            <!-- <span class="ti-close close_person"></span> -->
+            <div class="friend_list">
+                <ul>
+                    <?php foreach($friend_list as $item) { ?>
+                        <li>
+                            <div class="friend_profile">
+                                <a href="javascript:return false;">
+                                    <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                    <span class="message_name"><?= $item->name ?></span>
+                                    <input type="hidden" value="<?= $item->idx ?>" name="message_ridx" class="message_ridx">                                </a>    
+                            </div>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <textarea name="message_input" id="message_input" cols="30" rows="10"></textarea>
+            <div class="btn_group">
+                <input type="submit" value="보내기" id="message_post">
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="cover_wrapper">
     <div class="modify_write">
         <form action="/modify" method='post'>
             <input type="hidden" value="" name="pidx" class="pidx">
             <textarea name="modify_input" id="modify_input" cols="30" rows="10" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요."></textarea>
-                <div class="btn_group">
-                    <button type="button" id="modify_cancel">취소</button>
-                    <input type="submit" value="올리기" id="modify_post">
-                </div>
+            <div class="btn_group">
+                <button type="button" id="modify_cancel">취소</button>
+                <input type="submit" value="올리기" id="modify_post">
+            </div>
         </form>
     </div>
 </div>

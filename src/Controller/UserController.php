@@ -140,4 +140,18 @@ class UserController {
         move("/", "친구삭제 완료");
     }
 
+    # 쪽지 보내기
+    public function send_message() {
+        $user = $_SESSION['user'];
+        extract($_POST);
+        
+        $sql = DB::execute("INSERT INTO sns_msg(`qidx`, `ridx`, `content`, `writer`, `receiver`, `date`) VALUES (?, ?, ?, ?, ?, NOW())", [$user->idx, $message_ridx, $message_input, $user->name, $receiver]);
+
+        if(!$sql) {
+            back("DB 작업이 완료되지 않았습니다.");
+        }
+
+        move("/", "쪽지를 보냈습니다.");
+    }
+
 }

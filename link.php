@@ -46,5 +46,8 @@ Route::GET("/friend/send_cancel", "UserController@send_cancel");
 # 친구 삭제
 Route::GET("/friend/friend_delete", "UserController@delete_friend");
 
+# 쪽지 보내기
+Route::POST("/message", "UserController@send_message");
+
 Route::init();
 ?>

@@ -295,3 +295,19 @@ $(".modify").on("click", function(){
 // Drag & Drop
 
 // Drag & Drop 끝
+
+// 쪽지 보내기
+$(".open_message").on("click", function() {
+    $(".cover_wrapper_msg").fadeIn('fast');
+});
+$("#message_cancel").on("click", function() {
+    $(".cover_wrapper_msg").fadeOut('fast');
+});
+
+$(".friend_list > ul li").on("click", function() {
+    let uName = $(this).children().children().children(".message_name").text();
+    $(".post_input").val(uName);
+    $(".friend_list").fadeOut('fast');
+    $("#message_input").fadeIn('fast');
+});
+// 쪽지 보내기 끝
