@@ -154,4 +154,13 @@ class UserController {
         move("/", "쪽지를 보냈습니다.");
     }
 
+    # 쪽지 삭제
+    public function delete_message() {
+        $user = $_SESSION['user'];
+        extract($_GET);
+
+        
+
+        move("/", "쪽지를 삭제했습니다.");
+    }
 }

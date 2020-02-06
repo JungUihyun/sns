@@ -255,7 +255,7 @@ $("#note").on("click", function() {
 // 댓글 작성 ajax 끝
 
 // 게시글 메뉴 버튼 클릭
-$(".ti-more-alt").on("click", function() {
+$(".section > .ti-more-alt").on("click", function() {
     $(this).parent().children(".btnList").css("display", "inline-block");
     $(".ti-more-alt").css("color", "#989898");
 });
@@ -311,3 +311,33 @@ $(".friend_list > ul li").on("click", function() {
     $("#message_input").fadeIn('fast');
 });
 // 쪽지 보내기 끝
+
+// 쪽지 조회
+let cover = $(".cover_wrapper_msg_show");
+$(".message_list > ul li").on("click", function() {
+    cover.fadeIn('fast');
+    let msg_receiver = $(this).children().children().children().children(".msg_receiver").val();
+    let msg_content = $(this).children().children().children().children(".msg_content").val();
+
+    $(".friend_profile > .message_name").text(msg_receiver + "님에게");
+    $("#show_msg_input").text(msg_content);
+
+});
+
+$(".friend_profile > .ti-more-alt").on("click", function() {
+    $(this).parent().children(".delete_msg").css("display", "inline-block");
+    $(".ti-more-alt").css("color", "#989898");
+});
+
+$(document).on("click", function(e) {
+    if ( !$(e.target).hasClass("delete_msg") && !$(e.target).hasClass("ti-more-alt") ) {
+        $(".delete_msg").css("display", "none");
+        $(".ti-more-alt").css("color", "#c2c2c2");
+    }
+});
+
+$(".msg_cancel").on("click", function() {
+    cover.fadeOut('fast');
+});
+
+// 쪽지 조회 끝

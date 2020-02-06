@@ -136,16 +136,19 @@
                 <ul>
                     <?php foreach($send_msg_list as $item) { ?>
                         <li>
-                            <div class="send_profile">
-                                <form>
-                                    <img src="/images/default_profile.jpg" alt="보낸 쪽지함 프로필 이미지">
-                                    <input type="hidden" value="<?= $item->idx ?>" name="ridx">
-                                    <div class="send_info">
-                                        <span><?= $item->receiver ?></span>
-                                        <span class="send_date"><?= $item->date ?></span>
-                                    </div>
-                                </form>
-                            </div>
+                            <a href="javascript:return false;" class="show_msg">
+                                <div class="send_profile">
+                                    <form>
+                                        <img src="/images/default_profile.jpg" alt="보낸 쪽지함 프로필 이미지">
+                                        <input type="hidden" value="<?= $item->content ?>" name="content" class="msg_content">
+                                        <input type="hidden" value="<?= $item->receiver ?>" class="msg_receiver">
+                                        <div class="send_info">
+                                            <span><?= $item->receiver ?></span>
+                                            <span class="send_date"><?= $item->date ?></span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </a>
                         </li>
                     <?php } ?>
                 </ul>
@@ -285,7 +288,7 @@
     </div>
 </div>
 
-
+<!-- 쪽지작성 틀 -->
 <div class="cover_wrapper_msg">
     <div class="message_write">
         <div class="message_top">
@@ -316,7 +319,34 @@
         </form>
     </div>
 </div>
+<!-- 쪽지작성 틀 끝 -->
 
+<!-- 쪽지 조회 -->
+<div class="cover_wrapper_msg_show">
+    <div class="message_write">
+        <div class="message_top">
+            <h3>보낸쪽지</h3>
+            <button type="button" id="message_cancel" class="msg_cancel"><span class="ti-close"></span></button>
+        </div>
+        <div class="friend_profile">
+            <a href="">
+                <img src="/images/default_profile.jpg">
+            </a>
+            <span class="message_name"></span>
+            <span class="ti-more-alt"></span>
+            <div class="delete_msg">
+                <a href="/delete_msg">삭제하기</a>
+            </div>
+        </div>
+        <textarea name="message_input" readonly id="show_msg_input" cols="30" rows="10"></textarea>
+        <div class="btn_group">
+            <input type="submit" value="답장" id="message_post">
+        </div>
+    </div>
+</div>
+<!-- 쪽지 조회 끝 -->
+
+<!-- 글쓰기 수정 -->
 <div class="cover_wrapper">
     <div class="modify_write">
         <form action="/modify" method='post'>
@@ -329,6 +359,7 @@
         </form>
     </div>
 </div>
+<!-- 글쓰기 수정 끝 -->
 
 <script>
     // dateFormat(dateString);

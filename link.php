@@ -48,6 +48,8 @@ Route::GET("/friend/friend_delete", "UserController@delete_friend");
 
 # 쪽지 보내기
 Route::POST("/message", "UserController@send_message");
+# 쪽지 조회
+Route::GET("/show_msg", "UserController@show_message");
 
 Route::init();
 ?>
