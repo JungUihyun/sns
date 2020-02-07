@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+
+		#drop-area {
+			width: 500px;
+			height: 500px;
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+<body>
+	<h3>File Drag & Drop Example</h3>
+
+	<input type="file" class="input-file" multiple="multiple" name='filename[]'>
+	<div id="drop-area"></div>
+	<div class="result"></div>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script>
+		const dropArea = $("#drop-area");
+
+		// dragenter : 드래그 요소가 특정 영역에 들어갔을 경우 호출
+		dropArea.on('dragenter', function(e) {
+			e.stopPropagation();
+			e.preventDefault();
+
+			dropArea.css('border-color', 'red');
+		});
+
+		// dragleave : 드래그 요소가 특정 영역에서 벗어났을 경우 호출
+		dropArea.on('dragleave', function(e) {
+			e.stopPropagation();
+			e.preventDefault();
+
+			dropArea.css('border-color', '#000');
+		});
+
+		// dragover : 드래그 요소가 특정 영역에 있을 경우 호출
+		dropArea.on('dragover', function(e) {
+			e.stopPropagation();
+			e.preventDefault();
+
+			dropArea.css('border-color', 'red');
+		});
+
+		// drop : 드래그 요소가 드롭되었을 경우 호출
+		dropArea.on('drop', function(e) {
+			e.stopPropagation();
+			e.preventDefault();
+
+			dropArea.css('background-color', 'red');
+
+			fileDropped(e);
+		});
+
+		// 파일을 drop했을 때
+		function fileDropped(e) {
+			let data = e.originalEvent.dataTransfer;
+
+
+			for ( let i = 0; i < data.files.length; i++ ) {
+				let file = data.files[i];
+
+				let reader = new FileReader();
+				reader.onload = function(event) {
+					$('.result').append(`<div>${file.name}</div>`);
+					$('.result').append(`<img src="${event.target.result}" alt="" />`);
+
+					console.log(file.name, event.target.result);
+					// 파일이름 (file.name)을 db에 저장하고 실제 파일은 php에 있는 move_uploaded_file 매서드 이용해서 서버에 업로드하면 될 듯 (ajax 필요)
+					// 유의사항은 파일이름에 idx, 등록일자 같은 고유한 값을 붙여서 넣어야 같은 이름의 이미지를 넣었을때 db가 꼬이는 일을 방지 할 수 있음
+				}
+				reader.readAsDataURL(file);
+			}
+		}
+
+		// input 에 직접 file 넣었을 때
+		$('input').on('change', function(e) {
+			let input = document.querySelector('.input-file');
+			for( let i = 0; i < input.files.length; i++ ) {
+				let reader = new FileReader();
+				reader.onload = function(e) {
+					$('.result').append(`<div>${input.files[i].name}</div>`);
+					$('.result').append(`<img src="${e.target.result}" alt="" />`);
+
+					console.log(input.files[i].name, e.target.result);
+				}
+				reader.readAsDataURL(input.files[i]);
+			}
+		});
+	</script>
+</body>
+</html>

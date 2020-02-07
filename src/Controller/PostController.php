@@ -10,12 +10,13 @@ class PostController {
         // $title = $_POST['title'];
         // $date = $_POST['date'];
         // $time = $_POST['time'];
-
         $content = $_POST['content'];
+        $file = $_FILES['file'];
 
-        if($content == "") {
-            back("필수 값이 비어있습니다.");
-        }
+        move_uploaded_file($file['tmp_name'], "./newFile/" . $file['name']);
+        // json(['success'=>true, 'name'=>$file['name']]);
+
+        var_dump($file);   
 
         // $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
 
@@ -24,10 +25,10 @@ class PostController {
         $result = DB::execute($sql, [$content, $user->name]);
 
         if(!$result) {
-            back("데이터베이스 입력중 오류 발생");
+            // back("데이터베이스 입력중 오류 발생");
         }
 
-        move("/", "성공적으로 입력되었습니다.");
+        // move("/", "성공적으로 입력되었습니다.");
     }
     
     # 글 수정

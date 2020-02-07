@@ -132,7 +132,7 @@
                 <a href="javascript:return false;" class="open_message">새 쪽지 작성</a>
             </div>
             <span>보낸 쪽지함 <span id="send_msg_cnt"><?= $send_msg_cnt ?></span></span>
-            <div class="message_list">
+            <div class="message_list first_list">
                 <ul>
                     <?php foreach($send_msg_list as $item) { ?>
                         <li>
@@ -154,14 +154,15 @@
                 </ul>
             </div>
             <span>받은 쪽지함 <span id="receive_msg_cnt"><?= $receive_msg_cnt ?></span></span>
-            <div class="message_list">
+            <div class="message_list second_list">
                 <ul>
                     <?php foreach($receive_msg_list as $item) { ?>
                         <li>
                             <div class="send_profile">
                                 <form>
                                     <img src="/images/default_profile.jpg" alt="받은 쪽지함 프로필 이미지">
-                                    <input type="hidden" value="<?= $item->idx ?>" name="ridx">
+                                    <input type="hidden" value="<?= $item->content ?>" name="content" class="msg_content">
+                                    <input type="hidden" value="<?= $item->writer ?>" class="msg_writer">
                                     <div class="send_info">
                                         <span><?= $item->writer ?></span>
                                         <span class="send_date"><?= $item->date ?></span>
@@ -179,13 +180,16 @@
 <div class="container">
     <div class="posting">
         <div class="write">
-            <form action="/write" method="post" id="writeForm">
-                <textarea id="write_input" name="content" cols="30" rows="10" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요."></textarea>
+            <form action="/write" method="post" id="writeForm" enctype="multipart/form-data" >
+                <textarea id="write_input" name="content" cols="30" rows="4" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요."></textarea>
+                <div class="drop-list">
+                    <!-- 파일 썸네일 -->
+                </div>
                 <div class="media">
                     <div class="type">
                         <ul>
                             <li>
-                                <input type="file" name="upImage" style="opacity: 0;" class="input_menu">
+                                <input type="file" name="upImage" multiple="multiple" style="opacity: 0;" class="input_menu upImage">
                                 <a href="" class="link_menu">
                                     <span class="txt_menu">
                                         <span class="ico ti-camera"></span>
@@ -194,7 +198,7 @@
                                 </a>
                             </li>
                             <li>
-                                <input type="file" name="upMusic" style="opacity: 0;" class="input_menu">
+                                <input type="file" name="upMusic" style="opacity: 0;" class="input_menu upMusic">
                                 <a href="" class="link_menu">
                                     <span class="txt_menu">
                                     <span class="ico ti-music-alt"></span>
@@ -203,7 +207,7 @@
                                 </a>
                             </li>
                             <li>
-                                <input type="file" name="link" style="opacity: 0;" class="input_menu">
+                                <input type="file" name="link" style="opacity: 0;" class="input_menu upLink">
                                 <a href="" class="link_menu">
                                     <span class="txt_menu">
                                         <span class="ico ti-link"></span>
@@ -217,8 +221,6 @@
                 <div class="btn_group">
                     <input type="reset" id="cancel" value="취소">
                     <input type="submit" value="올리기" id="post">
-                    <!-- <button id="cancel">취소</button> -->
-                    <!-- <button id="post" >올리기</button> -->
                 </div>
             </form>
         </div>
@@ -306,7 +308,8 @@
                                 <a href="javascript:return false;">
                                     <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
                                     <span class="message_name"><?= $item->name ?></span>
-                                    <input type="hidden" value="<?= $item->idx ?>" name="message_ridx" class="message_ridx">                                </a>    
+                                    <input type="hidden" value="<?= $item->idx ?>" name="message_ridx" class="message_ridx">
+                                </a>    
                             </div>
                         </li>
                     <?php } ?>
@@ -322,10 +325,8 @@
 <!-- 쪽지작성 틀 끝 -->
 
 <!-- 쪽지 조회 -->
-<div class="cover_
-
-\
-lass="message_write">
+<div class="cover_wrapper_msg_show">
+    <div class="message_write">
         <div class="message_top">
             <h3>보낸쪽지</h3>
             <button type="button" id="message_cancel" class="msg_cancel"><span class="ti-close"></span></button>
