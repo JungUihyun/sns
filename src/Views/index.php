@@ -236,7 +236,15 @@
                     </div>
                 </div>
                 <div class="post_content"><?= $item->content ?></div>
-                <div class="post_images">이미지들어가는곳 (없으면 비움)</div>
+                <div class="post_images">
+                    <button type="button" id="prev_btn" class="btn"><</button>
+                    <ul class="bxslider"> 
+                        <li><img src="/images/bg_1.jpg" /></li> 
+                        <li><img src="/images/bg_2.jpg" /></li> 
+                        <li><img src="/images/bg_3.jpg" /></li> 
+                    </ul>
+                    <button type="button" id="next_btn" class="btn">></button>
+                </div>
                 <?php if($_SESSION['user']->name == $item->writer) { ?>
                     <span class="ti-more-alt"></span>
                     <div class="btnList">

@@ -402,7 +402,7 @@ function loadThumbnail(files){
         let formData = new FormData();
         formData.append("file", x);
         $.ajax({
-            url:"/write",
+            url:"/writeeee",
             method:"post",
             processData: false,
             contentType: false,
@@ -470,18 +470,28 @@ $(function() {
     $("#sortable").sortable();
     $("#sortable").disableSelection();
 
-    $("#sortable").sortable({
+    $(".drop-list").sortable({
         placeholder:"itemBoxHighlight",
         start: function(event, ui) {
             ui.item.data('start_pos', ui.item.index());
-            console.log("asdf");
         },
         stop: function(event, ui) {
             let spos = ui.item.data('start_pos');
             let epos = ui.item.index();
             reorder();
-            console.log("asdf2");
         }
     });
 });
+
+function reorder() {
+    $(".itemBox").each(function(i, box) {
+        $(box).find(".itemNum").html(i + 1);
+    });
+}
 // 이미지 썸네일 위치바꿈 끝
+
+// 섹션 이미지 슬라이드
+$(document).ready(function(){ 
+    $('.bxslider').bxSlider(); 
+});
+// 섹션 이미지 슬라이드 끝
