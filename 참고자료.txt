@@ -28,4 +28,10 @@ addfriend
 user (테스트3)
 SELECT * FROM sns_users WHERE idx in ( SELECT qidx FROM sns_addfriend WHERE ridx = $user->idx );
 
+이미지 순서바꾸는 라이브러리
+<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" ></script>
 
+이미지 미리보기 라이브러리
+gu-upload

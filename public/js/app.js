@@ -59,7 +59,6 @@ $(".upImage").on('change', function() {
 });
 
 $(".write > form > textarea").focus(function () {
-
     $(".drop-list").animate({ "margin-top": "20px"}, 0);
     $(".drop-list").animate({ "margin-bottom": "110px"}, 0);        
     $(".media").animate({ bottom: "70px" }, 0);
@@ -351,7 +350,7 @@ $(".message_list.second_list > ul li").on("click", function() {
 // 이미지 업로드 (드래그앤드롭, input(file))
 
 $(".write .btn_group > #cancel").on("click", function () {
-    $(".fileThumb").fadeOut('fast');
+    $(".fileThumb").css("display","none");
     $(".fileThumb").val("");
 });
 
@@ -359,9 +358,7 @@ const dropZone = document.querySelector(".write");
 const dropList = document.querySelector(".drop-list");
 
 $(".write .btn_group > #cancel").on("click", function () {
-    $('.drop-list').children().fadeOut(500, function() {
-        $('.drop-list').empty();
-    });
+    $('.drop-list').empty();
 });
 
 dropZone.addEventListener("dragover", e => {
@@ -369,6 +366,7 @@ dropZone.addEventListener("dragover", e => {
 });
 
 dropZone.addEventListener("drop", e=>{
+    $(".write > form > textarea").focus();
     e.preventDefault();
 
     const files = Array.from(e.dataTransfer.files);
@@ -441,20 +439,20 @@ function loadFile(file){
     });
 }
 
-$(".upImage").on("change", function(e) {
-    let input = document.querySelector('.input-file');
+$('.upImage').on('change', function(e) {
+    let input = document.querySelector('.upImage');
     for( let i = 0; i < input.files.length; i++ ) {
         let reader = new FileReader();
         reader.onload = function(e) {
-            // $('.drop-list').append(`<div>${input.files[i].name}</div>`);
+            // $('.result').append(`<div>${input.files[i].name}</div>`);
             $('.drop-list').append(`<img src="${e.target.result}" alt="" />`);
 
             console.log(input.files[i].name, e.target.result);
         }
         reader.readAsDataURL(input.files[i]);
     }
-
 });
+
 // 이미지 업로드 (드래그앤드롭, input(file)) 끝
 
 // textarea 입력 자동 줄바꿈
@@ -466,3 +464,24 @@ $(".post_content").on('keydown keyup', function () {
 	$(this).height(1).height( $(this).prop('scrollHeight') );	
 });
 // textarea 입력 자동 줄바꿈 끝
+
+// 이미지 썸네일 위치바꿈
+$(function() {
+    $("#sortable").sortable();
+    $("#sortable").disableSelection();
+
+    $("#sortable").sortable({
+        placeholder:"itemBoxHighlight",
+        start: function(event, ui) {
+            ui.item.data('start_pos', ui.item.index());
+            console.log("asdf");
+        },
+        stop: function(event, ui) {
+            let spos = ui.item.data('start_pos');
+            let epos = ui.item.index();
+            reorder();
+            console.log("asdf2");
+        }
+    });
+});
+// 이미지 썸네일 위치바꿈 끝

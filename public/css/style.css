@@ -773,6 +773,12 @@ header {
     /* margin-top: 20px; */
     /* margin-bottom: 110px; */
 }
+
+.drop-list img {
+    /* display: inline-block; */
+    width: 100px;
+    height: 100px;
+}
 /* Container End */
 
 /* Modify */

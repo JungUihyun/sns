@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="js/gu-upload/css/guupload.css"/> 
 <link rel="stylesheet" href="/css/style.css">
 <?php 
     if(!isset($_SESSION['user'])) {
@@ -182,14 +183,14 @@
         <div class="write">
             <form action="/write" method="post" id="writeForm" enctype="multipart/form-data" >
                 <textarea id="write_input" name="content" cols="30" rows="4" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요."></textarea>
-                <div class="drop-list">
+                <div class="drop-list" id="sortable itemBoxWrap">
                     <!-- 파일 썸네일 -->
                 </div>
                 <div class="media">
                     <div class="type">
                         <ul>
                             <li>
-                                <input type="file" name="upImage" multiple="multiple" style="opacity: 0;" class="input_menu upImage">
+                                <input type="file" name="upImage" multiple style="opacity: 0;" id="addItem" class="input_menu upImage">
                                 <a href="" class="link_menu">
                                     <span class="txt_menu">
                                         <span class="ico ti-camera"></span>
@@ -198,7 +199,7 @@
                                 </a>
                             </li>
                             <li>
-                                <input type="file" name="upMusic" style="opacity: 0;" class="input_menu upMusic">
+                                <input type="file" name="upMusic" style="opacity: 0;" class="input_menu upMusic" multiple>
                                 <a href="" class="link_menu">
                                     <span class="txt_menu">
                                     <span class="ico ti-music-alt"></span>
@@ -207,7 +208,7 @@
                                 </a>
                             </li>
                             <li>
-                                <input type="file" name="link" style="opacity: 0;" class="input_menu upLink">
+                                <input type="file" name="link" style="opacity: 0;" class="input_menu upLink" multiple>
                                 <a href="" class="link_menu">
                                     <span class="txt_menu">
                                         <span class="ico ti-link"></span>
@@ -235,6 +236,7 @@
                     </div>
                 </div>
                 <div class="post_content"><?= $item->content ?></div>
+                <div class="post_images">이미지들어가는곳 (없으면 비움)</div>
                 <?php if($_SESSION['user']->name == $item->writer) { ?>
                     <span class="ti-more-alt"></span>
                     <div class="btnList">

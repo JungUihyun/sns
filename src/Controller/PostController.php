@@ -10,25 +10,59 @@ class PostController {
         // $title = $_POST['title'];
         // $date = $_POST['date'];
         // $time = $_POST['time'];
-        $content = $_POST['content'];
-        $file = $_FILES['file'];
 
-        move_uploaded_file($file['tmp_name'], "./newFile/" . $file['name']);
-        // json(['success'=>true, 'name'=>$file['name']]);
+        $content = nl2br($_POST['content']);
 
-        var_dump($file);   
+        if(isEmpty(trim($content) == "")) {
+            back("필수값이 누락되었습니다.");
+        }
 
-        // $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
+        // $file = $_FILES['upImage'];
 
         $sql = "INSERT INTO sns_boards (`content`, `writer`, `date`, `liked`, `commented`) VALUES(?, ?, NOW(), 0, 0)";
         // $result = DB::execute($sql, [$content, $user->id, $datetime]);
         $result = DB::execute($sql, [$content, $user->name]);
-
+        
         if(!$result) {
-            // back("데이터베이스 입력중 오류 발생");
+            back("데이터베이스 입력중 오류 발생");
         }
+        
+        // for($i = 0; $i < count($file['name']); $i++) {
+        //     $post_idx = DB::fetch("SELECT * FROM sns_boards ORDER BY id DESC LIMIT 0, 1")->idx;
+        //     $upload_idx = DB::fetch("SELECT * FROM uploads ORDER BY idx DESC LIMIT 0, 1")->idx;
+        //     $name = $file['name'][$i];
+        //     $directory = "./newFile/" . $upload_idx . $file['name'][$i];
 
-        // move("/", "성공적으로 입력되었습니다.");
+        //     echo "<pre>";
+        //     var_dump($post_idx . $upload_idx . $name . $directory);
+        //     echo "</pre>";
+
+        //     // upload
+        //     move_uploaded_file($file['tmp_name'][$i], $directory);    
+
+        //     if(explode("/", $file['type'][$i])[0] == "image") {
+        //         // if Image
+        //         if($_FILES['upImage']['size'][$i] >= 1024 * 1024 * 10) back("10MB 미만의 파일만 받을 수 있습니다.");
+
+        //         $sql = DB::execute("INSERT INTO sns_uploads(`pidx`, `name`, `directory`, `type`) VALUES (?, ?, ?, ?)", $post_idx, $name, $directory, 1);
+
+        //         if(!$sql) {
+        //             back("이미지 전송 중 오류 발생");
+        //         }
+
+        //     } else {
+        //         // if File
+        //         if($_FILES['upImage']['size'][$i] >= 1024 * 1024 * 50) back("50MB 미만의 파일만 받을 수 있습니다.");
+
+        //         $sql = DB::execute("INSERT INTO sns_uploads(`pidx`, `name`, `directory`, `type`) VALUES (?, ?, ?, ?)", $post_idx, $name, $directory, 0);
+                
+        //         if(!$sql) {
+        //             back("파일 전송 중 오류 발생");
+        //         }
+        //     }
+        // }
+        
+        back("성공적으로 입력되었습니다.");
     }
     
     # 글 수정
@@ -55,7 +89,7 @@ class PostController {
             back("데이터베이스 수정중 오류 발생");
         }
 
-        move("/", "성공적으로 수정되었습니다.");
+        back("성공적으로 수정되었습니다.");
     }
 	
     # 글 삭제
@@ -82,7 +116,7 @@ class PostController {
             back("데이터베이스 삭제중 오류 발생");
         }
 
-        move("/", "성공적으로 삭제되었습니다.");
+        back("성공적으로 삭제되었습니다.");
     }
 
     # 글 리스트 출력
@@ -120,7 +154,7 @@ class PostController {
             back("데이터베이스 입력중 오류 발생");
         }
 
-        move("/", "성공적으로 입력되었습니다.");
+        back("성공적으로 입력되었습니다.");
     }
 
     # 댓글 수정
@@ -139,7 +173,7 @@ class PostController {
             back("데이터베이스 삭제 중 오류 발생");
         }
 
-        move("/", "댓글 삭제 완료");
+        back("댓글 삭제 완료");
     }
 
     # 글 좋아요
@@ -156,7 +190,7 @@ class PostController {
                 back("데이터베이스 삭제 중 오류 발생");
             }
 
-            move("/", "좋아요를 취소하였습니다.");
+            back("좋아요를 취소하였습니다.");
         } else {
             $sql = "INSERT INTO sns_like (`pidx`, `uidx`) VALUES (?, ?)";
             $result = DB::execute($sql, [$id, $user->idx]);
@@ -169,7 +203,7 @@ class PostController {
             }
         }
 
-        move("/", "좋아요 투척");
+        back("좋아요 투척");
     }
     
 
