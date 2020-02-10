@@ -19,7 +19,7 @@ function changeText() {
     if(i > 2) {
         i = 0;
     }
-    
+
     $(".intro > img").attr('src', '/images/' + texts[i]);
 }
 
@@ -103,7 +103,7 @@ $(".write > form > textarea").focus(function () {
 
 $(".write .btn_group > #post").on("click", function() {
     $(".drop-list").empty();
-    $(".write > form > textarea").text("");
+    $(".write > form > textarea").val("");
 });
 
 $(".write .btn_group > #cancel").on("click", function () {
