@@ -1,4 +1,3 @@
-<link rel="stylesheet" type="text/css" href="js/gu-upload/css/guupload.css"/> 
 <link rel="stylesheet" href="/css/style.css">
 <?php 
     if(!isset($_SESSION['user'])) {
@@ -30,10 +29,10 @@
 
 <div id="side">
     <div class="profile">
-        <a href="/profile?id=<?= $_SESSION['user']->id ?>" class="link_img">
+        <a href="/profile?name=<?= $_SESSION['user']->name ?>" class="link_img">
             <img src="/images/default_profile.jpg" alt="profile_img">
         </a> 
-        <a href="/profile" class="link_name"><?= $_SESSION['user']->name ?></a>
+        <a href="/profile?name=<?= $_SESSION['user']->name ?>" class="link_name"><?= $_SESSION['user']->name ?></a>
     </div>
 
     <div class="side_button">
@@ -50,7 +49,7 @@
                 <ul>
                     <?php foreach($question_list as $item) { ?>
                         <li>
-                            <div class="friend_profile">
+                            <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
                                 <form action="/friend/receive" method="post">
                                     <input type="hidden" value="<?= $item->idx ?>" name="question_qidx">
                                     <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
@@ -70,12 +69,12 @@
                 <ul>
                     <?php foreach($friend_list as $item) { ?>
                         <li>
-                            <div class="friend_profile">
-                                <form action="">
+                            <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
+                                <form>
                                     <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
                                     <span><?= $item->name ?></span>
                                     <div class="recommend_btn">
-                                        <span class="refuse ti-close"><a href="/friend/friend_delete"></a></span>
+                                        <span class="refuse ti-close"><a href="/friend/friend_delete?idx=<?= $item->idx ?>"></a></span>
                                         <input type="submit" value="" class="accept recommend_submit"><span class="ti-check"></span>
                                     </div>
                                 </form>
@@ -91,7 +90,7 @@
                 <ul>
                     <?php foreach($send_list as $item) { ?>
                     <li>
-                        <div class="friend_profile">
+                        <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
                             <form>
                                 <img src="/images/default_profile.jpg" alt="보낸친구 프로필 이미지">
                                 <input type="hidden" value="<?= $item->idx ?>" name="ridx">
@@ -111,7 +110,7 @@
                     <?php foreach($recommend_list as $item) { ?>
                         <?php if($item->idx != user()->idx) { ?>
                             <li>
-                                <div class="friend_profile">
+                                <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
                                     <form action="/friend/question" method="post">
                                         <img src="/images/default_profile.jpg" alt="추천친구 프로필 이미지">
                                         <input type="hidden" value="<?= $item->idx ?>" name="ridx">
@@ -190,7 +189,7 @@
                     <div class="type">
                         <ul>
                             <li>
-                                <input type="file" name="upImage" multiple style="opacity: 0;" id="addItem" class="input_menu upImage">
+                                <input type="file" name="upImage[]" multiple style="opacity: 0;" id="addItem" class="input_menu upImage">
                                 <a href="" class="link_menu">
                                     <span class="txt_menu">
                                         <span class="ico ti-camera"></span>
@@ -236,15 +235,17 @@
                     </div>
                 </div>
                 <div class="post_content"><?= $item->content ?></div>
-                <div class="post_images">
-                    <button type="button" id="prev_btn" class="btn"><</button>
-                    <ul class="bxslider"> 
-                        <li><img src="/images/bg_1.jpg" /></li> 
-                        <li><img src="/images/bg_2.jpg" /></li> 
-                        <li><img src="/images/bg_3.jpg" /></li> 
-                    </ul>
-                    <button type="button" id="next_btn" class="btn">></button>
-                </div>
+                <?php if(!empty($item->images)) { ?>
+                    <div class="post_images">
+                        <button type="button" id="prev_btn" class="btn"><</button>
+                        <ul class="slider">
+                            <?php foreach($item->images as $image) { ?>
+                                <li><img src="<?= $image->directory ?>"/></li> 
+                            <?php } ?>
+                        </ul>
+                        <button type="button" id="next_btn" class="btn">></button>
+                    </div>
+                <?php } ?>
                 <?php if($_SESSION['user']->name == $item->writer) { ?>
                     <span class="ti-more-alt"></span>
                     <div class="btnList">

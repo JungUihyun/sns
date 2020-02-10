@@ -202,6 +202,13 @@ header {
     width: 100%;
     height: 40px;
     margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.friend_list > ul li a {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 .friend_profile {
@@ -782,28 +789,27 @@ header {
 }
 
 .section > .post_images {
-    background-color: #999;
-    border: 1px solid black;
     width: 490px;
     height: 490px;
     position: relative;
+    overflow: hidden;
 }
 
-.post_images > .bxslider {
-    width: 100%;
+.post_images > .slider {
+    width: auto;
     height: 100%;
-    position: relative;
+    position: absolute;
     display: flex;
 }
 
-.post_images > .bxslider li {
-    position: absolute;
-    width: 100%;
+.post_images > .slider li {
+    width: 490px;
     height: 100%;
+    top: 0;
+    left: 0;
 }
 
-.post_images > .bxslider img {
-    display: inline-block;
+.post_images > .slider img {
     width: 100%;
     height: 100%;
 }
@@ -813,20 +819,15 @@ header {
     top: 50%;
     width: 26px;
     height: 26px;
+    z-index: 10;
 }
 
 .post_images > #prev_btn {
-    position: absolute;
-    top: 50%;
     left: 0;
-    z-index: 10;
 }
 
 .post_images > #next_btn {
-    position: absolute;
-    top: 50%;
     right: 0;
-    z-index: 10;
 }
 /* Container End */
 
@@ -1018,10 +1019,6 @@ header {
 
 .message_top > #message_cancel {
     cursor: pointer;
-}
-
-.message_form .friend_list {
-    /* display: none; */
 }
 
 .message_form > textarea {

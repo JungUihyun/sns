@@ -30,7 +30,7 @@
 
 <div id="side">
     <div class="profile">
-        <a href="/profile?id=<?= $_SESSION['user']->id ?>" class="link_img">
+        <a href="/profile?name=<?= $_SESSION['user']->name ?>" class="link_img">
             <img src="/images/default_profile.jpg" alt="profile_img">
         </a> 
         <a href="/profile" class="link_name"><?= $_SESSION['user']->name ?></a>
@@ -50,7 +50,7 @@
                 <ul>
                     <?php foreach($question_list as $item) { ?>
                         <li>
-                            <div class="friend_profile">
+                            <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
                                 <form action="/friend/receive" method="post">
                                     <input type="hidden" value="<?= $item->idx ?>" name="question_qidx">
                                     <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
@@ -70,7 +70,7 @@
                 <ul>
                     <?php foreach($friend_list as $item) { ?>
                         <li>
-                            <div class="friend_profile">
+                            <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
                                 <form action="">
                                     <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
                                     <span><?= $item->name ?></span>
@@ -91,7 +91,7 @@
                 <ul>
                     <?php foreach($send_list as $item) { ?>
                     <li>
-                        <div class="friend_profile">
+                        <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
                             <form>
                                 <img src="/images/default_profile.jpg" alt="보낸친구 프로필 이미지">
                                 <input type="hidden" value="<?= $item->idx ?>" name="ridx">
@@ -111,7 +111,7 @@
                     <?php foreach($recommend_list as $item) { ?>
                         <?php if($item->idx != user()->idx) { ?>
                             <li>
-                                <div class="friend_profile">
+                                <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
                                     <form action="/friend/question" method="post">
                                         <img src="/images/default_profile.jpg" alt="추천친구 프로필 이미지">
                                         <input type="hidden" value="<?= $item->idx ?>" name="ridx">
@@ -184,7 +184,7 @@
         <div class="myStory">
             <div class="name">
                 <img src="/images/default_profile.jpg" alt="프로필 사진">
-                <span><?= $_SESSION['user']->name ?></span>
+                <span><?= $name ?></span>
             </div>
             <div class="menu_story">
                 <ul>
@@ -272,7 +272,7 @@
                         <li>
                             <span class="ti-pencil"></span>
                             <span class="story">스토리</span>
-                            <h4>12</h4>
+                            <h4><?= $cnt ?></h4>
                         </li>
                     </ul>
                 </div>
@@ -298,7 +298,7 @@
                 <ul>
                     <?php foreach($friend_list as $item) { ?>
                         <li>
-                            <div class="friend_profile">
+                            <div class="friend_profile" >
                                 <a href="javascript:return false;">
                                     <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
                                     <span class="message_name"><?= $item->name ?></span>
@@ -325,8 +325,8 @@
             <h3>보낸쪽지</h3>
             <button type="button" id="message_cancel" class="msg_cancel"><span class="ti-close"></span></button>
         </div>
-        <div class="friend_profile">
-            <a href="">
+        <div class="friend_profile" >
+            <a href="/profile">
                 <img src="/images/default_profile.jpg">
             </a>
             <span class="message_name"></span>

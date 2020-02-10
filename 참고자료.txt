@@ -20,8 +20,6 @@ idx qidx ridx date
 Question - 요청
 Receive - 수락
 
-
-테스트2가 테스트3한테 친구요청을 보냄
 addfriend
 14  ->    13
 
@@ -35,3 +33,5 @@ SELECT * FROM sns_users WHERE idx in ( SELECT qidx FROM sns_addfriend WHERE ridx
 
 이미지 미리보기 라이브러리
 gu-upload
+
+moment.js

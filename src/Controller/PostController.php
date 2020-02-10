@@ -13,7 +13,7 @@ class PostController {
 
         $content = nl2br($_POST['content']);
 
-        if(isEmpty(trim($content) == "")) {
+        if($content == "") {
             back("필수값이 누락되었습니다.");
         }
 
@@ -26,22 +26,21 @@ class PostController {
         if(!$result) {
             back("데이터베이스 입력중 오류 발생");
         }
-        
+
         for($i = 0; $i < count($file['name']); $i++) {
-            $post_idx = DB::fetch("SELECT * FROM sns_boards ORDER BY id DESC LIMIT 0, 1")->idx;
+            $post_idx = DB::fetch("SELECT * FROM sns_boards ORDER BY id DESC LIMIT 0, 1")->id;
             $upload_idx = DB::fetch("SELECT * FROM sns_uploads ORDER BY idx DESC LIMIT 0, 1")->idx;
             $name = $file['name'][$i];
             $directory = "./newFile/" . $upload_idx . $file['name'][$i];
-
+        
             // upload
-            move_uploaded_file($file['tmp_name'][$i], $directory);    
-
+            move_uploaded_file($file['tmp_name'][$i], $directory);
+            
             if(explode("/", $file['type'][$i])[0] == "image") {
                 // if Image
                 if($_FILES['upImage']['size'][$i] >= 1024 * 1024 * 10) back("10MB 미만의 파일만 받을 수 있습니다.");
 
-                $sql = DB::execute("INSERT INTO sns_uploads(`pidx`, `name`, `directory`, `type`) VALUES (?, ?, ?, ?)", $post_idx, $name, $directory, 1);
-                echo "이미지 입력";
+                $sql = DB::execute("INSERT INTO sns_uploads(`pidx`, `name`, `directory`, `type`) VALUES (?, ?, ?, ?)", [$post_idx, $name, $directory, 1]);
 
                 if(!$sql) {
                     back("이미지 전송 중 오류 발생");
@@ -51,7 +50,7 @@ class PostController {
                 // if File
                 if($_FILES['upImage']['size'][$i] >= 1024 * 1024 * 50) back("50MB 미만의 파일만 받을 수 있습니다.");
 
-                $sql = DB::execute("INSERT INTO sns_uploads(`pidx`, `name`, `directory`, `type`) VALUES (?, ?, ?, ?)", $post_idx, $name, $directory, 0);
+                $sql = DB::execute("INSERT INTO sns_uploads(`pidx`, `name`, `directory`, `type`) VALUES (?, ?, ?, ?)", [$post_idx, $name, $directory, 0]);
                 
                 echo "파일 입력";
 
@@ -60,7 +59,6 @@ class PostController {
                 }
             }
         }
-        
         back("성공적으로 입력되었습니다.");
     }
     
@@ -110,8 +108,10 @@ class PostController {
         $result = DB::execute($sql, [$id]);
         $sql2 = "DELETE FROM sns_comments WHERE pidx = ?";
         $result2 = DB::execute($sql2, [$id]);
+        $sql3 = "DELETE FROM sns_uploads WHERE pidx = ?";
+        $result3 = DB::execute($sql3, [$id]);
 
-        if(!$result || !$result2) {
+        if(!$result || !$result2 || !$result3) {
             back("데이터베이스 삭제중 오류 발생");
         }
 
@@ -166,8 +166,8 @@ class PostController {
         $pidx = $_GET['id'];
 
         $update = DB::execute("UPDATE sns_boards SET commented = commented - 1 WHERE id = ?", [$pidx]);
-        $sql = DB::fetch("DELETE FROM sns_comments WHERE pidx = ? AND uidx = ?", [$pidx, $user->idx]);
-
+        $sql = DB::execute("DELETE FROM sns_comments WHERE pidx = ? AND uidx = ?", [$pidx, $user->idx]);
+        
         if(!$update || !$sql) {
             back("데이터베이스 삭제 중 오류 발생");
         }

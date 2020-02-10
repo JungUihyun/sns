@@ -1,3 +1,8 @@
+$(function() {
+    let randomBG = Math.floor((Math.random() * 11) + 1);
+    $(".myStory").css("background-image","url(/images/bg" + randomBG + ".jpg)");
+});
+
 // 아이디 기억
 $(document).ready(function () {
     // 저장된 쿠키값을 가져와서 ID칸에 넣음. 없으면 공백
@@ -63,6 +68,11 @@ $(".write > form > textarea").focus(function () {
     $(".drop-list").animate({ "margin-bottom": "110px"}, 0);        
     $(".media").animate({ bottom: "70px" }, 0);
     $(".write .btn_group").css('display', 'block');
+});
+
+$(".write .btn_group > #post").on("click", function() {
+    $(".drop-list").empty();
+    $(".write > form > textarea").text("");
 });
 
 $(".write .btn_group > #cancel").on("click", function () {
@@ -361,7 +371,7 @@ $(".write .btn_group > #cancel").on("click", function () {
     $('.drop-list').empty();
 });
 
-dropZone.addEventListener("dragover", e => {
+dropZone.addEventListener("dragover", e=>{
     e.preventDefault();
 });
 
@@ -401,16 +411,16 @@ function loadThumbnail(files){
 
         let formData = new FormData();
         formData.append("file", x);
-        $.ajax({
-            url:"/writeeee",
-            method:"post",
-            processData: false,
-            contentType: false,
-            data:formData,
-            success:(result)=>{
-                console.log(result);
-            }
-        });
+        // $.ajax({
+        //     url:"/writeeee",
+        //     method:"post",
+        //     processData: false,
+        //     contentType: false,
+        //     data:formData,
+        //     success:(result)=>{
+        //         console.log(result);
+        //     }
+        // });
     });
 }
 
@@ -491,7 +501,29 @@ function reorder() {
 // 이미지 썸네일 위치바꿈 끝
 
 // 섹션 이미지 슬라이드
-$(document).ready(function(){ 
-    $('.bxslider').bxSlider(); 
+$(document).ready(function(){
+    let w = 490;
+    let idx = 0;
+
+    let position = 0;
+
+    $("#next_btn").on("click", function() {
+        position += w;
+        $(this).parent().children(".slider").animate({ 'left': position});
+    });
+
+    $("#prev_btn").on("click", function() {
+        position += 490;
+        $(this).parent().children(".slider").animate({ 'left': position});
+    });
 });
 // 섹션 이미지 슬라이드 끝
+
+// 로그인 배경화면
+
+
+// 로그인 배경화면 끝
+
+// 프로필 배경사진
+
+// 프로필 배경사진 끝

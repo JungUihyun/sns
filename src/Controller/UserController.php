@@ -129,9 +129,10 @@ class UserController {
     # 친구삭제
     public function delete_friend() {
         $user = $_SESSION['user'];
+        $friend = $_GET['idx'];
 
-        $result1 = DB::execute("DELETE FROM sns_friends WHERE qidx = ?", [$user->idx]);
-        $result2 = DB::execute("DELETE FROM sns_friends WHERE ridx = ?", [$user->idx]);
+        $result1 = DB::execute("DELETE FROM sns_friends WHERE qidx = ? AND ridx = ?", [$user->idx, $friend]);
+        $result2 = DB::execute("DELETE FROM sns_friends WHERE ridx = ? AND qidx = ?", [$user->idx, $friend]);
 
         if(!$result1 || !$result2) {
             back("DB 작업이 완료되지 않았습니다.");
