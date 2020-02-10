@@ -18,17 +18,42 @@ a {
     background-repeat: no-repeat;
 }
 
+.intro {
+    width: 100%;
+    height: 93px;
+    margin-bottom: 25px;
+}
+
+.intro .msg {
+    max-width: 100%;
+    height: 93px;
+    display: block;
+    z-index: 28;
+}
+
+#bg {
+    height: 100%;
+    width: 100%;
+}
+
 #bg img {
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
     top: 0px;
-    /* display: none; */
-    z-index: -3;
+    z-index: 8;
 }
 
+#bg .bg.active {
+    z-index: 10;
+    opacity: 1;
+}
 
+#bg .bg.last-active {
+    z-index: 9;
+}
 
 #logo {
     position: absolute;
@@ -55,21 +80,10 @@ a {
 }
 
 #pageLogin {
+    z-index: 20;
     width: 380px;
     height: 43%;
     /* background-color: #eee; */
-}
-
-.intro {
-    width: 100%;
-    height: 93px;
-    margin-bottom: 25px;
-}
-
-.intro > #msg {
-    max-width: 100%;
-    height: 93px;
-    z-index: 5;
 }
 
 #login-form {

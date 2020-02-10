@@ -1,3 +1,34 @@
+// 로그인 배경화면
+function slideSwitch() {
+    let $active = $('#bg .bg.active');
+    if ($active.length == 0) $active = $('#bg .bg:last');
+
+    let $next = $active.next().length ? $active.next() : $('#bg .bg:first');
+
+    $active.addClass('last-active');
+    $next.css({ opacity: 0 }).addClass('active').animate({ opacity: 1.0 }, 500, function () {
+        $active.removeClass('active last-active');
+    });
+}
+
+let texts = ['msg1.png', 'msg2.png', 'msg3.png'];
+let i = 0;
+function changeText() {
+    i++;
+
+    if(i > 2) {
+        i = 0;
+    }
+    
+    $(".intro > img").attr('src', '/images/' + texts[i]);
+}
+
+$(function () {
+    setInterval("changeText()", 5000);
+    setInterval("slideSwitch()", 5000);
+});    
+// 로그인 배경화면 끝
+
 $(function() {
     let randomBG = Math.floor((Math.random() * 11) + 1);
     $(".myStory").css("background-image","url(/images/bg" + randomBG + ".jpg)");
@@ -501,28 +532,26 @@ function reorder() {
 // 이미지 썸네일 위치바꿈 끝
 
 // 섹션 이미지 슬라이드
-$(document).ready(function(){
-    let w = 490;
-    let idx = 0;
-
-    let position = 0;
-
-    $("#next_btn").on("click", function() {
-        position += w;
-        $(this).parent().children(".slider").animate({ 'left': position});
-    });
+$(function() {
+    let position = 1;
 
     $("#prev_btn").on("click", function() {
-        position += 490;
-        $(this).parent().children(".slider").animate({ 'left': position});
+        if(1 < position) {
+            $(this).parent().children('.slider').animate({ left: "+=490px" }, 300);
+            position--;
+        }
+    });
+
+    $("#next_btn").on("click", function() {
+        if($(this).parent().children().children('li').length > position) {
+            $(this).parent().children('.slider').animate({ left: "-=490px" }, 300);
+            position++;
+        }
     });
 });
 // 섹션 이미지 슬라이드 끝
 
-// 로그인 배경화면
 
-
-// 로그인 배경화면 끝
 
 // 프로필 배경사진
 

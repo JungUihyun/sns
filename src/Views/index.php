@@ -237,13 +237,13 @@
                 <div class="post_content"><?= $item->content ?></div>
                 <?php if(!empty($item->images)) { ?>
                     <div class="post_images">
-                        <button type="button" id="prev_btn" class="btn"><</button>
+                        <button type="button" id="prev_btn" class="btn"><span class="ti-angle-left"></span></button>
                         <ul class="slider">
                             <?php foreach($item->images as $image) { ?>
                                 <li><img src="<?= $image->directory ?>"/></li> 
                             <?php } ?>
                         </ul>
-                        <button type="button" id="next_btn" class="btn">></button>
+                        <button type="button" id="next_btn" class="btn"><span class="ti-angle-right"></span></button>
                     </div>
                 <?php } ?>
                 <?php if($_SESSION['user']->name == $item->writer) { ?>

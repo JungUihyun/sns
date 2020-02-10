@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+</head>
+<style>
+    #bg {
+        position:relative;
+        height:385px;
+    }
+
+    #bg img {
+        position:absolute;
+        top:0;
+        left:0;
+        z-index:8;
+        opacity:0.0;
+        height: 385px;
+        background-color: #FFF;
+    }
+
+    #bg .bg.active {
+        z-index:10;
+        opacity:1.0;
+    }
+
+    #bg .bg.last-active {
+        z-index:9;
+    }
+
+    #bg img {
+        height: 385px;
+        display: block;
+        border: 0;
+        margin-bottom: 10px;
+    }
+</style>
+<body>
+    <div id="bg">
+        <img src="bg_1.jpg" alt="bg1" class="bg active">
+        <img src="bg_2.jpg" alt="bg2" class="bg">
+        <img src="bg_3.jpg" alt="bg3" class="bg">
+        <img src="bg_4.jpg" alt="bg4" class="bg">
+    </div>
+
+    <div class="boxstyle_01" id="Rolling" >
+        <!-- style css값과 동일한 id 값 입력 -->
+        <div class="active">
+          <a href="#" target="_blank"><img src="http://placehold.it/199x199" alt="BannerTest1"></a>
+        </div>
+        <div>
+          <a href="#" target="_blank"><img src="http://placehold.it/199x199/000000" alt="BannerTest2"></a>
+        </div> 
+      </div>
+    
+
+
+    <script>
+        function slideSwitch() {
+            let $active = $('#bg .bg.active');
+            if ($active.length == 0) $active = $('#bg .bg:last');
+
+            let $next = $active.next().length ? $active.next() : $('#bg .bg:first');
+
+            $active.addClass('last-active');
+            $next.css({ opacity: 0.0 })
+                .addClass('active')
+                .animate({ opacity: 1.0 }, 500, function () {
+                $active.removeClass('active last-active');
+            });
+        }
+
+        $(function () {
+            setInterval("slideSwitch()", 5000);
+        });    
+    </script>
+</body>
+</html>

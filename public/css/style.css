@@ -796,17 +796,18 @@ header {
 }
 
 .post_images > .slider {
-    width: auto;
     height: 100%;
     position: absolute;
+    top: 0;
+    left: 0;
     display: flex;
+    width: auto;
 }
 
 .post_images > .slider li {
     width: 490px;
     height: 100%;
-    top: 0;
-    left: 0;
+    display: inline-block;
 }
 
 .post_images > .slider img {
@@ -816,10 +817,15 @@ header {
 
 .post_images > .btn {
     position: absolute;
-    top: 50%;
+    top: 45%;
     width: 26px;
     height: 26px;
     z-index: 10;
+    margin: 15px 10px;
+    background-color: rgba(0, 0, 0, 0.541);
+    color: #fff;
+    border: none;
+    font-size: 20px;
 }
 
 .post_images > #prev_btn {
