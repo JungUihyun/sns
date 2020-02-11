@@ -48,17 +48,23 @@ class MainController {
 				$comment_list = DB::fetchAll($comment_sql, [$board->id]);
 				$board->comments = $comment_list;
 
-				// foreach($board as $comments) {
-				// 	$c_p_img = DB::fetch("SELECT p_img FROM sns_users WHERE name = ?", [$comments->writer]);
-				// 	$comments->c_p_img = $c_p_img;
-				// }
-
 				$images = DB::fetchAll("SELECT * FROM sns_uploads WHERE pidx = ?", [$board->id]);
 				$board->images = $images;
 
 				$p_img = DB::fetch("SELECT p_img FROM sns_users WHERE name = ?", [$board->writer]);
 				$board->p_img = $p_img;
+
+				$c_p_img = DB::fetch("SELECT p_img FROM sns_users WHERE name = ?", [$comment_list->writer]);
+				$comment_list->c_p_img = $c_p_img;
+
+				echo "<pre>";
+				var_dump($comment_list=>writer);
+				var_dump($c_p_img);
+				echo "</pre>";
+				exit;
 			}
+
+			
 			
 			/* 추천친구 */
 			// $recommend_sql = "SELECT * FROM sns_users WHERE id NOT IN(" . $user->id . ") ORDER BY rand()";
@@ -97,7 +103,7 @@ class MainController {
 			$current_profile = DB::fetch("SELECT p_img FROM sns_users WHERE idx = ?", [$user->idx]);
 		}	
 
-		return view("index", [/* 'c_p_img' => $c_p_img,*/'p_img' => $p_img, 'current_profile' => $current_profile, 'images' => $images, 'receive_msg_list' => $receive_msg_list, 'receive_msg_cnt' => $receive_msg_cnt, 'send_msg_list' => $send_msg_list, 'send_msg_cnt' => $send_msg_cnt, 'send_list' => $send_list, 'send_cnt' => $send_cnt, 'friend_list' => $friend_list, 'friend_cnt' => $friend_cnt, 'question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'comment_cnt' => $comment_cnt, 'list' => $list, 'prev' => $prev, 'next' => $next, 'p' => $page]);
+		return view("index", ['c_p_img' => $c_p_img, 'p_img' => $p_img, 'current_profile' => $current_profile, 'images' => $images, 'receive_msg_list' => $receive_msg_list, 'receive_msg_cnt' => $receive_msg_cnt, 'send_msg_list' => $send_msg_list, 'send_msg_cnt' => $send_msg_cnt, 'send_list' => $send_list, 'send_cnt' => $send_cnt, 'friend_list' => $friend_list, 'friend_cnt' => $friend_cnt, 'question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'comment_cnt' => $comment_cnt, 'list' => $list, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 	# 404 페이지 이동

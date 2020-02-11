@@ -289,11 +289,11 @@
                                 <li>
                                     <div class="comment_profile">
                                         <div class="comment_info">
-                                            <?php if(!empty($item2->c_p_img->c_p_img)) { ?>
-                                                <img src="<?= $item2->c_p_img->c_p_img ?>" alt="프로필 이미지">
-                                            <?php } else { ?>
+                                            <!-- ?php if(!empty($item2->c_p_img)) { ?> -->
+                                                <!-- <img src="?= $item2->c_p_img ?>" alt="프로필 이미지"> -->
+                                            <!-- ?php } else { ?> -->
                                                 <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
-                                            <?php } ?>
+                                            <!-- ?php } ?> -->
                                             <span><?= $item2->writer ?></span>
                                             <span class="time" style="font-size:11px; font-weight: normal"><?= $item2->wdate ?></span>
                                         </div>
