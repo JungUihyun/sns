@@ -29,10 +29,10 @@ $(function () {
 });    
 // 로그인 배경화면 끝
 
-$(function() {
-    let randomBG = Math.floor((Math.random() * 11) + 1);
-    $(".myStory").css("background-image","url(/images/bg" + randomBG + ".jpg)");
-});
+// $(function() {
+//     let randomBG = Math.floor((Math.random() * 11) + 1);
+//     $(".myStory").css("background-image","url(/images/bg" + randomBG + ".jpg)");
+// });
 
 // 아이디 기억
 $(document).ready(function () {
@@ -103,7 +103,7 @@ $(".write > form > textarea").focus(function () {
 
 $(".write .btn_group > #post").on("click", function() {
     $(".drop-list").empty();
-    $(".write > form > textarea").val("");
+    // $(".write > form > textarea").val("");
 });
 
 $(".write .btn_group > #cancel").on("click", function () {
@@ -402,7 +402,7 @@ $(".write .btn_group > #cancel").on("click", function () {
     $('.drop-list').empty();
 });
 
-dropZone.addEventListener("dragover", e=>{
+dropZone.addEventListener("dragover", function(e) {
     e.preventDefault();
 });
 
@@ -442,16 +442,16 @@ function loadThumbnail(files){
 
         let formData = new FormData();
         formData.append("file", x);
-        // $.ajax({
-        //     url:"/writeeee",
-        //     method:"post",
-        //     processData: false,
-        //     contentType: false,
-        //     data:formData,
-        //     success:(result)=>{
-        //         console.log(result);
-        //     }
-        // });
+        $.ajax({
+            url:"/upload.php",
+            method:"post",
+            processData: false,
+            contentType: false,
+            data:formData,
+            success:(result)=>{
+                console.log(result);
+            }
+        });
     });
 }
 
@@ -551,8 +551,24 @@ $(function() {
 });
 // 섹션 이미지 슬라이드 끝
 
+// 프로필 이미지
+$(".profile_image > input").on("change", function(e) {
+    let formData = new FormData();
+    let file = $(this)[0].files[0];
 
+    formData.append("file", file);
 
-// 프로필 배경사진
-
-// 프로필 배경사진 끝
+    console.log(file);
+    $.ajax({
+        url : "/setProfile",
+        type: "post",
+        processData : false,
+        contentType : false,
+        data : formData,
+        success : (result)=>{
+            console.log(result);
+        }
+    });
+});
+    
+// 프로필 이미지 끝

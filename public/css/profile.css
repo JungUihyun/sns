@@ -106,6 +106,12 @@ header {
     margin: 0 auto 9px;
 }
 
+.link_img > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
 .link_name {
     text-align: center;
     width: 100%;
@@ -388,6 +394,44 @@ header {
 /* Side End */
 
 /* Container */
+.bg_change {
+    width: 150px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 30;
+}
+
+.bg_change label {
+    display: inline-block;
+    padding: .5em .75em;
+    color: rgb(214, 214, 214);
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: transparent;
+    cursor: pointer;
+    border: 1px solid rgb(214, 214, 214);;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+}
+
+.bg_change:hover label {
+    color: #fff;
+    border-color: #fff;
+}
+
+.bg_change input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
 .container {
     width: 100%;
     height: 100%;
@@ -415,7 +459,8 @@ header {
 }
 
 .myStory {
-    /* background-image: url(/images/profileBG.jpg); */
+    background-image: url(/images/profileBG.jpg);
+    background-position: left;
     height: 100%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -727,9 +772,6 @@ header {
     color: #73767c;
 }
 
-
-
-
 .widget {
     position: relative;
     margin-top: 10px;
@@ -806,6 +848,39 @@ header {
     width: 800px;
     display: flex;
     justify-content: space-between;
+}
+
+.profile_image {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.678);
+    right: 150px;
+    bottom: 5px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.profile_image > input {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    display: inline-block;
+    border: none;
+    left: 0;
+}
+
+.profile_image > svg {
+    position: relative;
+    left: 6px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 28px;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.801);
 }
 
 /* Container End */

@@ -23,7 +23,7 @@ class UserController {
 			back("아이디가 올바른 형식이 아닙니다. 아이디를 다시 입력해 주세요");
         }
 
-        if(!DB::fetch("SELECT * FROM users WHERE id = ?", [$id])) {
+        if(DB::fetch("SELECT * FROM sns_users WHERE id = ?", [$id])) {
             back("이미 사용중인 아이디 입니다.");
         }
         
@@ -31,9 +31,15 @@ class UserController {
         //     back("아이디가 올바른 형식이 아닙니다. 아이디를 다시 입력해 주세요");
 		// 	return;
         // }
+        
 
-        $sql = "INSERT INTO sns_users (`id`, `name`, `password`) VALUES (?, ?, ?)";
-        $result = DB::execute($sql, [$id, $name, $password]);
+        $b_img_name = "bg" . rand(0, 10) . ".jpg";
+        $directory = "./newFile/" . $b_img_name;
+
+        move_uploaded_file($b_img_name, $directory);
+
+        $sql = "INSERT INTO sns_users (`id`, `name`, `password`, `b_img`) VALUES (?, ?, ?, ?)";
+        $result = DB::execute($sql, [$id, $name, $password, $directory]);
 
         if(!$result){
             back("DB에 값이 올바르게 들어가지 않았습니다.");
@@ -163,5 +169,20 @@ class UserController {
         
 
         move("/", "쪽지를 삭제했습니다.");
+    }
+
+    # 프로필 사진 설정
+    public function setProfile() {
+        $user = $_SESSION['user'];
+        $file = $_FILES['userProfile'];
+        json(['success'=>true, 'name'=>$file['name']]);
+        $name = $_POST['name'];
+        $directory = "./newFile/" . $name;
+
+        move_uploaded_file($file['tmp_name'], $directory);
+
+        if($_FILES['userProfile']['size'] >= 1024 * 1024 * 10) back("10MB 미만의 파일만 가능합니다.");
+
+        DB::execute("UPDATE sns_users SET p_img = ? WHERE idx = ?", [$directory, $user->idx]);
     }
 }

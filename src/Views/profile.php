@@ -7,6 +7,8 @@
 ?>
 
 <header>
+    <div class="write" style="display: none;"></div>
+    <div class="drop-list" style="display: none;"></div>
     <div id="logo">
         <a href="/">
             <img src="/images/main_logo.png" alt="main_logo">
@@ -30,10 +32,10 @@
 
 <div id="side">
     <div class="profile">
-        <a href="/profile?name=<?= $_SESSION['user']->name ?>" class="link_img">
+        <a href="/profile?idx=<?= $_SESSION['user']->idx ?>" class="link_img">
             <img src="/images/default_profile.jpg" alt="profile_img">
         </a> 
-        <a href="/profile" class="link_name"><?= $_SESSION['user']->name ?></a>
+        <a href="/profile?idx=<?= $_SESSION['user']->idx ?>" class="link_name"><?= $_SESSION['user']->name ?></a>
     </div>
 
     <div class="side_button">
@@ -50,10 +52,14 @@
                 <ul>
                     <?php foreach($question_list as $item) { ?>
                         <li>
-                            <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
+                            <div class="friend_profile" onclick="location.href='/profile?idx=<?= $item->idx ?>'">
                                 <form action="/friend/receive" method="post">
                                     <input type="hidden" value="<?= $item->idx ?>" name="question_qidx">
-                                    <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                    <?php if($item->p_img) { ?>
+                                        <img src="<?= $item->p_img ?>" alt="내 친구 프로필 이미지">
+                                    <?php } else { ?>
+                                        <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                    <?php } ?>
                                     <span><?= $item->name ?></span>
                                     <div class="recommend_btn">
                                         <span class="refuse ti-close"><a href="/friend/refuse"></a></span>
@@ -70,12 +76,16 @@
                 <ul>
                     <?php foreach($friend_list as $item) { ?>
                         <li>
-                            <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
-                                <form action="">
-                                    <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                            <div class="friend_profile" onclick="location.href='/profile?idx=<?= $item->idx ?>'">
+                                <form>
+                                    <?php if($item->p_img) { ?>
+                                        <img src="<?= $item->p_img ?>" alt="내 친구 프로필 이미지">
+                                    <?php } else { ?>
+                                        <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                    <?php } ?>
                                     <span><?= $item->name ?></span>
                                     <div class="recommend_btn">
-                                        <span class="refuse ti-close"><a href="/friend/friend_delete"></a></span>
+                                        <span class="refuse ti-close"><a href="/friend/friend_delete?idx=<?= $item->idx ?>"></a></span>
                                         <input type="submit" value="" class="accept recommend_submit"><span class="ti-check"></span>
                                     </div>
                                 </form>
@@ -91,9 +101,13 @@
                 <ul>
                     <?php foreach($send_list as $item) { ?>
                     <li>
-                        <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
+                        <div class="friend_profile" onclick="location.href='/profile?idx=<?= $item->idx ?>'">
                             <form>
-                                <img src="/images/default_profile.jpg" alt="보낸친구 프로필 이미지">
+                                <?php if($item->p_img) { ?>
+                                    <img src="<?= $item->p_img ?>" alt="내 친구 프로필 이미지">
+                                <?php } else { ?>
+                                    <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                <?php } ?>
                                 <input type="hidden" value="<?= $item->idx ?>" name="ridx">
                                 <span><?= $item->name ?></span>
                                 <div class="recommend_btn">
@@ -111,9 +125,13 @@
                     <?php foreach($recommend_list as $item) { ?>
                         <?php if($item->idx != user()->idx) { ?>
                             <li>
-                                <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
+                                <div class="friend_profile" onclick="location.href='/profile?idx=<?= $item->idx ?>'">
                                     <form action="/friend/question" method="post">
-                                        <img src="/images/default_profile.jpg" alt="추천친구 프로필 이미지">
+                                        <?php if($item->p_img) { ?>
+                                            <img src="<?= $item->p_img ?>" alt="내 친구 프로필 이미지">
+                                        <?php } else { ?>
+                                            <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                        <?php } ?>
                                         <input type="hidden" value="<?= $item->idx ?>" name="ridx">
                                         <span><?= $item->name ?></span>
                                         <div class="recommend_btn">
@@ -181,10 +199,16 @@
 <div class="container">
     <div class="container_wrap">
         <div class="bg"></div>
-        <div class="myStory">
+        <div class="myStory" style="background-image: url(<?= $background_image->b_img ?>);">
             <div class="name">
                 <img src="/images/default_profile.jpg" alt="프로필 사진">
-                <span><?= $name ?></span>
+                <?php if($name->name == $_SESSION['user']->name) { ?>
+                    <div class="profile_image">
+                        <input type="file" name="userProfile">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                <?php } ?>
+                <span><?= $name->name ?></span>
             </div>
             <div class="menu_story">
                 <ul>
@@ -197,6 +221,12 @@
                     <li>더보기</li>
                 </ul>
             </div>
+            <?php if($name->name == $_SESSION['user']->name) { ?>
+            <div class="bg_change">
+                <label for="bg_change">배경 화면 편집</label>
+                <input type="file" id="bg_change" name="bg_change">
+            </div>
+            <?php } ?>
         </div>
     </div>
     <div class="asd">

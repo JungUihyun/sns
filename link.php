@@ -19,6 +19,8 @@ Route::POST("/login", "UserController@login");
 Route::GET("/logout", "UserController@logout");
 # 프로필 페이지 이동
 Route::GET("/profile", "MainController@profile");
+# 프로필 사진 설정
+Route::POST('/setProfile', "UserController@setProfile");
 
 # 글쓰기 처리
 Route::POST("/write", "PostController@write");

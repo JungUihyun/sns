@@ -29,10 +29,14 @@
 
 <div id="side">
     <div class="profile">
-        <a href="/profile?name=<?= $_SESSION['user']->name ?>" class="link_img">
-            <img src="/images/default_profile.jpg" alt="profile_img">
+        <a href="/profile?idx=<?= $_SESSION['user']->idx ?>" class="link_img">
+            <?php if($_SESSION['user']->p_img != "") { ?>
+                <img src="<?= $_SESSION['user']->p_img ?>" alt="profile_img">
+            <?php } else { ?>
+                <img src="/images/default_profile.jpg" alt="profile_img">
+            <?php } ?>
         </a> 
-        <a href="/profile?name=<?= $_SESSION['user']->name ?>" class="link_name"><?= $_SESSION['user']->name ?></a>
+        <a href="/profile?idx=<?= $_SESSION['user']->idx ?>" class="link_name"><?= $_SESSION['user']->name ?></a>
     </div>
 
     <div class="side_button">
@@ -49,10 +53,14 @@
                 <ul>
                     <?php foreach($question_list as $item) { ?>
                         <li>
-                            <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
+                            <div class="friend_profile" onclick="location.href='/profile?idx=<?= $item->idx ?>'">
                                 <form action="/friend/receive" method="post">
                                     <input type="hidden" value="<?= $item->idx ?>" name="question_qidx">
-                                    <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                    <?php if($item->p_img) { ?>
+                                        <img src="<?= $item->p_img ?>" alt="내 친구 프로필 이미지">
+                                    <?php } else { ?>
+                                        <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                    <?php } ?>
                                     <span><?= $item->name ?></span>
                                     <div class="recommend_btn">
                                         <span class="refuse ti-close"><a href="/friend/refuse"></a></span>
@@ -69,9 +77,13 @@
                 <ul>
                     <?php foreach($friend_list as $item) { ?>
                         <li>
-                            <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
+                            <div class="friend_profile" onclick="location.href='/profile?idx=<?= $item->idx ?>'">
                                 <form>
-                                    <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                    <?php if($item->p_img) { ?>
+                                        <img src="<?= $item->p_img ?>" alt="내 친구 프로필 이미지">
+                                    <?php } else { ?>
+                                        <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                    <?php } ?>
                                     <span><?= $item->name ?></span>
                                     <div class="recommend_btn">
                                         <span class="refuse ti-close"><a href="/friend/friend_delete?idx=<?= $item->idx ?>"></a></span>
@@ -90,9 +102,13 @@
                 <ul>
                     <?php foreach($send_list as $item) { ?>
                     <li>
-                        <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
+                        <div class="friend_profile" onclick="location.href='/profile?idx=<?= $item->idx ?>'">
                             <form>
-                                <img src="/images/default_profile.jpg" alt="보낸친구 프로필 이미지">
+                                <?php if($item->p_img) { ?>
+                                    <img src="<?= $item->p_img ?>" alt="내 친구 프로필 이미지">
+                                <?php } else { ?>
+                                    <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                <?php } ?>
                                 <input type="hidden" value="<?= $item->idx ?>" name="ridx">
                                 <span><?= $item->name ?></span>
                                 <div class="recommend_btn">
@@ -110,9 +126,13 @@
                     <?php foreach($recommend_list as $item) { ?>
                         <?php if($item->idx != user()->idx) { ?>
                             <li>
-                                <div class="friend_profile" onclick="location.href='/profile?name=<?= $item->name ?>'">
+                                <div class="friend_profile" onclick="location.href='/profile?idx=<?= $item->idx ?>'">
                                     <form action="/friend/question" method="post">
-                                        <img src="/images/default_profile.jpg" alt="추천친구 프로필 이미지">
+                                        <?php if($item->p_img) { ?>
+                                            <img src="<?= $item->p_img ?>" alt="내 친구 프로필 이미지">
+                                        <?php } else { ?>
+                                            <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                        <?php } ?>
                                         <input type="hidden" value="<?= $item->idx ?>" name="ridx">
                                         <span><?= $item->name ?></span>
                                         <div class="recommend_btn">
@@ -228,7 +248,11 @@
         <?php foreach($list as $item) { ?>
             <div class="section">
                 <div class="post_profile">
-                    <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
+                    <?php if(!empty($item->p_img->p_img)) { ?>
+                        <img src="<?= $item->p_img->p_img ?>" alt="프로필 이미지">
+                    <?php } else { ?>
+                        <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
+                    <?php } ?>
                     <div class="post_info">
                         <span name="writer" class="writer"><?= $item->writer ?></span>
                         <span name="time" class="time"><?= $item->date ?></span>
@@ -265,7 +289,11 @@
                                 <li>
                                     <div class="comment_profile">
                                         <div class="comment_info">
-                                            <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
+                                            <?php if(!empty($item2->c_p_img->c_p_img)) { ?>
+                                                <img src="<?= $item2->c_p_img->c_p_img ?>" alt="프로필 이미지">
+                                            <?php } else { ?>
+                                                <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
+                                            <?php } ?>
                                             <span><?= $item2->writer ?></span>
                                             <span class="time" style="font-size:11px; font-weight: normal"><?= $item2->wdate ?></span>
                                         </div>
