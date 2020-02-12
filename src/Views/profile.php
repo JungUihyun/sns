@@ -33,7 +33,11 @@
 <div id="side">
     <div class="profile">
         <a href="/profile?idx=<?= $_SESSION['user']->idx ?>" class="link_img">
-            <img src="/images/default_profile.jpg" alt="profile_img">
+            <?php if(!empty($_SESSION['user']->p_img)) { ?>
+                <img src="<?= $_SESSION['user']->p_img ?>" alt="profile_img">
+            <?php } else { ?>
+                <img src="/images/default_profile.jpg" alt="profile_img">
+            <?php } ?>
         </a> 
         <a href="/profile?idx=<?= $_SESSION['user']->idx ?>" class="link_name"><?= $_SESSION['user']->name ?></a>
     </div>
@@ -234,13 +238,28 @@
             <?php foreach($list as $item) { ?>
                 <div class="section">
                     <div class="post_profile">
-                        <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
+                        <?php if(!empty($item->p_img->p_img)) { ?>
+                            <img src="<?= $item->p_img->p_img ?>" alt="프로필 이미지">
+                        <?php } else { ?>
+                            <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
+                        <?php } ?>
                         <div class="post_info">
                             <span name="writer" class="writer"><?= $item->writer ?></span>
                             <span name="time" class="time"><?= $item->date ?></span>
                         </div>
                     </div>
                     <div class="post_content"><?= $item->content ?></div>
+                    <?php if(!empty($item->images)) { ?>
+                        <div class="post_images">
+                            <button type="button" id="prev_btn" class="btn"><span class="ti-angle-left"></span></button>
+                            <ul class="slider">
+                                <?php foreach($item->images as $image) { ?>
+                                    <li><img src="<?= $image->directory ?>"/></li> 
+                                <?php } ?>
+                            </ul>
+                            <button type="button" id="next_btn" class="btn"><span class="ti-angle-right"></span></button>
+                        </div>
+                    <?php } ?>
                     <?php if($_SESSION['user']->name == $item->writer) { ?>
                         <span class="ti-more-alt"></span>
                         <div class="btnList">
@@ -260,7 +279,11 @@
                                     <li>
                                         <div class="comment_profile">
                                             <div class="comment_info">
-                                                <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
+                                                <!-- ?php if(!empty($item2->p_img)) { ?> -->
+                                                    <!-- <img src="?= $item2->p_img ?>" alt="프로필 이미지"> -->
+                                                <!-- ?php } else { ?> -->
+                                                    <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
+                                                <!-- ?php } ?> -->
                                                 <span><?= $item2->writer ?></span>
                                                 <span class="time" style="font-size:11px; font-weight: normal"><?= $item2->wdate ?></span>
                                             </div>

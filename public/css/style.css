@@ -825,6 +825,7 @@ header {
 .post_images > .btn {
     position: absolute;
     top: 45%;
+    cursor: pointer;
     width: 26px;
     height: 26px;
     z-index: 10;

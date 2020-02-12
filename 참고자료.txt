@@ -35,3 +35,5 @@ SELECT * FROM sns_users WHERE idx in ( SELECT qidx FROM sns_addfriend WHERE ridx
 gu-upload
 
 moment.js
+
+owl.js

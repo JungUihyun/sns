@@ -112,94 +112,7 @@ $(".write .btn_group > #cancel").on("click", function () {
     $(".media").animate({ bottom: "20px" }, 0);
     $(".write .btn_group").css('display','none');
 });
-
-
 // 글쓰기 애니메이션 끝
-
-// ajax 더보기 버튼
-// let currentIdx = 0;
-// let grid = null;
-
-// getDataFromServer(currentIdx);
-
-// let moreBtn = $("#moreBtn");
-// moreBtn.on("click", function() {
-//     console.log("asd");
-//     getDataFromServer(5);
-// });
-
-// function getDataFromServer(idx){
-//     return new Promise( (res, rej) => {
-//         $.ajax({
-//             url: `/list/${idx}`,
-//             method: 'get',
-//             success: (data) => {
-//                 if(data.success){
-//                     makeTemplate(data.list);
-//                     currentIdx += data.list.length;
-//                     // $(".list-btn").css({display:'inline-block'});
-//                     // $(".write-btn").css({display:'none'});
-//                 }else {
-//                     // $(".icon-btn").css({display:'none'});
-//                 }
-//                 res();
-//             }
-//         });
-//     });
-// }
-
-// function makeTemplate(list){
-//     const posting = document.querySelector(".posting");
-//     if(currentIdx == 0){
-//         posting.innerHTML = "";
-//         grid = document.createElement("div");
-//         grid.id = "gridContainer";
-//     }
-
-//     list.forEach((item, idx) => {
-//         setTimeout(()=>{
-//             let dom = makeItem(item);
-//             grid.appendChild(dom);
-//             setTimeout(()=>{
-//                 dom.classList.add("active");
-//             }, 10);
-//         }, Math.floor(idx / 3)  * 500);
-//     });
-//     posting.appendChild(grid);
-// }
-
-// function makeItem(item){
-//     let dom = document.createElement("li");
-//     // dom.classList.add("todobox");
-//     dom.innerHTML = `
-//                 <div class="comment_profile">
-//                     <div class="comment_info">
-//                         <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
-//                         <span>${ item.title }</span>
-//                     </div>
-//                 </div>
-//                 <div class="comment_content">
-//                     ${ item.content }
-//                 </div>`;
-//     return dom;
-// }
-
-// ajax 더보기 버튼 끝
-
-// ajax 무한 스크롤
-// $(document).ready(function () {
-//     $(document).scroll(function () {
-//         let maxHeight = $(document).height();
-//         let currentScroll = $(window).scrollTop() + $(window).height();
-
-//         if (maxHeight <= currentScroll + 100) {
-//             $.ajax({
-
-//             })
-//         }
-//     })
-// });
-// ajax 무한 스크롤 끝
 
 // 댓글 input창 눌렀을 때
 $(".comment_input > input").on("focus", function () {
@@ -534,11 +447,12 @@ function reorder() {
 // 섹션 이미지 슬라이드
 $(function() {
     let position = 1;
-
+    
     $("#prev_btn").on("click", function() {
         if(1 < position) {
             $(this).parent().children('.slider').animate({ left: "+=490px" }, 300);
             position--;
+            console.log(position + '마이너스');
         }
     });
 
@@ -546,6 +460,7 @@ $(function() {
         if($(this).parent().children().children('li').length > position) {
             $(this).parent().children('.slider').animate({ left: "-=490px" }, 300);
             position++;
+            console.log(position + "플러스");
         }
     });
 });
@@ -557,8 +472,8 @@ $(".profile_image > input").on("change", function(e) {
     let file = $(this)[0].files[0];
 
     formData.append("file", file);
+    // console.log(file['name']);
 
-    console.log(file);
     $.ajax({
         url : "/setProfile",
         type: "post",
@@ -567,8 +482,33 @@ $(".profile_image > input").on("change", function(e) {
         data : formData,
         success : (result)=>{
             console.log(result);
+        },
+        error : (result)=> {
+            console.log(result);
         }
     });
 });
     
 // 프로필 이미지 끝
+
+// 무한 스크롤
+// let loading = false;
+// $(window).scroll(function() {
+//     let h = $("#postswrapper").height();
+//     let st = $(window).scrollTop();
+
+//     if(st >= 0.7 * h && !loading && h > 500) {
+//         loading = true;
+//         $("다음 섹션").show();
+//         $.ajax({
+//             url : "주소.php?lastid=" + $(".sdf:last").attr("id"),
+//             success : function(html) {
+//                 if(html) {
+//                     $(".posting").append(html);
+//                     $("")
+//                 }
+//             }
+//         });
+//     }
+// });
+// 무한 스크롤 끝

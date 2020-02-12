@@ -174,15 +174,34 @@ class UserController {
     # 프로필 사진 설정
     public function setProfile() {
         $user = $_SESSION['user'];
+
+        // if(isset($_POST['formData'])) {
+        //     $file = $_FILES['file'];
+        
+        //     $name = $_POST['name'];
+        //     $fileName = $file['name'];
+        //     $directory = "./newFile/" . $fileName;
+
+        //     move_uploaded_file($file['tmp_name'], $directory);
+
+        //     DB::execute("UPDATE sns_users SET p_img = ? WHERE idx = ?", [$directory, $user->idx]); 
+        //     json(['success'=>true, 'name'=>$file['name'], 'fileName'=>$fileName]);
+        // }
+
+
         $file = $_FILES['userProfile'];
         json(['success'=>true, 'name'=>$file['name']]);
         $name = $_POST['name'];
-        $directory = "./newFile/" . $name;
+        $fileName = $_FILES['file'];
 
-        move_uploaded_file($file['tmp_name'], $directory);
+        $directory = "./newFile/" . $fileName;
+
+        move_uploaded_file($fileName['tmp_name'], $directory);
+        
+        DB::execute("UPDATE sns_users SET p_img = ? WHERE idx = ?", [$directory, $user->idx]); 
 
         if($_FILES['userProfile']['size'] >= 1024 * 1024 * 10) back("10MB 미만의 파일만 가능합니다.");
 
-        DB::execute("UPDATE sns_users SET p_img = ? WHERE idx = ?", [$directory, $user->idx]);
+        
     }
 }

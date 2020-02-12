@@ -53,5 +53,8 @@ Route::POST("/message", "UserController@send_message");
 # 쪽지 조회
 Route::GET("/show_msg", "UserController@show_message");
 
+# 검색 기능
+Route::GET("/search", "MainController@search");
+
 Route::init();
 ?>
