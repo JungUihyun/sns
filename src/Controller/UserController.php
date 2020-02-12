@@ -199,9 +199,6 @@ class UserController {
         move_uploaded_file($fileName['tmp_name'], $directory);
         
         DB::execute("UPDATE sns_users SET p_img = ? WHERE idx = ?", [$directory, $user->idx]); 
-
-        if($_FILES['userProfile']['size'] >= 1024 * 1024 * 10) back("10MB 미만의 파일만 가능합니다.");
-
         
     }
 }

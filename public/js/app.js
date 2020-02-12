@@ -464,6 +464,14 @@ $(function() {
         }
     });
 });
+// $(function() {
+//     let index = $(".loop").children("li").length;
+//     $('.loop').owlCarousel({
+//         center: true,
+//         items: index,
+//         loop: true
+//     });
+// });
 // 섹션 이미지 슬라이드 끝
 
 // 프로필 이미지
@@ -512,3 +520,4 @@ $(".profile_image > input").on("change", function(e) {
 //     }
 // });
 // 무한 스크롤 끝
+
