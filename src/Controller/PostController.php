@@ -65,7 +65,7 @@ class PostController {
     # 글 수정
     public function modify() {
         $user = $_SESSION['user'];
-        $content = $_POST['modify_input'];
+        $content = nl2br($_POST['modify_input']);
         $pidx = $_POST['pidx'];
 
         if($content == "" && $pidx == "") {
@@ -79,7 +79,7 @@ class PostController {
             back("권한이 없습니다.");
         }
 
-        $sql = "UPDATE sns_boards SET `content` = ?, `date` = NOW() WHERE `id` = ?";
+        $sql = "UPDATE sns_boards SET `content` = ? WHERE `id` = ?";
         $result = DB::execute($sql, [$content, $pidx]);
 
         if(!$result) {

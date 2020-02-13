@@ -276,7 +276,13 @@
                     <span class="ti-more-alt"></span>
                     <div class="btnList">
                         <input type="hidden" value="<?= $item->id ?>">
-                        
+                        <ul class="distance" >
+                            <input class="radioMoved" type="hidden" value="<?= $item->distance ?>">
+                            <li><a href="#"><span class="ti-hand-open"></span>전체공개</a></li>
+                            <li><a href="#"><span class="ti-user"></span>친구공개</a></li>
+                            <li><a href="#"><span class="ti-lock"></span>나만보기</a></li>
+                            <input type="radio" checked>
+                        </ul>
                         <a class="modify" href="javascript:return false;">수정</a>
                         <a class="delete" href="/delete?id=<?= $item->id ?>">삭제</a>
                     </div>
