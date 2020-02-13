@@ -37,3 +37,6 @@ gu-upload
 moment.js
 
 owl.js
+
+https://abc1211.tistory.com/345
+php ajax

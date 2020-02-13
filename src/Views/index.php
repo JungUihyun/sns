@@ -13,10 +13,12 @@
     </div>
 
     <div class="input">
-        <input type="text" class="input_search" placeholder="친구, 채널, 태그, 장소 검색">
-        <button class="btn_search">
-            <span class="ti-search"></span>
-        </button>
+        <form action="/search" method="post">
+            <input type="text" class="input_search" placeholder="친구, 채널, 태그, 장소 검색">
+            <button class="btn_search">
+                <span class="ti-search"></span>
+            </button>
+        </form>
     </div>
 
     <div class="logout">
@@ -274,6 +276,7 @@
                     <span class="ti-more-alt"></span>
                     <div class="btnList">
                         <input type="hidden" value="<?= $item->id ?>">
+                        
                         <a class="modify" href="javascript:return false;">수정</a>
                         <a class="delete" href="/delete?id=<?= $item->id ?>">삭제</a>
                     </div>

@@ -190,10 +190,10 @@ class UserController {
 
 
         $file = $_FILES['userProfile'];
-        json(['success'=>true, 'name'=>$file['name']]);
+        json_encode(['success'=>true, 'name'=>$file['name']]);
         $name = $_POST['name'];
         $fileName = $_FILES['file'];
-
+        
         $directory = "./newFile/" . $fileName;
 
         move_uploaded_file($fileName['tmp_name'], $directory);

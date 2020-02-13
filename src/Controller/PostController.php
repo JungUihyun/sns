@@ -204,6 +204,15 @@ class PostController {
 
         back("좋아요 투척");
     }
+
+    # 글 검색
+    public function search() {
+        $user = $_SESSION['user'];
+
+        $result = DB::fetchAll("SELECT * FROM sns_boards WHERE content = ?");
+        
+        
+    }
     
 
 }
