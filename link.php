@@ -30,6 +30,8 @@ Route::GET("/delete", "PostController@delete");
 Route::POST("/modify", "PostController@modify");
 # 글 좋아요 버튼
 Route::GET("/board/like", "PostController@like");
+# 글 공개범위 설정
+Route::GET('/distance', "PostController@distance");
 
 
 # 댓글 쓰기 처리

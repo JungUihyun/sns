@@ -515,3 +515,16 @@
     //     }
     // });
     // 무한 스크롤 끝
+
+$(function() {
+    $(".section > .ti-more-alt").on("click", function() {
+        let distanceValue = $(this).parent().children('.btnList').children('.radioMoved').val();
+        if(distanceValue == 1) {
+            $(this).parent().children('.btnList').children('.distance').children('.all').attr("checked", true);
+        } else if(distanceValue == 2) {
+            $(this).parent().children('.btnList').children('.distance').children('.friend').attr("checked", true);
+        } else if(distanceValue == 3) {
+            $(this).parent().children('.btnList').children('.distance').children('.me').attr("checked", true);
+        }
+    });
+});

@@ -213,6 +213,33 @@ class PostController {
         
         
     }
+
+    # 글 공개범위
+    public function distance() {
+        $writer = $_GET['writer'];
+        $pidx = $_GET['pidx'];
+        $distance = $_GET['distance'];
+
+        if($writer != $_SESSION['user']->name) {
+            back("권한이 없습니다.");
+        }
+
+        $result = DB::execute("UPDATE sns_boards SET distance = ? WHERE id = ?", [$distance, $pidx]);
+
+        if(!$result) {
+            back("데이터베이스 처리중 오류 발생");
+        }
+
+        if($distance == 1) {
+            back("공개범위를 전체공개로 변경하였습니다.");
+        } else if($distance == 2) {
+            back("공개범위를 친구공개로 변경하였습니다.");
+        } else if($distance == 3) {
+            back("공개범위를 나만보기로 변경하였습니다.");
+        } else {
+            back("[오류] 다시 시도해 주세요.");
+        }
+    }
     
 
 }

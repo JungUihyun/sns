@@ -613,7 +613,7 @@ header {
     float: left;
     background-color: #fff;
     padding: 1px 0px;
-    /* display: none; */
+    display: none;
 }
 
 
@@ -637,6 +637,19 @@ header {
 
 .btnList > .distance > input[type="radio"] {
     position: absolute;
+    right: 10px;
+}
+
+.btnList > .distance > .all {
+    top: 10px;
+}
+
+.btnList > .distance > .friend {
+    top: 45px;
+}
+
+.btnList > .distance > .me {
+    top: 80px;
 }
 
 .section > .btnList > ul > li:last-child:hover {
