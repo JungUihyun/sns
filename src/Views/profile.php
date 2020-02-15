@@ -4,7 +4,7 @@
     if(!isset($_SESSION['user'])) {
         move("/login", "로그인을 해주세요");
     }
-?>
+?>     
 
 <header>
     <div class="write" style="display: none;"></div>
@@ -33,8 +33,8 @@
 <div id="side">
     <div class="profile">
         <a href="/profile?idx=<?= $_SESSION['user']->idx ?>" class="link_img">
-            <?php if(!empty($_SESSION['user']->p_img)) { ?>
-                <img src="<?= $_SESSION['user']->p_img ?>" alt="profile_img">
+            <?php if(!empty($current_profile->p_img)) { ?>
+                <img src="<?= $current_profile->p_img ?>" alt="profile_img">
             <?php } else { ?>
                 <img src="/images/default_profile.jpg" alt="profile_img">
             <?php } ?>
@@ -205,7 +205,7 @@
         <div class="bg"></div>
         <div class="myStory" style="background-image: url(<?= $background_image->b_img ?>);">
             <div class="name">
-                <img src="/images/default_profile.jpg" alt="프로필 사진">
+                <img src="<?= $main_profile->p_img ?>" alt="프로필 사진">
                 <?php if($name->name == $_SESSION['user']->name) { ?>
                     <div class="profile_image">
                         <input type="file" name="userProfile">

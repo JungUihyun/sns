@@ -19,7 +19,7 @@ class PostController {
 
         $file = $_FILES['upImage'];
 
-        $sql = "INSERT INTO sns_boards (`content`, `writer`, `date`, `liked`, `commented`) VALUES(?, ?, NOW(), 0, 0)";
+        $sql = "INSERT INTO sns_boards (`content`, `writer`, `date`, `liked`, `commented`, `distance`) VALUES(?, ?, NOW(), 0, 0, 2)";
         // $result = DB::execute($sql, [$content, $user->id, $datetime]);
         $result = DB::execute($sql, [$content, $user->name]);
         
@@ -31,7 +31,7 @@ class PostController {
             $post_idx = DB::fetch("SELECT * FROM sns_boards ORDER BY id DESC LIMIT 0, 1")->id;
             $upload_idx = DB::fetch("SELECT * FROM sns_uploads ORDER BY idx DESC LIMIT 0, 1")->idx;
             $name = $file['name'][$i];
-            $directory = "./newFile/" . $upload_idx . $file['name'][$i];
+            $directory = "/" . "newFile/" . $upload_idx . $file['name'][$i];
             
             // upload
             move_uploaded_file($file['tmp_name'][$i], $directory);
@@ -47,16 +47,17 @@ class PostController {
                 }
             }
             // } else {
+            //     back("사진만 넣을수있음");
             //     // if File
-            //     if($_FILES['upImage']['size'][$i] >= 1024 * 1024 * 50) back("50MB 미만의 파일만 받을 수 있습니다.");
+            //     // if($_FILES['upImage']['size'][$i] >= 1024 * 1024 * 50) back("50MB 미만의 파일만 받을 수 있습니다.");
 
-            //     $sql = DB::execute("INSERT INTO sns_uploads(`pidx`, `name`, `directory`, `type`) VALUES (?, ?, ?, ?)", [$post_idx, $name, $directory, 0]);
+            //     // $sql = DB::execute("INSERT INTO sns_uploads(`pidx`, `name`, `directory`, `type`) VALUES (?, ?, ?, ?)", [$post_idx, $name, $directory, 0]);
                 
-            //     echo "파일 입력";
+            //     // echo "파일 입력";
 
-            //     if(!$sql) {
-            //         back("파일 전송 중 오류 발생");
-            //     }
+            //     // if(!$sql) {
+            //     //     back("파일 전송 중 오류 발생");
+            //     // }
             // }
         }
         back("성공적으로 입력되었습니다.");

@@ -18,9 +18,11 @@ Route::POST("/login", "UserController@login");
 # 로그아웃 처리
 Route::GET("/logout", "UserController@logout");
 # 프로필 페이지 이동
-Route::GET("/profile", "MainController@profile");
+Route::GET("/profile/{uidx}", "MainController@profile");
 # 프로필 사진 설정
 Route::POST('/setProfile', "UserController@setProfile");
+# 프로필 배경화면 설정
+Route::POST('/setBackground', "UserController@setBackground");
 
 # 글쓰기 처리
 Route::POST("/write", "PostController@write");

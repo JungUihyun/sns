@@ -390,6 +390,15 @@
 
     $('.upImage').on('change', function(e) {
         let input = document.querySelector('.upImage');
+
+        if( $(this).val() != "" ){
+            let ext = $(this).val().split('.').pop().toLowerCase();            
+            if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+                alert('gif, png, jpg, jpeg 파일만 업로드 할수 있습니다.');
+                return;
+            }
+        }
+
         for( let i = 0; i < input.files.length; i++ ) {
             let reader = new FileReader();
             reader.onload = function(e) {
@@ -410,6 +419,10 @@
     });
 
     $(".post_content").on('keydown keyup', function () {
+        $(this).height(1).height( $(this).prop('scrollHeight') );	
+    });
+
+    $(".comment_").on('keydown keyup', function () {
         $(this).height(1).height( $(this).prop('scrollHeight') );	
     });
     // textarea 입력 자동 줄바꿈 끝
@@ -490,8 +503,37 @@
                 console.log(result);
             }
         });
+        setTimeout(() => {
+            location.reload();
+        }, 300);
     });
-        
+    // 프로필 이미지 끝
+
+    // 프로필 이미지
+    $(".myStory > .bg_change > #bg_change").on("change", function(e) {
+        let formData = new FormData();
+        let file = $(this)[0].files[0];
+
+        formData.append("file", file);
+        // console.log(file['name']);
+
+        $.ajax({
+            url : "/setBackground",
+            type: "post",
+            processData : false,
+            contentType : false,
+            data : formData,
+            success : (result)=>{
+                console.log(result);
+            },
+            error : (result)=> {
+                console.log(result);
+            }
+        });
+        setTimeout(() => {
+            location.reload();
+        }, 300);
+    });
     // 프로필 이미지 끝
 
     // 무한 스크롤

@@ -433,8 +433,8 @@ header {
     width: 100%;
     border: none;
     color: #000;
-    min-height: 20px;
-    height: auto;
+    /* min-height: 20px; */
+    height: 20px;
     font-size: 14px;
     resize: none;
 }
@@ -572,6 +572,15 @@ header {
 .section > .post_profile > .post_info {
     display: flex;
     flex-direction: column;
+}
+
+.section > .post_profile > .post_info > a {
+    display: inline-block;
+    width: 90px;
+    height: 50px;
+    position: absolute;
+    left: 0;
+    opacity: 0;
 }
 
 .section > .post_content {
@@ -786,6 +795,10 @@ header {
     font-size: 13px;
     bottom: 20px;
     left: 45px;
+    width: 410px;
+    /* width: auto;
+    overflow-x: scroll;
+    height: 40px; */
 }
 
 .comment_btnList {
