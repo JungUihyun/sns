@@ -60,11 +60,6 @@ class MainController {
 
 				$p_img = DB::fetch("SELECT p_img FROM sns_users WHERE name = ?", [$board->writer]);
 				$board->p_img = $p_img;
-
-				foreach($board->comments as $item2) {
-					$c_p_img = DB::fetch("SELECT p_img FROM sns_users WHERE name = ?", [$item2->writer]);
-					$item2->c_p_img = $c_p_img;
-				}
 			}			
 			
 			/* 추천친구 */
@@ -104,7 +99,7 @@ class MainController {
 			$current_profile = DB::fetch("SELECT p_img FROM sns_users WHERE idx = ?", [$user->idx]);
 		}	
 
-		return view("index", ['c_p_img' => $c_p_img, 'p_img' => $p_img, 'current_profile' => $current_profile, 'images' => $images, 'receive_msg_list' => $receive_msg_list, 'receive_msg_cnt' => $receive_msg_cnt, 'send_msg_list' => $send_msg_list, 'send_msg_cnt' => $send_msg_cnt, 'send_list' => $send_list, 'send_cnt' => $send_cnt, 'friend_list' => $friend_list, 'friend_cnt' => $friend_cnt, 'question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'comment_cnt' => $comment_cnt, 'list' => $list, 'prev' => $prev, 'next' => $next, 'p' => $page]);
+		return view("index", ['p_img' => $p_img, 'current_profile' => $current_profile, 'images' => $images, 'receive_msg_list' => $receive_msg_list, 'receive_msg_cnt' => $receive_msg_cnt, 'send_msg_list' => $send_msg_list, 'send_msg_cnt' => $send_msg_cnt, 'send_list' => $send_list, 'send_cnt' => $send_cnt, 'friend_list' => $friend_list, 'friend_cnt' => $friend_cnt, 'question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'comment_cnt' => $comment_cnt, 'list' => $list, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 	# 404 페이지 이동

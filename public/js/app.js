@@ -98,7 +98,6 @@
 
     $(".write .btn_group > #post").on("click", function() {
         $(".drop-list").empty();
-        // $(".write > form > textarea").val("");
     });
 
     $(".write .btn_group > #cancel").on("click", function () {
@@ -422,9 +421,9 @@
         $(this).height(1).height( $(this).prop('scrollHeight') );	
     });
 
-    $(".comment_").on('keydown keyup', function () {
-        $(this).height(1).height( $(this).prop('scrollHeight') );	
-    });
+    // $(".comment_").on('keydown keyup', function () {
+    //     $(this).height(1).height( $(this).prop('scrollHeight') );	
+    // });
     // textarea 입력 자동 줄바꿈 끝
 
     // 이미지 썸네일 위치바꿈
@@ -558,6 +557,7 @@
     // });
     // 무한 스크롤 끝
 
+    // 공개범위 설정
 $(function() {
     $(".section > .ti-more-alt").on("click", function() {
         let distanceValue = $(this).parent().children('.btnList').children('.radioMoved').val();
@@ -570,3 +570,5 @@ $(function() {
         }
     });
 });
+
+// 공개범위 설정 끝

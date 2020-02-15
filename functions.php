@@ -35,7 +35,7 @@ function user($idx = 0) {
 		}
 		return false;
 	} else {
-		$user = DB::fetch("SELECT * FROM users WHERE idx = ?", [$idx]);
+		$user = DB::fetch("SELECT * FROM sns_users WHERE idx = ?", [$idx]);
 		if($user) {
 			return $user;
 		} else {

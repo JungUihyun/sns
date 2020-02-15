@@ -199,7 +199,7 @@
     <div class="posting">
         <div class="write">
             <form action="/write" method="post" id="writeForm" enctype="multipart/form-data" >
-                <textarea id="write_input" name="content" cols="30" rows="4" placeholder="<?= $_SESSION['user']->name ?>님의 이야기를 기다리고 있어요."></textarea>
+                <textarea id="write_input" name="content" cols="30" rows="4" placeholder="<?= user()->name ?>님의 이야기를 기다리고 있어요."></textarea>
                 <div class="drop-list" id="sortable itemBoxWrap">
                     <!-- 파일 썸네일 -->
                 </div>
@@ -297,18 +297,16 @@
                                 <li>
                                     <div class="comment_profile">
                                         <div class="comment_info">
-                                            <!-- ?php if(!empty($item2->p_img)) { ?> -->
-                                                <!-- <img src="?= $item2->p_img ?>" alt="프로필 이미지"> -->
-                                            <!-- ?php } else { ?> -->
+                                            <?php if(!empty(user($item2->uidx)->p_img)) { ?>
+                                                <img src="<?= user($item2->uidx)->p_img ?>" alt="프로필 이미지">
+                                            <?php } else { ?>
                                                 <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
-                                            <!-- ?php } ?> -->
+                                            <?php } ?>
                                             <span><?= $item2->writer ?></span>
                                             <span class="time" style="font-size:11px; font-weight: normal"><?= $item2->wdate ?></span>
                                         </div>
                                     </div>
-                                    <div class="comment_content">
-                                        <?= $item2->content ?>
-                                    </div>
+                                    <div class="comment_content"><?= $item2->content ?></div>
                                     <!-- ?php if($_SESSION['user']->idx == $item2->uidx || $_SESSION['user']->name == $item->writer) { ?> -->
                                     <?php if($_SESSION['user']->idx == $item2->uidx) { ?>
                                         <div class="comment_btnList">
@@ -353,7 +351,11 @@
                         <li>
                             <div class="friend_profile">
                                 <a href="javascript:return false;">
-                                    <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                    <?php if(!empty($item->p_img)) { ?>
+                                        <img src="<?= $item->p_img ?>" alt="내 친구 프로필 이미지">
+                                    <?php } else { ?>
+                                        <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
+                                    <?php } ?>
                                     <span class="message_name"><?= $item->name ?></span>
                                     <input type="hidden" value="<?= $item->idx ?>" name="message_ridx" class="message_ridx">
                                 </a>    

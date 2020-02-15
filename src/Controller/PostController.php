@@ -11,7 +11,12 @@ class PostController {
         // $date = $_POST['date'];
         // $time = $_POST['time'];
 
-        $content = nl2br($_POST['content']);
+        $content = $_POST['content'];
+
+        echo "<pre>";
+        var_dump($content);
+        echo "</pre>";
+        exit;
 
         if($content == "") {
             back("필수값이 누락되었습니다.");
