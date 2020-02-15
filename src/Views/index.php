@@ -157,7 +157,11 @@
                             <a href="javascript:return false;" class="show_msg">
                                 <div class="send_profile">
                                     <form>
-                                        <img src="/images/default_profile.jpg" alt="보낸 쪽지함 프로필 이미지">
+                                        <?php if(!empty(user($item->ridx)->p_img)) { ?>
+                                            <img src="<?= user($item->ridx)->p_img ?>" alt="보낸 쪽지함 프로필 이미지">
+                                        <?php } else { ?>
+                                            <img src="/images/default_profile.jpg" alt="보낸 쪽지함 프로필 이미지">
+                                        <?php } ?>
                                         <input type="hidden" value="<?= $item->content ?>" name="content" class="msg_content">
                                         <input type="hidden" value="<?= $item->receiver ?>" class="msg_receiver">
                                         <div class="send_info">
@@ -178,7 +182,11 @@
                         <li>
                             <div class="send_profile">
                                 <form>
-                                    <img src="/images/default_profile.jpg" alt="받은 쪽지함 프로필 이미지">
+                                    <?php if(!empty(user($item->qidx)->p_img)) { ?>
+                                        <img src="<?= user($item->qidx)->p_img ?>" alt="보낸 쪽지함 프로필 이미지">
+                                    <?php } else { ?>
+                                        <img src="/images/default_profile.jpg" alt="보낸 쪽지함 프로필 이미지">
+                                    <?php } ?>
                                     <input type="hidden" value="<?= $item->content ?>" name="content" class="msg_content">
                                     <input type="hidden" value="<?= $item->writer ?>" class="msg_writer">
                                     <div class="send_info">
