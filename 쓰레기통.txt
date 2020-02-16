@@ -1,0 +1,44 @@
+  // function loadThumbnail(files){
+    //     files.forEach(async x => {
+    //         let img = await loadFile(x);
+    //         dropList.appendChild(img);
+
+    //         let formData = new FormData();
+    //         formData.append("file", x);
+    //         $.ajax({
+    //             url:"/upload.php",
+    //             method:"post",
+    //             processData: false,
+    //             contentType: false,
+    //             data:formData,
+    //             success:(result)=>{
+    //                 console.log(result);
+    //             }
+    //         });
+    //     });
+    // }
+
+    // function loadFile(file){
+    //     return new Promise( (res, rej)=>{
+    //         let reader = new FileReader();
+
+    //         reader.addEventListener("load", ()=>{
+    //             let img = new Image();
+    //             img.src = reader.result;
+    //             img.addEventListener("load", ()=>{
+    //                 let canvas = document.createElement("canvas");
+    //                 canvas.width = 100;
+    //                 canvas.height = 100;
+    //                 let ctx = canvas.getContext("2d");
+    //                 ctx.drawImage(img, 0, 0, 100, 100);
+    //                 let url = canvas.toDataURL();
+
+    //                 let thumbImg = new Image();
+    //                 thumbImg.src = url;
+
+    //                 res(thumbImg);
+    //             });
+    //         });
+    //         reader.readAsDataURL(file);
+    //     });
+    // }

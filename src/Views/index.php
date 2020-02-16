@@ -207,7 +207,7 @@
     <div class="posting">
         <div class="write">
             <form action="/write" method="post" id="writeForm" enctype="multipart/form-data" >
-                <textarea id="write_input" name="content" cols="30" rows="4" placeholder="<?= user()->name ?>님의 이야기를 기다리고 있어요."></textarea>
+                <textarea id="write_input" name="content" cols="30" rows="4" placeholder="<?= user()->name ?>님의 이야기를 기다리고 있어요." contenteditable="true" aria-multiline='true'></textarea>
                 <div class="drop-list" id="sortable itemBoxWrap">
                     <!-- 파일 썸네일 -->
                 </div>
@@ -270,8 +270,9 @@
                     <div class="post_images">
                         <button type="button" id="prev_btn" class="btn"><span class="ti-angle-left"></span></button>
                         <ul class="slider">
+                            <input type="hidden" class="itemValue">
                             <?php foreach($item->images as $image) { ?>
-                                <li><img src="<?= $image->directory ?>"/></li> 
+                                <li class="item"><img src="<?= $image->directory ?>"/></li> 
                             <?php } ?>
                         </ul>
                         <button type="button" id="next_btn" class="btn"><span class="ti-angle-right"></span></button>

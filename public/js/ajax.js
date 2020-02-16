@@ -1,17 +1,57 @@
-// 무한스크롤 인식
-$(window).scroll(function() {// 스크롤 이벤트가 발생할 때마다 인식
-    if ( $(window).scrollTop() == $(document).height() - $(window).height() ) {// 스크롤이 끝에 닿는걸 인식
-      console.log("스크롤 인식");
-      page++;
-      if(statueFilter ==false){// 필터가 안된 상태이면 내 관심사에 따라서 타임라인에 뿌려줌
-          console.log("statueFilter false");
-          listAll(page,keywords);
-      } else if(statueFilter ==true) {// 필터가 적용되면 필터를 계산한 값을 뿌려줌
-          listFilter(page,allData);
-      }
+$(function() {
+    $('.upImage').on('change', function(e) {
+        let input = document.querySelector('.upImage');
 
-      let height = $(document).scrollTop();
-      $('.posting').animate({scrollTop : height + 400}, 600);
+        if( $(this).val() != "" ){
+            let ext = $(this).val().split('.').pop().toLowerCase();            
+            if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+                alert('gif, png, jpg, jpeg 파일만 업로드 할수 있습니다.');
+                return;
+            }
+        }
+
+        for( let i = 0; i < input.files.length; i++ ) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                // $('.result').append(`<div>${input.files[i].name}</div>`);
+                $('.drop-list').append(`<img src="${e.target.result}" alt="" />`);
+
+                console.log(input.files[i].name, e.target.result);
+            }
+            reader.readAsDataURL(input.files[i]);
+        }
+    });
+
+    $("#post").on("click", function() {
+        post();
+    });
+
+    function post() {
+        console.log($(".drop-list").children('img'));
+        let previewList = Array.from($(".drop-list img"));
+        let fileList = [];
+
+        console.log(previewList); 
+
+        previewList.forEach(x => {
+            fileList.push( fileObjects[$(x).data('idx')] );
+        });
+
+        let formData = new FormData();
+
+        fileList.forEach(x => {
+            formData.append("list[]", x);
+        });
+
+        $.ajax({
+            url : "/write",
+            method : "post",
+            data : formData,
+            processData: false,
+            contentType: false,
+            success:(result)=>{
+                console.log(result);
+            }
+        });
     }
 });
-//end of 무한스크롤

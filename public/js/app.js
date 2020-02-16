@@ -98,6 +98,7 @@
 
     $(".write .btn_group > #post").on("click", function() {
         $(".drop-list").empty();
+        location.reload();
     });
 
     $(".write .btn_group > #cancel").on("click", function () {
@@ -262,6 +263,10 @@
         $(".friend_profile > .message_name").text(msg_receiver + "님에게");
         $("#show_msg_input").text(msg_content);
 
+        let src = $(this).children().children().children().children('img').attr('src');
+        console.log(src);
+        $(".message_write > .friend_profile > a > img").attr("src", src);
+
     });
 
     $(".friend_profile > .ti-more-alt").on("click", function() {
@@ -281,6 +286,7 @@
         $("#show_msg_input").text("");
         $(".friend_profile > .message_name").text("");
         $(".message_write > .message_top > h3").text("");
+        $(".message_write > .friend_profile > a > img").attr("src", "");
     });
 
     $(".message_list.second_list > ul li").on("click", function() {
@@ -292,9 +298,14 @@
 
         $(".friend_profile > .message_name").text(msg_writer + "으로부터");
         $("#show_msg_input").text(msg_content);
+
+        let src = $(this).children().children().children('img').attr('src');
+        console.log(src);
+        $(".message_write > .friend_profile > a > img").attr("src", src);
     });
 
     // 쪽지 조회 끝
+
     // 이미지 업로드 (드래그앤드롭, input(file))
 
     $(".write .btn_group > #cancel").on("click", function () {
@@ -313,20 +324,31 @@
         e.preventDefault();
     });
 
+$(function() {
     dropZone.addEventListener("drop", e=>{
         $(".write > form > textarea").focus();
         e.preventDefault();
 
         const files = Array.from(e.dataTransfer.files);
-        loadThumbnail(files);
+
+        // console.log(files);
+        // console.log(files[0].name);
+        fileObjects = { ...Array.from(files) };
+
+        for(let i = 0; i < files.length; i++) {
+            let file = files[i];
+            let reader = new FileReader();
+            reader.onload = function(event) {
+                $('.drop-list').append(`<img src="${event.target.result}" data-name="${file.name}" data-idx="${i}" alt="" />`);
+            }
+            reader.readAsDataURL(file);
+        }
+        // loadThumbnail(files);
     });
-
-    // if($(".file_input").val().length > 0) {
-
-    //     loadThumbnail(file);
-    // }
+});
 
     $(".write").on("dragover", dragOver).on("dragleave", dragOver).on("drop", dragOver);
+
     function dragOver(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -341,74 +363,6 @@
             });
         }
     }
-
-    function loadThumbnail(files){
-        files.forEach(async x => {
-            let img = await loadFile(x);
-            dropList.appendChild(img);
-
-            let formData = new FormData();
-            formData.append("file", x);
-            $.ajax({
-                url:"/upload.php",
-                method:"post",
-                processData: false,
-                contentType: false,
-                data:formData,
-                success:(result)=>{
-                    console.log(result);
-                }
-            });
-        });
-    }
-
-    function loadFile(file){
-        return new Promise( (res, rej)=>{
-            let reader = new FileReader();
-
-            reader.addEventListener("load", ()=>{
-                let img = new Image();
-                img.src = reader.result;
-                img.addEventListener("load", ()=>{
-                    let canvas = document.createElement("canvas");
-                    canvas.width = 100;
-                    canvas.height = 100;
-                    let ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0, 100, 100);
-                    let url = canvas.toDataURL();
-
-                    let thumbImg = new Image();
-                    thumbImg.src = url;
-
-                    res(thumbImg);
-                });
-            });
-            reader.readAsDataURL(file);
-        });
-    }
-
-    $('.upImage').on('change', function(e) {
-        let input = document.querySelector('.upImage');
-
-        if( $(this).val() != "" ){
-            let ext = $(this).val().split('.').pop().toLowerCase();            
-            if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-                alert('gif, png, jpg, jpeg 파일만 업로드 할수 있습니다.');
-                return;
-            }
-        }
-
-        for( let i = 0; i < input.files.length; i++ ) {
-            let reader = new FileReader();
-            reader.onload = function(e) {
-                // $('.result').append(`<div>${input.files[i].name}</div>`);
-                $('.drop-list').append(`<img src="${e.target.result}" alt="" />`);
-
-                console.log(input.files[i].name, e.target.result);
-            }
-            reader.readAsDataURL(input.files[i]);
-        }
-    });
 
     // 이미지 업로드 (드래그앤드롭, input(file)) 끝
 
@@ -453,8 +407,9 @@
 
     // 섹션 이미지 슬라이드
     $(function() {
-        let position = 1;
-        
+        $('.itemValue').val("1");
+        let position = $(".itemValue").val();
+        console.log(position);
         $("#prev_btn").on("click", function() {
             if(1 < position) {
                 $(this).parent().children('.slider').animate({ left: "+=490px" }, 300);
@@ -471,14 +426,6 @@
             }
         });
     });
-    // $(function() {
-    //     let index = $(".loop").children("li").length;
-    //     $('.loop').owlCarousel({
-    //         center: true,
-    //         items: index,
-    //         loop: true
-    //     });
-    // });
     // 섹션 이미지 슬라이드 끝
 
     // 프로필 이미지
@@ -535,28 +482,6 @@
     });
     // 프로필 이미지 끝
 
-    // 무한 스크롤
-    // let loading = false;
-    // $(window).scroll(function() {
-    //     let h = $("#postswrapper").height();
-    //     let st = $(window).scrollTop();
-
-    //     if(st >= 0.7 * h && !loading && h > 500) {
-    //         loading = true;
-    //         $("다음 섹션").show();
-    //         $.ajax({
-    //             url : "주소.php?lastid=" + $(".sdf:last").attr("id"),
-    //             success : function(html) {
-    //                 if(html) {
-    //                     $(".posting").append(html);
-    //                     $("")
-    //                 }
-    //             }
-    //         });
-    //     }
-    // });
-    // 무한 스크롤 끝
-
     // 공개범위 설정
 $(function() {
     $(".section > .ti-more-alt").on("click", function() {
@@ -572,3 +497,18 @@ $(function() {
 });
 
 // 공개범위 설정 끝
+
+// 탭 키 눌렀을 때
+$('textarea').on('keydown', function(e) {
+	if ( e.keyCode === 9 ) {
+		let start = this.selectionStart;
+		let end = this.selectionEnd;
+
+		$(this).val( $(this).val().substring(0, start) + '\t' + $(this).val().substring(end));
+
+		this.selectionStart = this.selectionEnd = start + 1;
+
+		e.preventDefault();
+	}
+});
+// 탭 키 눌렀을 때 끝

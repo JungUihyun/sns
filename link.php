@@ -35,7 +35,6 @@ Route::GET("/board/like", "PostController@like");
 # 글 공개범위 설정
 Route::GET('/distance', "PostController@distance");
 
-
 # 댓글 쓰기 처리
 Route::POST("/comment_write", "PostController@comment_write");
 # 댓글 삭제 처리
@@ -56,6 +55,8 @@ Route::GET("/friend/friend_delete", "UserController@delete_friend");
 Route::POST("/message", "UserController@send_message");
 # 쪽지 조회
 Route::GET("/show_msg", "UserController@show_message");
+# 쪽지 삭제
+// Route::GET("/delete_msg/", "PostController@delete_message");
 
 # 검색 기능
 Route::GET("/search", "MainController@search");

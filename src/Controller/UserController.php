@@ -163,10 +163,14 @@ class UserController {
 
     # 쪽지 삭제
     public function delete_message() {
-        $user = $_SESSION['user'];
         extract($_GET);
-
         
+        // $result = DB::execute("DELETE FROM sns_msg WHERE qidx = ?", [$qidx]);
+        // $result1 = DB::execute("DELETE FROM sns_msg WHERE ridx = ?", [$ridx]);
+
+        if(!$result || !$result1) {
+            back("데이터베이스 작업중 오류 발생");
+        }
 
         move("/", "쪽지를 삭제했습니다.");
     }

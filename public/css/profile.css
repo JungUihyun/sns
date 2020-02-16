@@ -361,6 +361,7 @@ header {
 
 .message_list li {
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .send_profile {
@@ -375,6 +376,7 @@ header {
 
 .send_profile > form > img {
     width: 40px;
+    height: 40px;
     border-radius: 50%;
     margin-right: 10px;
 }

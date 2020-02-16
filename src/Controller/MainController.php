@@ -40,6 +40,9 @@ class MainController {
             $user = $_SESSION['user'];
 			$page = isset($_GET['p']) && is_numeric($_GET['p']) ? $_GET['p'] : 1;
 			$start = ($page - 1) * 5;
+
+			// $friends = DB::fetchAll("SELECT * FROM sns_friends WHERE")
+
 			// $sql = "SELECT * FROM sns_boards ORDER BY date DESC LIMIT ${start}, 5";
 			$sql = "SELECT * FROM sns_boards ORDER BY date DESC";
             $list = DB::fetchAll($sql);

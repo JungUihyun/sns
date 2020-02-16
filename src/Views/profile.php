@@ -32,14 +32,14 @@
 
 <div id="side">
     <div class="profile">
-        <a href="/profile?idx=<?= $_SESSION['user']->idx ?>" class="link_img">
+        <a href="/profile/<?= $_SESSION['user']->idx ?>" class="link_img">
             <?php if(!empty($current_profile->p_img)) { ?>
                 <img src="<?= $current_profile->p_img ?>" alt="profile_img">
             <?php } else { ?>
                 <img src="/images/default_profile.jpg" alt="profile_img">
             <?php } ?>
         </a> 
-        <a href="/profile?idx=<?= $_SESSION['user']->idx ?>" class="link_name"><?= $_SESSION['user']->name ?></a>
+        <a href="/profile/<?= $_SESSION['user']->idx ?>" class="link_name"><?= $_SESSION['user']->name ?></a>
     </div>
 
     <div class="side_button">
@@ -56,7 +56,7 @@
                 <ul>
                     <?php foreach($question_list as $item) { ?>
                         <li>
-                            <div class="friend_profile" onclick="location.href='/profile?idx=<?= $item->idx ?>'">
+                            <div class="friend_profile" onclick="location.href='/profile/<?= $item->idx ?>'">
                                 <form action="/friend/receive" method="post">
                                     <input type="hidden" value="<?= $item->idx ?>" name="question_qidx">
                                     <?php if($item->p_img) { ?>
@@ -80,7 +80,7 @@
                 <ul>
                     <?php foreach($friend_list as $item) { ?>
                         <li>
-                            <div class="friend_profile" onclick="location.href='/profile?idx=<?= $item->idx ?>'">
+                            <div class="friend_profile" onclick="location.href='/profile/<?= $item->idx ?>'">
                                 <form>
                                     <?php if($item->p_img) { ?>
                                         <img src="<?= $item->p_img ?>" alt="내 친구 프로필 이미지">
@@ -88,10 +88,6 @@
                                         <img src="/images/default_profile.jpg" alt="내 친구 프로필 이미지">
                                     <?php } ?>
                                     <span><?= $item->name ?></span>
-                                    <div class="recommend_btn">
-                                        <span class="refuse ti-close"><a href="/friend/friend_delete?idx=<?= $item->idx ?>"></a></span>
-                                        <input type="submit" value="" class="accept recommend_submit"><span class="ti-check"></span>
-                                    </div>
                                 </form>
                             </div>
                         </li>
@@ -105,7 +101,7 @@
                 <ul>
                     <?php foreach($send_list as $item) { ?>
                     <li>
-                        <div class="friend_profile" onclick="location.href='/profile?idx=<?= $item->idx ?>'">
+                        <div class="friend_profile" onclick="location.href='/profile/<?= $item->idx ?>'">
                             <form>
                                 <?php if($item->p_img) { ?>
                                     <img src="<?= $item->p_img ?>" alt="내 친구 프로필 이미지">
@@ -129,7 +125,7 @@
                     <?php foreach($recommend_list as $item) { ?>
                         <?php if($item->idx != user()->idx) { ?>
                             <li>
-                                <div class="friend_profile" onclick="location.href='/profile?idx=<?= $item->idx ?>'">
+                                <div class="friend_profile" onclick="location.href='/profile/<?= $item->idx ?>'">
                                     <form action="/friend/question" method="post">
                                         <?php if($item->p_img) { ?>
                                             <img src="<?= $item->p_img ?>" alt="내 친구 프로필 이미지">
@@ -162,7 +158,11 @@
                             <a href="javascript:return false;" class="show_msg">
                                 <div class="send_profile">
                                     <form>
-                                        <img src="/images/default_profile.jpg" alt="보낸 쪽지함 프로필 이미지">
+                                        <?php if(!empty(user($item->ridx)->p_img)) { ?>
+                                            <img src="<?= user($item->ridx)->p_img ?>" alt="보낸 쪽지함 프로필 이미지">
+                                        <?php } else { ?>
+                                            <img src="/images/default_profile.jpg" alt="보낸 쪽지함 프로필 이미지">
+                                        <?php } ?>
                                         <input type="hidden" value="<?= $item->content ?>" name="content" class="msg_content">
                                         <input type="hidden" value="<?= $item->receiver ?>" class="msg_receiver">
                                         <div class="send_info">
@@ -183,7 +183,11 @@
                         <li>
                             <div class="send_profile">
                                 <form>
-                                    <img src="/images/default_profile.jpg" alt="받은 쪽지함 프로필 이미지">
+                                    <?php if(!empty(user($item->qidx)->p_img)) { ?>
+                                        <img src="<?= user($item->qidx)->p_img ?>" alt="보낸 쪽지함 프로필 이미지">
+                                    <?php } else { ?>
+                                        <img src="/images/default_profile.jpg" alt="보낸 쪽지함 프로필 이미지">
+                                    <?php } ?>
                                     <input type="hidden" value="<?= $item->content ?>" name="content" class="msg_content">
                                     <input type="hidden" value="<?= $item->writer ?>" class="msg_writer">
                                     <div class="send_info">
@@ -205,7 +209,11 @@
         <div class="bg"></div>
         <div class="myStory" style="background-image: url(<?= $background_image->b_img ?>);">
             <div class="name">
-                <img src="<?= $main_profile->p_img ?>" alt="프로필 사진">
+                <?php if(!empty($main_profile->p_img)) { ?>
+                    <img src="<?= $main_profile->p_img ?>" alt="프로필 사진">
+                <?php } else { ?>
+                    <img src="/images/default_profile.jpg" alt="프로필 사진">
+                <?php } ?>
                 <?php if($name->name == $_SESSION['user']->name) { ?>
                     <div class="profile_image">
                         <input type="file" name="userProfile">
