@@ -6,18 +6,43 @@ use src\App\DB;
 class PostController {
     # 글쓰기 처리
 	public function write() {
+        // 비회원 접근 시
+		if(!user()) {
+			return view("login");
+		}
+
         $user = $_SESSION['user'];
         // $title = $_POST['title'];
         // $date = $_POST['date'];
         // $time = $_POST['time'];
-
+        
         $content = $_POST['content'];
+        $link = $_POST['link'];
+
+        $setDistance = $_POST['setDistance'];
+        $setCDistance = $_POST['setCDistance'];
+
+        if($content == "" || $setDistance == "null" || $setCDistance == "null") {
+            back('필수값이 누락되었습니다.');
+        }
+
+        if(!empty($link)) {
+            if(preg_match("/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/", $link)) {
+                $link = "http://$link";
+                // back("링크 형식이 잘못되었습니다. 다시 입력해 주세요.");
+            } else if(preg_match("/^((http(s?))\:\/\/)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/", $link)) {
+
+            }
+        }
+
+        $uploadLink = "<a href='$link' target='_blank'>$link</a>";
 
         $file = $_FILES['upImage'];
 
-        $sql = "INSERT INTO sns_boards (`content`, `writer`, `date`, `liked`, `commented`, `distance`) VALUES(?, ?, NOW(), 0, 0, 2)";
+        $update1 = DB::execute("UPDATE sns_users SET post_cnt = post_cnt + 1 WHERE idx = ?", [user()->idx]);
+        $sql = "INSERT INTO sns_boards (`content`, `link`, `writer`, `date`, `liked`, `commented`, `uidx`, `distance`, `c_distance`) VALUES(?, ?, ?, NOW(), 0, 0, ?, ?, ?)";
         // $result = DB::execute($sql, [$content, $user->id, $datetime]);
-        $result = DB::execute($sql, [$content, $user->name]);
+        $result = DB::execute($sql, [$content, $uploadLink, $user->name, user()->idx, $setDistance, $setCDistance]);
         
         if(!$result) {
             back("데이터베이스 입력중 오류 발생");
@@ -25,25 +50,25 @@ class PostController {
 
         if(isset($_FILES['list'])) {
             $files = $_FILES['list'];
+            $upload_idx = DB::fetch("SELECT * FROM sns_boards ORDER BY id DESC LIMIT 0, 1")->id;
+            // $upload_idx = DB::fetch("SELECT * FROM sns_uploads ORDER BY idx DESC LIMIT 0, 1")->idx;
 
             for($i = 0; $i < count($files['name']); $i++) {
-                $post_idx = DB::fetch("SELECT * FROM sns_boards ORDER BY id DESC LIMIT 0, 1")->id;
-                $upload_idx = DB::fetch("SELECT * FROM sns_uploads ORDER BY idx DESC LIMIT 0, 1")->idx;
-                $name = $files['name'][$i];
-                $directory = "/" . "newFile/" . $upload_idx . $file['name'][$i];
+                $name = $upload_idx . $files['name'][$i];
+                $directory = "/" . "newFile/" . $name;
                 
-                move_uploaded_file($files['tmp_name'][$i], $directory);
+                move_uploaded_file($files['tmp_name'][$i], "." . $directory);
 
-                if(explode("/", $files['type'][$i])[0] == "image") {
-                    // if Image
-                    if($_FILES['list']['size'][$i] >= 1024 * 1024 * 10) back("10MB 미만의 파일만 받을 수 있습니다.");
+                // if(explode("/", $files['type'][$i])[0] == "image") {
+                //     // if Image
+                //     if($_FILES['list']['size'][$i] >= 1024 * 1024 * 10) back("10MB 미만의 파일만 받을 수 있습니다.");
     
-                    $sql = DB::execute("INSERT INTO sns_uploads(`pidx`, `name`, `directory`, `type`) VALUES (?, ?, ?, ?)", [$post_idx, $name, $directory, 1]);
+                //     $sql = DB::execute("INSERT INTO sns_uploads(`pidx`, `name`, `directory`, `type`) VALUES (?, ?, ?, ?)", [$post_idx, $name, $directory, 1]);
     
-                    if(!$sql) {
-                        back("이미지 전송 중 오류 발생");
-                    }
-                }
+                //     if(!$sql) {
+                //         back("이미지 전송 중 오류 발생");
+                //     }
+                // }
             }
         }
 
@@ -55,7 +80,7 @@ class PostController {
                 $directory = "/" . "newFile/" . $upload_idx . $file['name'][$i];
                 
                 // upload
-                move_uploaded_file($file['tmp_name'][$i], $directory);
+                move_uploaded_file($file['tmp_name'][$i], "." . $directory);
     
                 if(explode("/", $file['type'][$i])[0] == "image") {
                     // if Image
@@ -75,8 +100,13 @@ class PostController {
     
     # 글 수정
     public function modify() {
+        // 비회원 접근 시
+		if(!user()) {
+			return view("login");
+		}
+
         $user = $_SESSION['user'];
-        $content = nl2br($_POST['modify_input']);
+        $content = $_POST['modify_input'];
         $pidx = $_POST['pidx'];
 
         if($content == "" && $pidx == "") {
@@ -102,6 +132,11 @@ class PostController {
 	
     # 글 삭제
     public function delete() {
+        // 비회원 접근 시
+		if(!user()) {
+			return view("login");
+		}
+
         if(!isset($_GET['id']) || !is_numeric($_GET['id'])) {
             back("삭제 대상 값이 올바르지 않습니다.");
         }
@@ -114,6 +149,8 @@ class PostController {
         if($data == null) {
             back("권한이 없습니다.");
         }
+
+        $update = DB::execute("UPDATE sns_users SET comment_cnt = comment_cnt - 1 WHERE idx = ?", [user()->idx]);
 
         $sql = "DELETE FROM sns_boards WHERE id = ?";
         $result = DB::execute($sql, [$id]);
@@ -143,6 +180,11 @@ class PostController {
 
     # 댓글 쓰기 처리
     public function comment_write() {
+        // 비회원 접근 시
+		if(!user()) {
+			return view("login");
+        }
+
         $comment = $_POST['comment_'];
         $user = $_SESSION['user'];
 
@@ -152,7 +194,24 @@ class PostController {
             back("필수 값이 비어있습니다.");
         }
 
+        // 댓글 권한
+        $post = DB::fetch("SELECT * FROM sns_boards WHERE id = ?", [$pidx]);
+
+		if (user()->idx == $post->uidx) {} else {
+			$friend = DB::fetch("SELECT * FROM sns_friends WHERE ridx = ? AND qidx = ?", [user()->idx, $post->uidx]);
+			if ($friend) {
+				if ($post->c_distance != 1 && $post->c_distance != 2) {
+					back("권한이 없습니다.");
+				}
+			} else {
+				if ( $post->c_distance != 3 ) {
+					back("권한이 없습니다.");
+				}
+			}
+        }
+
         $update = DB::execute("UPDATE sns_boards SET commented = commented + 1 WHERE id = ?", [$pidx]);
+        $update1 = DB::execute("UPDATE sns_users SET comment_cnt = comment_cnt + 1 WHERE idx = ?", [user()->idx]);
 
         // $datetime = $date . " " . ($time == "" ? "00:00:00" : $time . ":00");
 
@@ -160,7 +219,7 @@ class PostController {
         // $result = DB::execute($sql, [$content, $user->id, $datetime]);
         $result = DB::execute($sql, [$user->idx, $pidx, $comment, $user->name]);
 
-        if(!$result || !$update) {
+        if(!$result || !$update || !$update1) {
             back("데이터베이스 입력중 오류 발생");
         }
 
@@ -169,17 +228,27 @@ class PostController {
 
     # 댓글 수정
     public function comment_modify() {
+        // 비회원 접근 시
+		if(!user()) {
+			return view("login");
+		}
     }
 
     # 댓글 삭제
     public function comment_delete() {
+        // 비회원 접근 시
+		if(!user()) {
+			return view("login");
+		}
         $user = $_SESSION['user'];
         $pidx = $_GET['id'];
 
         $update = DB::execute("UPDATE sns_boards SET commented = commented - 1 WHERE id = ?", [$pidx]);
+        $update1 = DB::execute("UPDATE sns_users SET comment_cnt = comment_cnt - 1 WHERE idx = ?", [user()->idx]);
+
         $sql = DB::execute("DELETE FROM sns_comments WHERE pidx = ? AND uidx = ?", [$pidx, $user->idx]);
         
-        if(!$update || !$sql) {
+        if(!$update1 || !$update || !$sql) {
             back("데이터베이스 삭제 중 오류 발생");
         }
 
@@ -188,6 +257,10 @@ class PostController {
 
     # 글 좋아요
     public function like() {
+        // 비회원 접근 시
+		if(!user()) {
+			return view("login");
+		}
         $user = $_SESSION['user'];
 
         $id = $_GET['id'];
@@ -217,16 +290,26 @@ class PostController {
     }
 
     # 글 검색
-    public function search() {
-        $user = $_SESSION['user'];
+    // public function search() {
+    //     // 비회원 접근 시
+	// 	if(!user()) {
+	// 		return view("login");
+    //     }
+        
+    //     $user = $_SESSION['user'];
 
-        $result = DB::fetchAll("SELECT * FROM sns_boards WHERE content = ?");
+    //     $result = DB::fetchAll("SELECT * FROM sns_boards WHERE content = ?");
         
         
-    }
+    // }
 
     # 글 공개범위
     public function distance() {
+        // 비회원 접근 시
+		if(!user()) {
+			return view("login");
+		}
+
         $writer = $_GET['writer'];
         $pidx = $_GET['pidx'];
         $distance = $_GET['distance'];

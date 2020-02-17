@@ -30,57 +30,57 @@
     // 로그인 배경화면 끝
 
     // 아이디 기억
-    $(document).ready(function () {
-        // 저장된 쿠키값을 가져와서 ID칸에 넣음. 없으면 공백
-        let key = getCookie("key");
-        $("#id").val(key);
+    // $(document).ready(function () {
+    //     // 저장된 쿠키값을 가져와서 ID칸에 넣음. 없으면 공백
+    //     let key = getCookie("key");
+    //     $("#id").val(key);
 
-        if ($("#id").val != "") {    // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면
-            $("#keepLoginbox").attr("checked", true);  // ID 저장하기를 체크 상태로 두기
-        }
+    //     if ($("#id").val != "") {    // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면
+    //         $("#keepLoginbox").attr("checked", true);  // ID 저장하기를 체크 상태로 두기
+    //     }
 
-        $("#keepLoginbox").change(function () {
-            if ($("#keepLoginbox").is(":checked")) { // ID 저장하기 체크했을 떄,
-                setCookie("key", $("#id").val(), 3);    // 3일 동안 쿠키 보관
-            } else {    // ID 저장하기 체크 해제 시,
-                deleteCookie("key");
-            }
-        });
+    //     $("#keepLoginbox").change(function () {
+    //         if ($("#keepLoginbox").is(":checked")) { // ID 저장하기 체크했을 떄,
+    //             setCookie("key", $("#id").val(), 3);    // 3일 동안 쿠키 보관
+    //         } else {    // ID 저장하기 체크 해제 시,
+    //             deleteCookie("key");
+    //         }
+    //     });
 
-        // ID저장하기 체크한 상테에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장
-        $("#id").keyup(function () {     // ID입력 칸에 ID를 입력할 때
-            if ($("#keepLoginbox").is(":checked")) {     // ID저장하기를 체크한 상태라면,
-                setCookie("key", $("#id").val(), 3);    // 3일동안 쿠키 보관
-            }
-        });
-    });
+    //     // ID저장하기 체크한 상테에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장
+    //     $("#id").keyup(function () {     // ID입력 칸에 ID를 입력할 때
+    //         if ($("#keepLoginbox").is(":checked")) {     // ID저장하기를 체크한 상태라면,
+    //             setCookie("key", $("#id").val(), 3);    // 3일동안 쿠키 보관
+    //         }
+    //     });
+    // });
 
-    function setCookie(cookieName, value, exdays) {
-        let exdate = new Date();
-        exdate.setDate(exdate.getDate() + exdays);
-        let cookieValue = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
-        document.cookie = cookieName + "=" + cookieValue;
-    }
+    // function setCookie(cookieName, value, exdays) {
+    //     let exdate = new Date();
+    //     exdate.setDate(exdate.getDate() + exdays);
+    //     let cookieValue = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
+    //     document.cookie = cookieName + "=" + cookieValue;
+    // }
 
-    function deleteCookie(cookieName) {
-        let expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() - 1);
-        document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
-    }
+    // function deleteCookie(cookieName) {
+    //     let expireDate = new Date();
+    //     expireDate.setDate(expireDate.getDate() - 1);
+    //     document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+    // }
 
-    function getCookie(cookieName) {
-        cookieName = cookieName + '=';
-        let cookieData = document.cookie;
-        let start = cookieData.indexOf(cookieName);
-        let cookieValue = '';
-        if (start != -1) {
-            start += cookieName.length;
-            let end = cookieData.indexOf(';', start);
-            if (end == -1) end = cookieData.length;
-            cookieValue = cookieData.substring(start, end);
-        }
-        return unescape(cookieValue);
-    }
+    // function getCookie(cookieName) {
+    //     cookieName = cookieName + '=';
+    //     let cookieData = document.cookie;
+    //     let start = cookieData.indexOf(cookieName);
+    //     let cookieValue = '';
+    //     if (start != -1) {
+    //         start += cookieName.length;
+    //         let end = cookieData.indexOf(';', start);
+    //         if (end == -1) end = cookieData.length;
+    //         cookieValue = cookieData.substring(start, end);
+    //     }
+    //     return unescape(cookieValue);
+    // }
     // 아이디 기억 끝
 
     // 글쓰기 애니메이션
@@ -89,11 +89,19 @@
         $(".write > form > textarea").focus();
     });
 
+    $(".link").focus(function() {
+        $(".drop-list").animate({ "margin-top": "20px"}, 0);
+        $(".drop-list").animate({ "margin-bottom": "110px"}, 0);        
+        $(".media").animate({ bottom: "70px" }, 0);
+        $(".write .btn_group").css('display', 'block');
+    });
+
     $(".write > form > textarea").focus(function () {
         $(".drop-list").animate({ "margin-top": "20px"}, 0);
         $(".drop-list").animate({ "margin-bottom": "110px"}, 0);        
         $(".media").animate({ bottom: "70px" }, 0);
         $(".write .btn_group").css('display', 'block');
+        $(".selectBox").css('display', 'block');
     });
 
     $(".write .btn_group > #post").on("click", function() {
@@ -106,6 +114,7 @@
         $(".drop-list").animate({ "margin-bottom": "0px"}, 0);
         $(".media").animate({ bottom: "20px" }, 0);
         $(".write .btn_group").css('display','none');
+        $(".selectBox").css('display', 'none');
     });
     // 글쓰기 애니메이션 끝
 
@@ -159,40 +168,6 @@
         }, 200);
     });
     // side bar 버튼 애니메이션 끝
-
-
-    // 댓글 작성 ajax
-    // $(".comment_post").click(function(){
-    //     // let id = $("#id").val();
-    //     // let no = $("#no").val();
-    //     let comment = $(".comment_").val();
-    //     let writer = $(".writer").val();
-    //     let data_arr = {"comment":comment, "writer":writer};
-
-    //     $.ajax({
-    //       type:"post",
-    //       data:data_arr,
-    //       url:"/comment_write",
-    //       dataType:"html",
-    //       success:function(){
-    //         $(".comment_list > ul").append(`
-    //                 <li>
-    //                     <div class="comment_profile">
-    //                         <div class="comment_info">
-    //                             <img src="/images/default_profile.jpg" alt="댓글 기본 프로필 이미지">
-    //                             <span>` + writer + `</span>
-    //                         </div>
-    //                     </div>
-    //                     <div class="comment_content">
-    //                         ` + content + `
-    //                     </div>
-    //                 </li>
-    //         `);
-    //         $(".comment_post").val("");
-    //       }
-    //     });
-    // });   
-    // 댓글 작성 ajax 끝
 
     // 게시글 메뉴 버튼 클릭
     $(".section > .ti-more-alt").on("click", function() {
@@ -324,28 +299,66 @@
         e.preventDefault();
     });
 
+let fileList = [];
+
 $(function() {
-    dropZone.addEventListener("drop", e=>{
+    dropZone.addEventListener("drop", function(e){
         $(".write > form > textarea").focus();
+        e.stopPropagation();
         e.preventDefault();
+        console.log(e.originalEvent);
+        
+        let f_cnt = 0;
+        let files = e.originalEvent.dataTransfer;
+        console.log(files);
+        fileObjects = { ...Array.from(files.files) };
 
-        const files = Array.from(e.dataTransfer.files);
+        for(let i = f_cnt; i < files.files.length; i++) {
+            let file = files.files[i];
+            fileList.push(file);
 
-        // console.log(files);
-        // console.log(files[0].name);
-        fileObjects = { ...Array.from(files) };
-
-        for(let i = 0; i < files.length; i++) {
-            let file = files[i];
             let reader = new FileReader();
+
             reader.onload = function(event) {
+                console.log(event);
                 $('.drop-list').append(`<img src="${event.target.result}" data-name="${file.name}" data-idx="${i}" alt="" />`);
             }
             reader.readAsDataURL(file);
         }
+        console.log(fileList); 
+        console.log(fileList.length); 
+        if(fileList.length > 5) {
+            alert("5장 이상은 넣을 수 없습니다.");
+            location.reload();
+    
+            return;
+        }
         // loadThumbnail(files);
     });
 });
+
+$("#post").on("click", function() {
+    post();
+});
+
+function post() {
+    let formData = new FormData();
+
+    fileList.forEach(x => {
+        formData.append("list[]", x);
+    });
+
+    $.ajax({
+        url : "/write",
+        method : "post",
+        data : formData,
+        processData: false,
+        contentType: false,
+        success:(result)=>{
+            console.log(result);
+        }
+    });
+}
 
     $(".write").on("dragover", dragOver).on("dragleave", dragOver).on("drop", dragOver);
 
@@ -455,7 +468,7 @@ $(function() {
     });
     // 프로필 이미지 끝
 
-    // 프로필 이미지
+    // 배경 이미지
     $(".myStory > .bg_change > #bg_change").on("change", function(e) {
         let formData = new FormData();
         let file = $(this)[0].files[0];

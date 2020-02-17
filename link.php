@@ -6,6 +6,13 @@ use src\Controller\MainController;
 Route::GET("/", "MainController@index");
 // 404 page
 Route::GET("/error", "MainController@error");
+// Admin page
+Route::GET('/admin', "AdminController@admin", "admin");
+
+# 관리자 유저 삭제
+Route::GET('/user_delete/{uidx}', "AdminController@user_delete", "admin");
+# 관리자 글 삭제
+Route::GET('/admin_delete/{pidx}', "AdminController@admin_delete", "admin");
 
 # 회원가입 페이지 이동
 Route::GET("/register", "MainController@register");
@@ -42,6 +49,7 @@ Route::GET("/comment_delete", "PostController@comment_delete");
 
 # 친구 신청하기
 Route::POST("/friend/question", "UserController@question");
+Route::GET('/friend/question/{uidx}', "UserController@get_question");
 # 친구 신청 수락
 Route::POST("/friend/receive", "UserController@receive");
 # 친구 신청 거절
@@ -49,7 +57,7 @@ Route::GET("/friend/refuse", "UserController@refuse");
 # 친구 신청 취소
 Route::GET("/friend/send_cancel", "UserController@send_cancel");
 # 친구 삭제
-Route::GET("/friend/friend_delete", "UserController@delete_friend");
+Route::GET("/friend/friend_delete/{uidx}", "UserController@delete_friend");
 
 # 쪽지 보내기
 Route::POST("/message", "UserController@send_message");

@@ -1,6 +1,6 @@
 $(function() {
-    $('.upImage').on('change', function(e) {
-        let input = document.querySelector('.upImage');
+    $('.upProfile').on('change', function(e) {
+        let input = document.querySelector('.upProfile');
 
         if( $(this).val() != "" ){
             let ext = $(this).val().split('.').pop().toLowerCase();            
@@ -14,7 +14,7 @@ $(function() {
             let reader = new FileReader();
             reader.onload = function(e) {
                 // $('.result').append(`<div>${input.files[i].name}</div>`);
-                $('.drop-list').append(`<img src="${e.target.result}" alt="" />`);
+                // $('.drop-list').append(`<img src="${e.target.result}" alt="" />`);
 
                 console.log(input.files[i].name, e.target.result);
             }

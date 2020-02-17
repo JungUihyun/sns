@@ -42,3 +42,9 @@ swiper
 
 https://abc1211.tistory.com/345
 php ajax
+
+
+1  전체공개
+2  친구공개
+3  나만보기
+4  친구의 친구공개

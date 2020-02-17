@@ -201,12 +201,13 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
 
 <div class="container">
     <div class="posting">
         <div class="write">
             <form action="/write" method="post" id="writeForm" enctype="multipart/form-data" >
+                <input type="text" name="link" class="link" placeholder="링크 주소를 입력하세요 예) 'www.gmsgondr.net'">
                 <textarea id="write_input" name="content" cols="30" rows="4" placeholder="<?= user()->name ?>님의 이야기를 기다리고 있어요." contenteditable="true" aria-multiline='true'></textarea>
                 <div class="drop-list" id="sortable itemBoxWrap">
                     <!-- 파일 썸네일 -->
@@ -233,7 +234,7 @@
                                 </a>
                             </li>
                             <li>
-                                <input type="file" name="link" style="opacity: 0;" class="input_menu upLink" multiple>
+                                <input type="file" name="" style="opacity: 0;" class="input_menu upLink" multiple>
                                 <a href="" class="link_menu">
                                     <span class="txt_menu">
                                         <span class="ico ti-link"></span>
@@ -244,6 +245,20 @@
                         </ul>
                     </div>
                 </div>
+                <div class="selectBox" style="display: none; margin-right: 50px;">
+                    <select name="setDistance" id="setDistance">
+                        <option value="">글 공개범위</option>
+                        <option value="1">전체공개</option>
+                        <option value="2">친구공개</option>
+                        <option value="3">나만 보기</option>
+                    </select>
+                    <select name="setCDistance" id="setCDistance">
+                        <option value="">댓글 작성권한</option>
+                        <option value="1">모두 가능</option>
+                        <option value="2">친구만</option>
+                        <option value="3">불가능</option>
+                    </select>
+                </div>
                 <div class="btn_group">
                     <input type="reset" id="cancel" value="취소">
                     <input type="submit" value="올리기" id="post">
@@ -252,94 +267,104 @@
         </div>
         <br>
         <?php foreach($list as $item) { ?>
-            <div class="section">
-                <div class="post_profile">
-                    <?php if(!empty($item->p_img->p_img)) { ?>
-                        <img src="<?= $item->p_img->p_img ?>" alt="프로필 이미지">
-                    <?php } else { ?>
-                        <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
-                    <?php } ?>
-                    <div class="post_info">
-                        <!-- <a href="/profile?writer=?= $item->writer ?>"></a> -->
-                        <span name="writer" class="writer"><?= $item->writer ?></span>
-                        <span name="time" class="time"><?= $item->date ?></span>
-                    </div>
+            <?php if(empty($item)) { ?>
+                <div class="section" style="height: 100px;display: flex; justify-content: center; align-items: center;">
+                    <h3 style="text-align: center">글이 없습니다.</h3>
                 </div>
-                <div class="post_content"><?= $item->content ?></div>
-                <?php if(!empty($item->images)) { ?>
-                    <div class="post_images">
-                        <button type="button" id="prev_btn" class="btn"><span class="ti-angle-left"></span></button>
-                        <ul class="slider">
-                            <input type="hidden" class="itemValue">
-                            <?php foreach($item->images as $image) { ?>
-                                <li class="item"><img src="<?= $image->directory ?>"/></li> 
-                            <?php } ?>
-                        </ul>
-                        <button type="button" id="next_btn" class="btn"><span class="ti-angle-right"></span></button>
-                    </div>
-                <?php } ?>
-                <?php if($_SESSION['user']->name == $item->writer) { ?>
-                    <span class="ti-more-alt"></span>
-                    <div class="btnList">
-                        <input type="hidden" value="<?= $item->id ?>">
-                        <input class="radioMoved" type="hidden" value="<?= $item->distance ?>">
-                        <ul class="distance">
-                            <li><a class="distance1" href="/distance?writer=<?= $item->writer ?>&pidx=<?= $item->id ?>&distance=1"><span class="ti-hand-open"></span>전체공개</a></li>
-                            <li><a class="distance2" href="/distance?writer=<?= $item->writer ?>&pidx=<?= $item->id ?>&distance=2"><span class="ti-user"></span>친구공개</a></li>
-                            <li><a class="distance3" href="/distance?writer=<?= $item->writer ?>&pidx=<?= $item->id ?>&distance=3"><span class="ti-lock"></span>나만보기</a></li>
-                            <input type="radio" name="distance" class="all" disabled >
-                            <input type="radio" name="distance" class="friend" disabled >
-                            <input type="radio" name="distance" class="me" disabled >
-                        </ul>
-                        <a class="modify" href="javascript:return false;">수정</a>
-                        <a class="delete" href="/delete?id=<?= $item->id ?>">삭제</a>
-                    </div>
-                <?php } ?>
-                <div class="comment">
-                    <div class="comment_group">
-                        <a href="/board/like?id=<?= $item->id ?>">좋아요 <span class="like"><?= $item->liked ?></span></a>
-                        <a href="#">댓글 <span class="comment_cnt"><?= $item->commented ?></span></a>
-                    </div>
-                    <div class="comment_list">
-                        <ul>
-                            <?php foreach($item->comments as $item2) { ?>
-                                <li>
-                                    <div class="comment_profile">
-                                        <div class="comment_info">
-                                            <?php if(!empty(user($item2->uidx)->p_img)) { ?>
-                                                <img src="<?= user($item2->uidx)->p_img ?>" alt="프로필 이미지">
-                                            <?php } else { ?>
-                                                <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
-                                            <?php } ?>
-                                            <span><?= $item2->writer ?></span>
-                                            <span class="time" style="font-size:11px; font-weight: normal"><?= $item2->wdate ?></span>
-                                        </div>
-                                    </div>
-                                    <div class="comment_content"><?= $item2->content ?></div>
-                                    <!-- ?php if($_SESSION['user']->idx == $item2->uidx || $_SESSION['user']->name == $item->writer) { ?> -->
-                                    <?php if($_SESSION['user']->idx == $item2->uidx) { ?>
-                                        <div class="comment_btnList">
-                                            <a href="/comment_delete?id=<?= $item->id ?>" class="comment_delete"><span class="ti-close"></span></a>
-                                        </div>
-                                    <?php } ?>
-                                </li>
-                            <?php } ?>
-                        </ul>
-                    </div>
-                    <form action="/comment_write" method="post">
-                        <div class="comment_input">
-                            <input type="text" style="display:none;" name="pidx" value="<?= $item->id ?>">
-                            <input type="text" name="comment_" class="comment_" placeholder="댓글을 입력하세요">
-                            <div class="comment_icon">
-                                <span class="ti-image"></span>
-                                <span class="ti-face-smile"></span>
-                            </div>
+            <?php } else { ?>
+                <div class="section">
+                    <div class="post_profile" onclick="location.href='/profile/<?= $item->uidx ?>'">
+                        <?php if(!empty($item->p_img->p_img)) { ?>
+                            <img src="<?= $item->p_img->p_img ?>" alt="프로필 이미지">
+                        <?php } else { ?>
+                            <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
+                        <?php } ?>
+                        <div class="post_info">
+                            <!-- <a href="/profile?writer=?= $item->writer ?>"></a> -->
+                            <span name="writer" class="writer"><?= text($item->writer, true) ?></span>
+                            <span name="time" class="time"><?= text($item->date, true) ?></span>
                         </div>
-                        <input type="submit" class="comment_post" value="전송">
-                    </form>
+                    </div>
+                    <?php if(!empty($item->link)) { ?>
+                        <div class="post_content"><?= $item->link ?><br><?= text($item->content, true) ?></div>
+                    <?php } else { ?>
+                        <div class="post_content"><?= text($item->content, true) ?></div>
+                    <?php } ?>
+                    <?php if(!empty($item->images)) { ?>
+                        <div class="post_images">
+                            <!-- <button type="button" id="prev_btn" class="btn"><span class="ti-angle-left"></span></button> -->
+                            <ul class="slider">
+                                <input type="hidden" class="itemValue">
+                                <?php foreach($item->images as $image) { ?>
+                                    <li class="item"><img src="<?= $image->directory ?>"/></li> 
+                                <?php } ?>
+                            </ul>
+                            <!-- <button type="button" id="next_btn" class="btn"><span class="ti-angle-right"></span></button> -->
+                        </div>
+                    <?php } ?>
+                    <?php if($_SESSION['user']->name == $item->writer) { ?>
+                        <span class="ti-more-alt"></span>
+                        <div class="btnList">
+                            <input type="hidden" value="<?= $item->id ?>">
+                            <input class="radioMoved" type="hidden" value="<?= $item->distance ?>">
+                            <ul class="distance">
+                                <li><a class="distance1" href="/distance?writer=<?= $item->writer ?>&pidx=<?= $item->id ?>&distance=1"><span class="ti-hand-open"></span>전체공개</a></li>
+                                <li><a class="distance2" href="/distance?writer=<?= $item->writer ?>&pidx=<?= $item->id ?>&distance=2"><span class="ti-user"></span>친구공개</a></li>
+                                <li><a class="distance3" href="/distance?writer=<?= $item->writer ?>&pidx=<?= $item->id ?>&distance=3"><span class="ti-lock"></span>나만보기</a></li>
+                                <input type="radio" name="distance" class="all" disabled >
+                                <input type="radio" name="distance" class="friend" disabled >
+                                <input type="radio" name="distance" class="me" disabled >
+                            </ul>
+                            <a class="modify" href="javascript:return false;">수정</a>
+                            <a class="delete" href="/delete?id=<?= $item->id ?>">삭제</a>
+                        </div>
+                    <?php } ?>
+                    <div class="comment">
+                        <div class="comment_group">
+                            <a href="/board/like?id=<?= $item->id ?>">좋아요 <span class="like"><?= $item->liked ?></span></a>
+                            <a href="#">댓글 <span class="comment_cnt"><?= $item->commented ?></span></a>
+                        </div>
+                        <div class="comment_list">
+                            <ul>
+                                <?php foreach($item->comments as $item2) { ?>
+                                    <li>
+                                        <div class="comment_profile">
+                                            <div class="comment_info">
+                                                <?php if(!empty(user($item2->uidx)->p_img)) { ?>
+                                                    <img src="<?= user($item2->uidx)->p_img ?>" alt="프로필 이미지">
+                                                <?php } else { ?>
+                                                    <img src="/images/default_profile.jpg" alt="기본 프로필 이미지">
+                                                <?php } ?>
+                                                <span><?= $item2->writer ?></span>
+                                                <span class="time" style="font-size:11px; font-weight: normal"><?= $item2->wdate ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="comment_content"><?= $item2->content ?></div>
+                                        <!-- ?php if($_SESSION['user']->idx == $item2->uidx || $_SESSION['user']->name == $item->writer) { ?> -->
+                                        <?php if($_SESSION['user']->idx == $item2->uidx) { ?>
+                                            <div class="comment_btnList">
+                                                <a href="/comment_delete?id=<?= $item->id ?>" class="comment_delete"><span class="ti-close"></span></a>
+                                            </div>
+                                        <?php } ?>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                        <form action="/comment_write" method="post">
+                            <div class="comment_input">
+                                <input type="text" style="display:none;" name="pidx" value="<?= $item->id ?>">
+                                <input type="text" name="comment_" class="comment_" placeholder="댓글을 입력하세요">
+                                <div class="comment_icon">
+                                    <span class="ti-image"></span>
+                                    <span class="ti-face-smile"></span>
+                                </div>
+                            </div>
+                            <input type="submit" class="comment_post" value="전송">
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <br>
+                <br>
+            <?php } ?>
         <?php } ?>
     </div>
 </div>

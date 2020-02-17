@@ -19,7 +19,7 @@
                 <input type="password" name="password" id="password" placeholder="비밀번호">
                 <div class="keepLogin">
                     <input type="checkbox" id="keepLoginbox" name="keepLogin">
-                    <label for="keepLogin" id="keepLabel">아이디 기억</label>
+                    <label for="keepLogin" id="keepLabel">자동 로그인</label>
                 </div>
                 <input type="submit" id="loginBtn" value="로그인">
             </form>

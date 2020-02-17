@@ -431,6 +431,21 @@ header {
     position: relative;
 }
 
+.write > form > .link {
+    width: 100%;
+    border: none;
+    color: #000;
+    /* min-height: 20px; */
+    height: 20px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    /* border-bottom: 1px solid rgb(184, 184, 184); */
+}
+
+.write > form > .link::placeholder {
+    color: #999;
+}
+
 .write > form > textarea {
     width: 100%;
     border: none;
@@ -592,6 +607,7 @@ header {
     height: auto;
     width: 100%;
     text-overflow: clip;
+    white-space: pre;
 }
 
 .section > .ti-more-alt {
@@ -863,7 +879,7 @@ header {
 
 .section > .post_images {
     width: 490px;
-    height: 490px;
+    height: 100px;
     position: relative;
     overflow: hidden;
 }
@@ -874,11 +890,11 @@ header {
     top: 0;
     left: 0;
     display: flex;
-    width: auto;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .post_images > .slider li {
-    width: 490px;
     height: 100%;
     display: inline-block;
 }

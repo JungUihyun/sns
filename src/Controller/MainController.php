@@ -6,6 +6,16 @@ use src\App\DB;
 class MainController {
 	# 인덱스 페이지 이동, 데이터 전송
 	public function index() {
+		// 관리자가 로그인 시
+		if(user() && user()->id == "admin") {
+			move("/admin", "관리자 페이지로 이동");
+		}
+
+		// 비회원 접근 시
+		if(!user()) {
+			return view("login");
+		}
+
 		$comment_list = [];
 		$list = [];
 		$cnt = 0;
@@ -35,23 +45,38 @@ class MainController {
 		$images = [];
 		/* 현재 유저 프로필 사진 */
 		$current_profile = [];
-
+		
         if(isset($_SESSION['user'])) {
+			$posts = [];
+			// 내 글
+			$list = DB::fetchAll("SELECT * FROM sns_boards WHERE uidx = ?", [user()->idx]);
+			// 내 친구
+			$myFriends = DB::fetchAll("SELECT * FROM sns_users WHERE idx IN (SELECT ridx FROM sns_friends WHERE qidx = ?)", [user()->idx]);
+
+			foreach ($myFriends as $friend) {
+				// 내 친구의 전체공개, 친구공개 글
+				$list = array_merge($list, DB::fetchAll("SELECT * FROM sns_boards WHERE uidx = ? AND distance < 3", [$friend->idx]));
+
+				// 내 친구의 친구
+				$friend_of_friend = DB::fetchAll("SELECT * FROM sns_users WHERE idx IN (SELECT ridx FROM sns_friends WHERE qidx = ?)", [$friend->idx]);
+				foreach ($friend_of_friend as $friend2) {
+					// 내 친구의 친구의 전체공개 글
+					$list = array_merge($list, DB::fetchAll("SELECT * FROM sns_boards WHERE uidx = ? AND distance = 1", [$friend2->idx]));
+				}
+			}
+
+			$list = arr_unique($list);
+			$list = arr_sort($list, 'id', 'desc');
+
+			// echo "<pre>";
+			// var_dump($list);
+			// echo "</pre>";
+			// exit;
+
             $user = $_SESSION['user'];
 			$page = isset($_GET['p']) && is_numeric($_GET['p']) ? $_GET['p'] : 1;
 			$start = ($page - 1) * 5;
 
-			// $friends = DB::fetchAll("SELECT * FROM sns_friends WHERE")
-
-			// $sql = "SELECT * FROM sns_boards ORDER BY date DESC LIMIT ${start}, 5";
-			$sql = "SELECT * FROM sns_boards ORDER BY date DESC";
-            $list = DB::fetchAll($sql);
-
-				// echo "<pre>";
-				// // var_dump($list);
-				// var_dump(json_encode($list));
-				// echo "</pre>";
-				// exit;
 			/* 댓글 리스트 출력 */
 			foreach($list as $board){
 				$comment_sql = "SELECT * FROM sns_comments WHERE pidx = ? ORDER BY wdate";
@@ -102,7 +127,7 @@ class MainController {
 			$current_profile = DB::fetch("SELECT p_img FROM sns_users WHERE idx = ?", [$user->idx]);
 		}	
 
-		return view("index", ['p_img' => $p_img, 'current_profile' => $current_profile, 'images' => $images, 'receive_msg_list' => $receive_msg_list, 'receive_msg_cnt' => $receive_msg_cnt, 'send_msg_list' => $send_msg_list, 'send_msg_cnt' => $send_msg_cnt, 'send_list' => $send_list, 'send_cnt' => $send_cnt, 'friend_list' => $friend_list, 'friend_cnt' => $friend_cnt, 'question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'comment_cnt' => $comment_cnt, 'list' => $list, 'prev' => $prev, 'next' => $next, 'p' => $page]);
+		return view("index", ['current_profile' => $current_profile, 'images' => $images, 'receive_msg_list' => $receive_msg_list, 'receive_msg_cnt' => $receive_msg_cnt, 'send_msg_list' => $send_msg_list, 'send_msg_cnt' => $send_msg_cnt, 'send_list' => $send_list, 'send_cnt' => $send_cnt, 'friend_list' => $friend_list, 'friend_cnt' => $friend_cnt, 'question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'comment_cnt' => $comment_cnt, 'list' => $list, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 	# 404 페이지 이동
@@ -117,16 +142,25 @@ class MainController {
 
 	# 로그인 페이지 이동
 	public function login() {
+		// 로그인 되어있을 시
+		if(user()) {
+			move("/");
+		}
 		return view("login");
 	}
 
 	# 글쓰기 페이지 이동
-	public function write() {
-		return view("write");
-	}
+	// public function write() {
+	// 	return view("write");
+	// }
 
 	# 프로필 페이지 이동
 	public function profile($uidx) {
+		// 비회원 접근 시
+		if(!user()) {
+			return view("login");
+		}
+
 		$comment_list = [];
 		$list = [];
 		$cnt = 0;
@@ -221,9 +255,12 @@ class MainController {
 
 			/* 메인 프로필 사진 */
 			$main_profile = DB::fetch("SELECT p_img FROM sns_users WHERE idx = ?", [$uidx]);
+
+			/* 친구인지 구별 */
+			$friends = DB::fetch("SELECT * FROM sns_friends WHERE ridx = ? AND qidx = ?", [user()->idx, $uidx]);
 		}	
 
-		return view("profile", ['main_profile' => $main_profile , 'images' => $images, 'current_profile' => $current_profile, 'background_image' => $background_image, 'cnt' => $sql, 'name' => $name, 'receive_msg_list' => $receive_msg_list, 'receive_msg_cnt' => $receive_msg_cnt, 'send_msg_list' => $send_msg_list, 'send_msg_cnt' => $send_msg_cnt, 'send_list' => $send_list, 'send_cnt' => $send_cnt, 'friend_list' => $friend_list, 'friend_cnt' => $friend_cnt, 'question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'comment_cnt' => $comment_cnt, 'list' => $list, 'prev' => $prev, 'next' => $next, 'p' => $page]);
+		return view("profile", ['friends' => $friends, 'uidx' => $uidx, 'main_profile' => $main_profile , 'images' => $images, 'current_profile' => $current_profile, 'background_image' => $background_image, 'cnt' => $sql, 'name' => $name, 'receive_msg_list' => $receive_msg_list, 'receive_msg_cnt' => $receive_msg_cnt, 'send_msg_list' => $send_msg_list, 'send_msg_cnt' => $send_msg_cnt, 'send_list' => $send_list, 'send_cnt' => $send_cnt, 'friend_list' => $friend_list, 'friend_cnt' => $friend_cnt, 'question_list' => $question_list, 'question_cnt' => $question_cnt, 'recommend_list' => $recommend_list, 'recommend_cnt' => $recommend_cnt, 'comment_list' => $comment_list, 'comment_cnt' => $comment_cnt, 'list' => $list, 'prev' => $prev, 'next' => $next, 'p' => $page]);
 	}
 
 
