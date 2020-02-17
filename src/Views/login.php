@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/css/login.css">
+<div class="drop-list" style="display:none;"></div>
+<div class="write" style="display:none;"></div>
 <div class="container">
     <div id="bg">
         <img src="/images/bg_1.jpg" alt="bg1" class="bg active">

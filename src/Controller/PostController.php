@@ -22,17 +22,25 @@ class PostController {
         $setDistance = $_POST['setDistance'];
         $setCDistance = $_POST['setCDistance'];
 
-        if($content == "" || $setDistance == "null" || $setCDistance == "null") {
+        if($content == "" || $setDistance == null || $setCDistance == null) {
             back('필수값이 누락되었습니다.');
         }
 
         if(!empty($link)) {
-            if(preg_match("/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/", $link)) {
+            if(preg_match("/^[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/", $link)) {
                 $link = "http://$link";
                 // back("링크 형식이 잘못되었습니다. 다시 입력해 주세요.");
             } else if(preg_match("/^((http(s?))\:\/\/)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/", $link)) {
-
+                $link = $link;                
+            } else {
+                back("링크 형식이 잘못되었습니다. 다시 입력해 주세요.");
             }
+            // if(preg_match("/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/", $link)) {
+            //     $link = "http://$link";
+            //     // back("링크 형식이 잘못되었습니다. 다시 입력해 주세요.");
+            // } else if(preg_match("/^((http(s?))\:\/\/)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/", $link)) {
+                
+            // }
         }
 
         $uploadLink = "<a href='$link' target='_blank'>$link</a>";
@@ -75,7 +83,7 @@ class PostController {
         if(isset($_FILES['upImage'])) {
             for($i = 0; $i < count($file['name']); $i++) {
                 $post_idx = DB::fetch("SELECT * FROM sns_boards ORDER BY id DESC LIMIT 0, 1")->id;
-                $upload_idx = DB::fetch("SELECT * FROM sns_uploads ORDER BY idx DESC LIMIT 0, 1")->idx;
+                $upload_idx = DB::fetch("SELECT * FROM sns_uploads ORDER BY idx DESC LIMIT 0, 1");
                 $name = $file['name'][$i];
                 $directory = "/" . "newFile/" . $upload_idx . $file['name'][$i];
                 
@@ -95,7 +103,7 @@ class PostController {
             }
         }
         
-        back("성공적으로 입력되었습니다.");
+        // back("성공적으로 입력되었습니다.");
     }
     
     # 글 수정
